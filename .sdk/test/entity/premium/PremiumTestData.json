@@ -1,0 +1,26 @@
+{
+  "existing": {
+    "premium": {
+      "PREMIUM00": {
+        "data": {},
+        "success": false
+      },
+      "PREMIUM01": {
+        "data": {},
+        "success": false
+      },
+      "PREMIUM02": {
+        "data": {},
+        "success": false
+      }
+    }
+  },
+  "new": {
+    "premium": {
+      "premium_ref01": {
+        "data": {},
+        "success": false
+      }
+    }
+  }
+}

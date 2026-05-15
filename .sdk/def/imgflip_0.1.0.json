@@ -1,0 +1,748 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Imgflip API",
+    "description": "RESTful JSON API for making memes with Imgflip's meme generator. Supports getting popular meme templates, captioning images and GIFs, searching memes, and AI-powered meme generation.",
+    "version": "1.0.0",
+    "contact": {
+      "url": "https://imgflip.com/api"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.imgflip.com",
+      "description": "Imgflip API Server"
+    }
+  ],
+  "paths": {
+    "/get_memes": {
+      "get": {
+        "summary": "Get popular memes",
+        "description": "Gets an array of popular user-uploaded memes that may be captioned with this API. Returns approximately 100 memes ordered by how many times they were captioned in the last 30 days.",
+        "operationId": "getMemes",
+        "tags": [
+          "Free"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "The type of meme templates to return. Valid values are 'gif' or 'image'. Specify one or multiple separated by commas (e.g. type=gif,image).",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "image",
+              "example": "image"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with meme templates",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "memes": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MemeTemplate"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/caption_image": {
+      "post": {
+        "summary": "Caption an image meme",
+        "description": "Add a caption to an Imgflip meme template. Images created with this API will be publicly accessible by anyone through the URL in the response.",
+        "operationId": "captionImage",
+        "tags": [
+          "Free"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "template_id",
+                  "username",
+                  "password"
+                ],
+                "properties": {
+                  "template_id": {
+                    "type": "string",
+                    "description": "A template ID as returned by the get_memes response",
+                    "example": "61579"
+                  },
+                  "username": {
+                    "type": "string",
+                    "description": "Username of a valid Imgflip account"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password for the Imgflip account"
+                  },
+                  "text0": {
+                    "type": "string",
+                    "description": "Top text for the meme (do not use if using boxes parameter)"
+                  },
+                  "text1": {
+                    "type": "string",
+                    "description": "Bottom text for the meme (do not use if using boxes parameter)"
+                  },
+                  "font": {
+                    "type": "string",
+                    "description": "The font family to use for the text. Defaults to impact. Can also use arial or any of the 1,500+ Google Fonts",
+                    "default": "impact"
+                  },
+                  "max_font_size": {
+                    "type": "integer",
+                    "description": "Maximum font size in pixels",
+                    "default": 50
+                  },
+                  "no_watermark": {
+                    "type": "boolean",
+                    "description": "[Premium only] Remove the imgflip.com watermark"
+                  },
+                  "boxes": {
+                    "type": "array",
+                    "description": "For creating memes with more than two text boxes or for further customization. Limited to 20 text boxes per image.",
+                    "items": {
+                      "$ref": "#/components/schemas/TextBox"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful or failed meme creation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/CaptionSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/caption_gif": {
+      "post": {
+        "summary": "Caption an animated GIF meme",
+        "description": "Add a caption to an Imgflip animated GIF template. Requires API Premium. First 50 creations per month are included, then $0.02 per creation.",
+        "operationId": "captionGif",
+        "tags": [
+          "Premium"
+        ],
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "template_id",
+                  "username",
+                  "password",
+                  "boxes"
+                ],
+                "properties": {
+                  "template_id": {
+                    "type": "string",
+                    "description": "An animated template ID"
+                  },
+                  "username": {
+                    "type": "string",
+                    "description": "Username of a valid Imgflip account"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password for the Imgflip account"
+                  },
+                  "font": {
+                    "type": "string",
+                    "description": "The font family to use for the text",
+                    "default": "impact"
+                  },
+                  "max_font_size": {
+                    "type": "integer",
+                    "description": "Maximum font size in pixels",
+                    "default": 50
+                  },
+                  "no_watermark": {
+                    "type": "boolean",
+                    "description": "Remove the imgflip.com watermark"
+                  },
+                  "boxes": {
+                    "type": "array",
+                    "description": "Text boxes for the meme. Limited to 20 text boxes per image.",
+                    "items": {
+                      "$ref": "#/components/schemas/TextBox"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful or failed GIF creation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/CaptionSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search_memes": {
+      "post": {
+        "summary": "Search for meme templates",
+        "description": "Search for meme templates that can be captioned with the /caption_image or /caption_gif endpoints. Allows searching 1M+ templates from the Imgflip database. Requires API Premium. First 200 searches per month are included, then $0.005 per search.",
+        "operationId": "searchMemes",
+        "tags": [
+          "Premium"
+        ],
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "username",
+                  "password",
+                  "query"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "Username of the Imgflip account with the Premium API subscription"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password for the Imgflip account"
+                  },
+                  "query": {
+                    "type": "string",
+                    "description": "A text query to search the meme database for. Searches both names and alternate names"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "The type of meme templates to search for. Valid values are 'gif' or 'image'. Specify one or multiple separated by commas",
+                    "default": "image"
+                  },
+                  "include_nsfw": {
+                    "type": "integer",
+                    "description": "Use include_nsfw=1 to allow not-safe-for-work memes to be returned",
+                    "default": 0,
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful search response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "memes": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MemeTemplateWithCaptions"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get_meme": {
+      "post": {
+        "summary": "Get a meme by ID",
+        "description": "Get a meme by ID. Same return format as /search_memes. Helpful if your users want to upload templates to Imgflip and then give you the ID directly. Requires API Premium.",
+        "operationId": "getMeme",
+        "tags": [
+          "Premium"
+        ],
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "username",
+                  "password",
+                  "template_id"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "Username of a valid Imgflip account"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password for the Imgflip account"
+                  },
+                  "template_id": {
+                    "type": "string",
+                    "description": "The template ID to retrieve"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with meme details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "meme": {
+                          "$ref": "#/components/schemas/MemeTemplateWithCaptions"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/automeme": {
+      "post": {
+        "summary": "Automatically caption a meme",
+        "description": "Automatically caption one of the top 2,048 memes based only on the input text. Uses a deep neural network trained on millions of public Imgflip memes. Requires API Premium. First 50 creations per month are included, then $0.02 per creation.",
+        "operationId": "automeme",
+        "tags": [
+          "Premium",
+          "AI"
+        ],
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "username",
+                  "password",
+                  "text"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "Username of the Imgflip account with the Premium API subscription"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password for the Imgflip account"
+                  },
+                  "text": {
+                    "type": "string",
+                    "description": "The text to display on the meme. This will also be used to determine which meme template to use"
+                  },
+                  "no_watermark": {
+                    "type": "boolean",
+                    "description": "Remove the imgflip.com watermark"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful or failed automeme creation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/CaptionSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ai_meme": {
+      "post": {
+        "summary": "Generate a meme using AI",
+        "description": "Generates a fresh meme from scratch using either OpenAI GPT or Imgflip's own deep neural network trained on millions of public memes. Requires API Premium. First 50 creations per month are included, then $0.02 per creation.",
+        "operationId": "aiMeme",
+        "tags": [
+          "Premium",
+          "AI"
+        ],
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "username",
+                  "password"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "Username of the Imgflip account with the Premium API subscription"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password for the Imgflip account"
+                  },
+                  "model": {
+                    "type": "string",
+                    "description": "Which neural network model to use",
+                    "enum": [
+                      "openai",
+                      "classic"
+                    ],
+                    "default": "openai"
+                  },
+                  "template_id": {
+                    "type": "string",
+                    "description": "Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). If not specified, randomly selects from available templates"
+                  },
+                  "prefix_text": {
+                    "type": "string",
+                    "description": "Max 64 chars. Initial prefix text to seed the meme text. For openai model, used as a general topic. For classic model, shorter is generally better",
+                    "maxLength": 64
+                  },
+                  "no_watermark": {
+                    "type": "boolean",
+                    "description": "Remove the imgflip.com watermark"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful AI meme generation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/AIMemeSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MemeTemplate": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique template ID",
+            "example": "61579"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the meme template",
+            "example": "One Does Not Simply"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to the meme template image",
+            "example": "https://i.imgflip.com/1bij.jpg"
+          },
+          "width": {
+            "type": "integer",
+            "description": "Width of the image in pixels",
+            "example": 568
+          },
+          "height": {
+            "type": "integer",
+            "description": "Height of the image in pixels",
+            "example": 335
+          },
+          "box_count": {
+            "type": "integer",
+            "description": "The default number of text boxes the meme uses",
+            "example": 2
+          }
+        }
+      },
+      "MemeTemplateWithCaptions": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/MemeTemplate"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "captions": {
+                "type": "integer",
+                "description": "Estimated number of all-time captions of this meme, rounded",
+                "example": 1750
+              }
+            }
+          }
+        ]
+      },
+      "TextBox": {
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text to display in this box"
+          },
+          "x": {
+            "type": "integer",
+            "description": "X coordinate of the top left corner of the text box"
+          },
+          "y": {
+            "type": "integer",
+            "description": "Y coordinate of the top left corner of the text box"
+          },
+          "width": {
+            "type": "integer",
+            "description": "Width of the text box"
+          },
+          "height": {
+            "type": "integer",
+            "description": "Height of the text box"
+          },
+          "color": {
+            "type": "string",
+            "description": "Text color in hex format",
+            "example": "#ffffff"
+          },
+          "outline_color": {
+            "type": "string",
+            "description": "Text outline color in hex format",
+            "example": "#000000"
+          }
+        }
+      },
+      "CaptionSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL to the generated meme image",
+                "example": "https://i.imgflip.com/123abc.jpg"
+              },
+              "page_url": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL to the meme page on Imgflip",
+                "example": "https://imgflip.com/i/123abc"
+              }
+            }
+          }
+        }
+      },
+      "AIMemeSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL to the generated meme image",
+                "example": "https://i.imgflip.com/123abc.jpg"
+              },
+              "page_url": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL to the meme page on Imgflip",
+                "example": "https://imgflip.com/i/123abc"
+              },
+              "template_id": {
+                "type": "integer",
+                "description": "The template ID that was used",
+                "example": 89370399
+              },
+              "texts": {
+                "type": "array",
+                "description": "The AI-generated text for each text box",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "you can't get caught to sing a conversation",
+                  "if you don't have any money"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "error_message": {
+            "type": "string",
+            "description": "A description of why the request failed",
+            "example": "Some hopefully-useful statement about why it failed"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Free",
+      "description": "Free API endpoints available to all users"
+    },
+    {
+      "name": "Premium",
+      "description": "Premium API endpoints requiring a paid subscription ($9.99/month)"
+    },
+    {
+      "name": "AI",
+      "description": "AI-powered meme generation endpoints"
+    }
+  ]
+}

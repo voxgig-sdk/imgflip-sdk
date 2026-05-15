@@ -1,0 +1,26 @@
+{
+  "existing": {
+    "free": {
+      "FREE00": {
+        "data": {},
+        "success": false
+      },
+      "FREE01": {
+        "data": {},
+        "success": false
+      },
+      "FREE02": {
+        "data": {},
+        "success": false
+      }
+    }
+  },
+  "new": {
+    "free": {
+      "free_ref01": {
+        "data": {},
+        "success": false
+      }
+    }
+  }
+}

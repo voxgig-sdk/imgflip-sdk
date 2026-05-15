@@ -1,0 +1,23 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      contact: {
+        url: "https://imgflip.com/api"
+      }
+      description: "RESTful JSON API for making memes with Imgflip's meme generator. Supports getting popular meme templates, captioning images and GIFs, searching memes, and AI-powered meme generation."
+      servers: [
+        {
+          description: "Imgflip API Server"
+          url: "https://api.imgflip.com"
+        }
+      ]
+      title: "Imgflip API"
+      version: "1.0.0"
+    }
+  }
+}
+
+}

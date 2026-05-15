@@ -1,0 +1,18 @@
+# BasicPremiumFlow
+
+main: kit: flow: BasicPremiumFlow:
+{
+  entity: "premium",
+  kind: "basic",
+  name: "BasicPremiumFlow",
+  step: [
+    {
+      input: {
+        ref: "premium_ref01"
+      }
+
+      op: "create"
+    }
+  ],
+  "key$": "BasicPremiumFlow"
+}

@@ -1,0 +1,36 @@
+# BasicFreeFlow
+
+main: kit: flow: BasicFreeFlow:
+{
+  entity: "free",
+  kind: "basic",
+  name: "BasicFreeFlow",
+  step: [
+    {
+      input: {
+        ref: "free_ref01"
+      }
+
+      op: "create"
+    }
+
+    {
+      input: {
+        ref: "free_ref01",
+        srcdatavar: "free_ref01_data",
+        suffix: "_dt0"
+      }
+
+      op: "load",
+      valid: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-free_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicFreeFlow"
+}
