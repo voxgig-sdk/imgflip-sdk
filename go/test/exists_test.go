@@ -3,7 +3,7 @@ package sdktest
 import (
 	"testing"
 
-	sdk "github.com/voxgig-sdk/imgflip-sdk"
+	sdk "github.com/voxgig-sdk/imgflip-sdk/go"
 )
 
 func TestExists(t *testing.T) {

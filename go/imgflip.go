@@ -1,10 +1,10 @@
 package voxgigimgflipsdk
 
 import (
-	"github.com/voxgig-sdk/imgflip-sdk/core"
-	"github.com/voxgig-sdk/imgflip-sdk/entity"
-	"github.com/voxgig-sdk/imgflip-sdk/feature"
-	_ "github.com/voxgig-sdk/imgflip-sdk/utility"
+	"github.com/voxgig-sdk/imgflip-sdk/go/core"
+	"github.com/voxgig-sdk/imgflip-sdk/go/entity"
+	"github.com/voxgig-sdk/imgflip-sdk/go/feature"
+	_ "github.com/voxgig-sdk/imgflip-sdk/go/utility"
 )
 
 // Type aliases preserve external API.

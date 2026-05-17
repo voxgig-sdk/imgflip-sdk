@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	sdk "github.com/voxgig-sdk/imgflip-sdk"
-	"github.com/voxgig-sdk/imgflip-sdk/core"
+	sdk "github.com/voxgig-sdk/imgflip-sdk/go"
+	"github.com/voxgig-sdk/imgflip-sdk/go/core"
 
-	vs "github.com/voxgig/struct"
+	vs "github.com/voxgig-sdk/imgflip-sdk/go/utility/struct"
 )
 
 func TestPremiumEntity(t *testing.T) {
