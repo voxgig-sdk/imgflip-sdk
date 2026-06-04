@@ -93,7 +93,6 @@ def _free_basic_setup(extra):
         "IMGFLIP_TEST_FREE_ENTID": idmap,
         "IMGFLIP_TEST_LIVE": "FALSE",
         "IMGFLIP_TEST_EXPLAIN": "FALSE",
-        "IMGFLIP_APIKEY": "NONE",
     })
 
     idmap_resolved = helpers.to_map(
@@ -104,7 +103,6 @@ def _free_basic_setup(extra):
     if env.get("IMGFLIP_TEST_LIVE") == "TRUE":
         merged_opts = vs.merge([
             {
-                "apikey": env.get("IMGFLIP_APIKEY"),
             },
             extra or {},
         ])

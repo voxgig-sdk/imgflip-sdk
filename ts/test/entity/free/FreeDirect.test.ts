@@ -74,14 +74,12 @@ function directSetup(mockres?: any) {
   const env = envOverride({
     'IMGFLIP_TEST_FREE_ENTID': {},
     'IMGFLIP_TEST_LIVE': 'FALSE',
-    'IMGFLIP_APIKEY': 'NONE',
   })
 
   const live = 'TRUE' === env.IMGFLIP_TEST_LIVE
 
   if (live) {
     const client = new ImgflipSDK({
-      apikey: env.IMGFLIP_APIKEY,
     })
 
     let idmap: any = env['IMGFLIP_TEST_FREE_ENTID']

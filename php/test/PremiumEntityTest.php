@@ -80,7 +80,6 @@ function premium_basic_setup($extra)
         "IMGFLIP_TEST_PREMIUM_ENTID" => $idmap,
         "IMGFLIP_TEST_LIVE" => "FALSE",
         "IMGFLIP_TEST_EXPLAIN" => "FALSE",
-        "IMGFLIP_APIKEY" => "NONE",
     ]);
 
     $idmap_resolved = Helpers::to_map(
@@ -92,7 +91,6 @@ function premium_basic_setup($extra)
     if ($env["IMGFLIP_TEST_LIVE"] === "TRUE") {
         $merged_opts = Vs::merge([
             [
-                "apikey" => $env["IMGFLIP_APIKEY"],
             ],
             $extra ?? [],
         ]);

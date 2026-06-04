@@ -113,7 +113,6 @@ function basicSetup(extra?: any) {
     'IMGFLIP_TEST_PREMIUM_ENTID': idmap,
     'IMGFLIP_TEST_LIVE': 'FALSE',
     'IMGFLIP_TEST_EXPLAIN': 'FALSE',
-    'IMGFLIP_APIKEY': 'NONE',
   })
 
   idmap = env['IMGFLIP_TEST_PREMIUM_ENTID']
@@ -123,7 +122,6 @@ function basicSetup(extra?: any) {
   if (live) {
     client = new ImgflipSDK(merge([
       {
-        apikey: env.IMGFLIP_APIKEY,
       },
       extra
     ]))

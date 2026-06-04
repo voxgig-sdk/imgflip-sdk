@@ -15,9 +15,6 @@ module ImgflipConfig
       },
       "options" => {
         "base" => "https://api.imgflip.com",
-        "auth" => {
-          "prefix" => "Bearer",
-        },
         "headers" => {
           "content-type" => "application/json",
         },
