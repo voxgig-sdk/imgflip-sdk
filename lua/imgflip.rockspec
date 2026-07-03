@@ -8,12 +8,14 @@ source = {
   dir = "imgflip-sdk/lua"
 }
 description = {
-  summary = "Imgflip SDK for Lua",
-  license = "MIT"
+  summary = "Unofficial generated Lua SDK for the Imgflip public API. Not affiliated with or endorsed by the upstream API provider.",
+  homepage = "https://github.com/voxgig-sdk/imgflip-sdk",
+  issues_url = "https://github.com/voxgig-sdk/imgflip-sdk/issues",
+  license = "MIT",
+  labels = { "voxgig", "sdk", "generated-sdk", "openapi", "api-client", "imgflip" }
 }
 dependencies = {
   "lua >= 5.3",
-  "dkjson >= 2.5",
   "dkjson >= 2.5",
 }
 build = {

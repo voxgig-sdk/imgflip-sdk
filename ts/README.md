@@ -10,7 +10,7 @@ The TypeScript SDK for the Imgflip API — a type-safe, entity-oriented client w
 
 ## Install
 ```bash
-npm install imgflip
+npm install @voxgig-sdk/imgflip
 ```
 ## Tutorial: your first API call
 

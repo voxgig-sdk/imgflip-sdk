@@ -10,7 +10,7 @@ The PHP SDK for the Imgflip API — an entity-oriented client using PHP conventi
 
 ## Install
 ```bash
-composer require voxgig/imgflip-sdk
+composer require voxgig-sdk/imgflip
 ```
 
 

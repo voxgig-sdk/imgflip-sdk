@@ -10,13 +10,13 @@ The Ruby SDK for the Imgflip API — an entity-oriented client using idiomatic R
 
 ## Install
 ```bash
-gem install imgflip-sdk
+gem install voxgig-sdk-imgflip
 ```
 
 Or add to your `Gemfile`:
 
 ```ruby
-gem "imgflip-sdk"
+gem "voxgig-sdk-imgflip"
 ```
 
 Then run:

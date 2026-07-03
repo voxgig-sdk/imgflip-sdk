@@ -10,7 +10,7 @@ The Python SDK for the Imgflip API — an entity-oriented client following Pytho
 
 ## Install
 ```bash
-pip install imgflip-sdk
+pip install voxgig-sdk-imgflip
 ```
 
 Or install from source:
