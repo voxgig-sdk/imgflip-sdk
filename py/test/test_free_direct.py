@@ -59,12 +59,14 @@ def _free_direct_setup(mockres):
     env = runner.env_override({
         "IMGFLIP_TEST_FREE_ENTID": {},
         "IMGFLIP_TEST_LIVE": "FALSE",
+        "IMGFLIP_APIKEY": "NONE",
     })
 
     live = env.get("IMGFLIP_TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {
+            "apikey": env.get("IMGFLIP_APIKEY"),
         }
         client = ImgflipSDK(merged_opts)
         return {

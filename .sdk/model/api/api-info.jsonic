@@ -16,31 +16,7 @@ main: {
       ]
       title: "Imgflip API"
       version: "1.0.0"
-      tagline: "Generate memes programmatically: browse templates, caption images and GIFs, search, or create memes with AI"
-      homepage: "https://imgflip.com"
-      docs_url: "https://imgflip.com/api"
-      license_short: "Proprietary API operated by Imgflip LLC; free and Premium tiers, account credentials required for most endpoints"
-      license_md: `- Imgflip LLC operates the API; usage is subject to Imgflip's terms of service
-- Most endpoints require a valid Imgflip account (username + password) sent in the POST body
-- Free tier covers basic template listing and captioning (output is watermarked); Premium ($9.99/month) unlocks GIF captioning, search, AI meme generation, and watermark removal
-- Generated images are publicly accessible by URL and may be auto-deleted if unused; user-generated content is not curated`
-      about_md: `Imgflip API is the developer interface to [Imgflip](https://imgflip.com), the popular meme-generation site run by Imgflip LLC. It exposes a small, focused REST surface for building memes from templates, captioning still images and animated GIFs, searching a large template database, and synthesising new memes with AI.
-
-What you get from the API:
-
-- \`GET /get_memes\` — list of popular, captionable meme templates with their IDs, names, and dimensions
-- \`POST /caption_image\` — add text boxes to a template and receive the rendered meme URL
-- \`POST /caption_gif\` — caption animated GIF templates (Premium)
-- \`POST /search_memes\` — search across 1M+ templates by keyword (Premium)
-- \`POST /get_meme\` — fetch a specific meme template by ID (Premium)
-- \`POST /automeme\` and \`POST /ai_meme\` — auto-generate or AI-generate memes from text (Premium)
-
-All requests are made over HTTPS to \`https://api.imgflip.com\`. Authentication uses an Imgflip account username and password posted in the request body (never in the URL). The free tier has no hard rate limit but may throttle abusive traffic; Premium plans include a monthly request allowance with small per-request overage fees. CORS is supported, so calls work directly from browser clients.`
-      entity_desc: {
-        free: "Endpoints available on the free tier, such as `GET /get_memes` for listing popular templates and `POST /caption_image` for rendering captioned memes (watermarked output)."
-        premium: "Endpoints that require a paid Imgflip Premium account, including `POST /caption_gif`, `POST /search_memes`, `POST /get_meme`, `POST /automeme`, and `POST /ai_meme`."
-      }
-      auth: false
     }
   }
 }
+

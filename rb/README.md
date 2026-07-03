@@ -1,6 +1,11 @@
 # Imgflip Ruby SDK
 
-The Ruby SDK for the Imgflip API. Provides an entity-oriented interface using idiomatic Ruby conventions.
+
+
+The Ruby SDK for the Imgflip API — an entity-oriented client using idiomatic Ruby conventions.
+
+> Other languages, the CLI, and MCP server live alongside this one — see
+> the [top-level README](../README.md).
 
 
 ## Install
@@ -31,13 +36,15 @@ loading a specific record.
 ```ruby
 require_relative "Imgflip_sdk"
 
-client = ImgflipSDK.new({})
+client = ImgflipSDK.new({
+  "apikey" => ENV["IMGFLIP_APIKEY"],
+})
 ```
 
 ### 3. Load a free
 
 ```ruby
-result, err = client.Free(nil).load({ "id" => "example_id" }, nil)
+result, err = client.Free().load({ "id" => "example_id" })
 raise err if err
 puts result
 ```
@@ -46,7 +53,7 @@ puts result
 
 ```ruby
 # Create
-created, _ = client.Free(nil).create({ "name" => "Example" }, nil)
+created, _ = client.Free().create({ "name" => "Example" })
 
 ```
 
@@ -91,11 +98,9 @@ puts fetchdef["headers"]
 Create a mock client for unit testing — no server required:
 
 ```ruby
-client = ImgflipSDK.test(nil, nil)
+client = ImgflipSDK.test
 
-result, err = client.Imgflip(nil).load(
-  { "id" => "test01" }, nil
-)
+result, err = client.Imgflip().load({ "id" => "test01" })
 # result contains mock response data
 ```
 
@@ -127,6 +132,7 @@ Create a `.env.local` file at the project root:
 
 ```
 IMGFLIP_TEST_LIVE=TRUE
+IMGFLIP_APIKEY=<your-key>
 ```
 
 Then run:
@@ -149,6 +155,7 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
+| `apikey` | `String` | API key for authentication. |
 | `base` | `String` | Base URL of the API server. |
 | `prefix` | `String` | URL path prefix prepended to all requests. |
 | `suffix` | `String` | URL path suffix appended to all requests. |

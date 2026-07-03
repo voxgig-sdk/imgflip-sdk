@@ -92,6 +92,7 @@ function free_basic_setup(extra)
     ["IMGFLIP_TEST_FREE_ENTID"] = idmap,
     ["IMGFLIP_TEST_LIVE"] = "FALSE",
     ["IMGFLIP_TEST_EXPLAIN"] = "FALSE",
+    ["IMGFLIP_APIKEY"] = "NONE",
   })
 
   local idmap_resolved = helpers.to_map(
@@ -103,6 +104,7 @@ function free_basic_setup(extra)
   if env["IMGFLIP_TEST_LIVE"] == "TRUE" then
     local merged_opts = vs.merge({
       {
+        apikey = env["IMGFLIP_APIKEY"],
       },
       extra or {},
     })

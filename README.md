@@ -1,23 +1,8 @@
 # Imgflip SDK
 
-Generate memes programmatically: browse templates, caption images and GIFs, search, or create memes with AI
+Imgflip API client, generated from the OpenAPI spec.
 
 > TypeScript, Python, PHP, Golang, Ruby, Lua SDKs, a CLI, an interactive REPL, and an MCP server for AI agents — all generated from one OpenAPI spec by [@voxgig/sdkgen](https://github.com/voxgig/sdkgen).
-
-## About Imgflip API
-
-Imgflip API is the developer interface to [Imgflip](https://imgflip.com), the popular meme-generation site run by Imgflip LLC. It exposes a small, focused REST surface for building memes from templates, captioning still images and animated GIFs, searching a large template database, and synthesising new memes with AI.
-
-What you get from the API:
-
-- `GET /get_memes` — list of popular, captionable meme templates with their IDs, names, and dimensions
-- `POST /caption_image` — add text boxes to a template and receive the rendered meme URL
-- `POST /caption_gif` — caption animated GIF templates (Premium)
-- `POST /search_memes` — search across 1M+ templates by keyword (Premium)
-- `POST /get_meme` — fetch a specific meme template by ID (Premium)
-- `POST /automeme` and `POST /ai_meme` — auto-generate or AI-generate memes from text (Premium)
-
-All requests are made over HTTPS to `https://api.imgflip.com`. Authentication uses an Imgflip account username and password posted in the request body (never in the URL). The free tier has no hard rate limit but may throttle abusive traffic; Premium plans include a monthly request allowance with small per-request overage fees. CORS is supported, so calls work directly from browser clients.
 
 ## Try it
 
@@ -51,27 +36,31 @@ gem install imgflip-sdk
 luarocks install imgflip-sdk
 ```
 
-## 30-second quickstart
+## Quickstart
 
 ### TypeScript
 
 ```ts
 import { ImgflipSDK } from 'imgflip'
 
-const client = new ImgflipSDK({})
+const client = new ImgflipSDK({
+  apikey: process.env.IMGFLIP_APIKEY,
+})
 
+// Load free data
+const free = await client.Free().load({})
+console.log(free.data)
 ```
 
-See the [TypeScript README](ts/README.md) for the
-full guide, or scroll down for the same example in other languages.
+See the [TypeScript README](ts/README.md) for the full guide.
 
-## What's in the box
+## Surfaces
 
-| Surface | Use it for | Path |
-| --- | --- | --- |
-| **SDK** (TypeScript, Python, PHP, Golang, Ruby, Lua) | App integration | `ts/` `py/` `php/` `go/` `rb/` `lua/` |
-| **CLI** | Scripts, CI, ops, one-off API calls | `go-cli/` |
-| **MCP server** | AI agents (Claude, Cursor, Cline) | `go-mcp/` |
+| Surface | Path |
+| --- | --- |
+| **SDK** (TypeScript, Python, PHP, Golang, Ruby, Lua) | `ts/` `py/` `php/` `go/` `rb/` `lua/` |
+| **CLI** | `go-cli/` |
+| **MCP server** | `go-mcp/` |
 
 ## Use it from an AI agent (MCP)
 
@@ -101,8 +90,8 @@ The API exposes 2 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
-| **Free** | Endpoints available on the free tier, such as `GET /get_memes` for listing popular templates and `POST /caption_image` for rendering captioned memes (watermarked output). | `/caption_image` |
-| **Premium** | Endpoints that require a paid Imgflip Premium account, including `POST /caption_gif`, `POST /search_memes`, `POST /get_meme`, `POST /automeme`, and `POST /ai_meme`. | `/ai_meme` |
+| **Free** |  | `/caption_image` |
+| **Premium** |  | `/ai_meme` |
 
 Each entity supports the following operations where available: **load**,
 **list**, **create**, **update**, and **remove**.
@@ -112,15 +101,17 @@ Each entity supports the following operations where available: **load**,
 ### Python
 
 ```python
+import os
 from imgflip_sdk import ImgflipSDK
 
-client = ImgflipSDK({})
+client = ImgflipSDK({
+    "apikey": os.environ.get("IMGFLIP_APIKEY"),
+})
 
 
 # Load a specific free
-free, err = client.Free(None).load(
-    {"id": "example_id"}, None
-)
+free, err = client.Free().load({"id": "example_id"})
+print(free)
 ```
 
 ### PHP
@@ -129,13 +120,14 @@ free, err = client.Free(None).load(
 <?php
 require_once 'imgflip_sdk.php';
 
-$client = new ImgflipSDK([]);
+$client = new ImgflipSDK([
+    "apikey" => getenv("IMGFLIP_APIKEY"),
+]);
 
 
 // Load a specific free
-[$free, $err] = $client->Free(null)->load(
-    ["id" => "example_id"], null
-);
+[$free, $err] = $client->Free()->load(["id" => "example_id"]);
+print_r($free);
 ```
 
 ### Golang
@@ -143,8 +135,13 @@ $client = new ImgflipSDK([]);
 ```go
 import sdk "github.com/voxgig-sdk/imgflip-sdk/go"
 
-client := sdk.NewImgflipSDK(map[string]any{})
+client := sdk.NewImgflipSDK(map[string]any{
+    "apikey": os.Getenv("IMGFLIP_APIKEY"),
+})
 
+// Load free data
+free, err := client.Free(nil).Load(map[string]any{}, nil)
+fmt.Println(free)
 ```
 
 ### Ruby
@@ -152,13 +149,14 @@ client := sdk.NewImgflipSDK(map[string]any{})
 ```ruby
 require_relative "Imgflip_sdk"
 
-client = ImgflipSDK.new({})
+client = ImgflipSDK.new({
+  "apikey" => ENV["IMGFLIP_APIKEY"],
+})
 
 
 # Load a specific free
-free, err = client.Free(nil).load(
-  { "id" => "example_id" }, nil
-)
+free, err = client.Free().load({ "id" => "example_id" })
+puts free
 ```
 
 ### Lua
@@ -166,13 +164,14 @@ free, err = client.Free(nil).load(
 ```lua
 local sdk = require("imgflip_sdk")
 
-local client = sdk.new({})
+local client = sdk.new({
+  apikey = os.getenv("IMGFLIP_APIKEY"),
+})
 
 
 -- Load a specific free
-local free, err = client:Free(nil):load(
-  { id = "example_id" }, nil
-)
+local free, err = client:Free():load({ id = "example_id" })
+print(free)
 ```
 
 ## Unit testing in offline mode
@@ -191,25 +190,21 @@ const result = await client.Free().load({ id: 'test01' })
 ### Python
 
 ```python
-client = ImgflipSDK.test(None, None)
-result, err = client.Free(None).load(
-    {"id": "test01"}, None
-)
+client = ImgflipSDK.test()
+result, err = client.Free().load({"id": "test01"})
 ```
 
 ### PHP
 
 ```php
-$client = ImgflipSDK::test(null, null);
-[$result, $err] = $client->Free(null)->load(
-    ["id" => "test01"], null
-);
+$client = ImgflipSDK::test();
+[$result, $err] = $client->Free()->load(["id" => "test01"]);
 ```
 
 ### Golang
 
 ```go
-client := sdk.TestSDK(nil, nil)
+client := sdk.Test()
 result, err := client.Free(nil).Load(
     map[string]any{"id": "test01"}, nil,
 )
@@ -218,19 +213,15 @@ result, err := client.Free(nil).Load(
 ### Ruby
 
 ```ruby
-client = ImgflipSDK.test(nil, nil)
-result, err = client.Free(nil).load(
-  { "id" => "test01" }, nil
-)
+client = ImgflipSDK.test
+result, err = client.Free().load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
-local client = sdk.test(nil, nil)
-local result, err = client:Free(nil):load(
-  { id = "test01" }, nil
-)
+local client = sdk.test()
+local result, err = client:Free():load({ id = "test01" })
 ```
 
 ## How it works
@@ -334,16 +325,6 @@ local result, err = client:direct({
 - [Golang](go/README.md)
 - [Ruby](rb/README.md)
 - [Lua](lua/README.md)
-
-## Using the Imgflip API
-
-- Upstream: [https://imgflip.com](https://imgflip.com)
-- API docs: [https://imgflip.com/api](https://imgflip.com/api)
-
-- Imgflip LLC operates the API; usage is subject to Imgflip's terms of service
-- Most endpoints require a valid Imgflip account (username + password) sent in the POST body
-- Free tier covers basic template listing and captioning (output is watermarked); Premium ($9.99/month) unlocks GIF captioning, search, AI meme generation, and watermark removal
-- Generated images are publicly accessible by URL and may be auto-deleted if unused; user-generated content is not curated
 
 ---
 

@@ -110,6 +110,7 @@ func premiumBasicSetup(extra map[string]any) *entityTestSetup {
 		"IMGFLIP_TEST_PREMIUM_ENTID": idmap,
 		"IMGFLIP_TEST_LIVE":      "FALSE",
 		"IMGFLIP_TEST_EXPLAIN":   "FALSE",
+		"IMGFLIP_APIKEY":         "NONE",
 	})
 
 	idmapResolved := core.ToMapAny(env["IMGFLIP_TEST_PREMIUM_ENTID"])
@@ -120,6 +121,7 @@ func premiumBasicSetup(extra map[string]any) *entityTestSetup {
 	if env["IMGFLIP_TEST_LIVE"] == "TRUE" {
 		mergedOpts := vs.Merge([]any{
 			map[string]any{
+				"apikey": env["IMGFLIP_APIKEY"],
 			},
 			extra,
 		})

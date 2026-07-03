@@ -99,12 +99,14 @@ func freeDirectSetup(mockres any) *freeDirectSetupResult {
 	env := envOverride(map[string]any{
 		"IMGFLIP_TEST_FREE_ENTID": map[string]any{},
 		"IMGFLIP_TEST_LIVE":    "FALSE",
+		"IMGFLIP_APIKEY":       "NONE",
 	})
 
 	live := env["IMGFLIP_TEST_LIVE"] == "TRUE"
 
 	if live {
 		mergedOpts := map[string]any{
+			"apikey": env["IMGFLIP_APIKEY"],
 		}
 		client := sdk.NewImgflipSDK(mergedOpts)
 
