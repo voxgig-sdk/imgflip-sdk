@@ -144,16 +144,23 @@ class ImgflipSDK:
 
         _, err = utility.prepare_auth(ctx)
         if err is not None:
-            return None, err
+            raise err
 
-        return utility.make_fetch_def(ctx)
+        fetchdef, err = utility.make_fetch_def(ctx)
+        if err is not None:
+            raise err
+
+        return fetchdef
 
     def direct(self, fetchargs=None):
         utility = self._utility
 
-        fetchdef, err = self.prepare(fetchargs)
-        if err is not None:
-            return {"ok": False, "err": err}, None
+        try:
+            fetchdef = self.prepare(fetchargs)
+        except Exception as err:
+            # direct() is the raw-HTTP escape hatch: it never raises, it
+            # returns a result object callers branch on via result["ok"].
+            return {"ok": False, "err": err}
 
         if fetchargs is None:
             fetchargs = {}
@@ -170,13 +177,13 @@ class ImgflipSDK:
         fetched, fetch_err = utility.fetcher(ctx, url, fetchdef)
 
         if fetch_err is not None:
-            return {"ok": False, "err": fetch_err}, None
+            return {"ok": False, "err": fetch_err}
 
         if fetched is None:
             return {
                 "ok": False,
                 "err": ctx.make_error("direct_no_response", "response: undefined"),
-            }, None
+            }
 
         if isinstance(fetched, dict):
             status = helpers.to_int(vs.getprop(fetched, "status"))
@@ -205,20 +212,42 @@ class ImgflipSDK:
                 "status": status,
                 "headers": headers,
                 "data": json_data,
-            }, None
+            }
 
         return {
             "ok": False,
             "err": ctx.make_error("direct_invalid", "invalid response type"),
-        }, None
+        }
 
+
+    @property
+    def free(self):
+        """Idiomatic facade: client.free.list() / client.free.load({"id": ...})."""
+        from entity.free_entity import FreeEntity
+        cached = getattr(self, "_free", None)
+        if cached is None:
+            cached = FreeEntity(self, None)
+            self._free = cached
+        return cached
 
     def Free(self, data=None):
+        # Deprecated: use client.free instead.
         from entity.free_entity import FreeEntity
         return FreeEntity(self, data)
 
 
+    @property
+    def premium(self):
+        """Idiomatic facade: client.premium.list() / client.premium.load({"id": ...})."""
+        from entity.premium_entity import PremiumEntity
+        cached = getattr(self, "_premium", None)
+        if cached is None:
+            cached = PremiumEntity(self, None)
+            self._premium = cached
+        return cached
+
     def Premium(self, data=None):
+        # Deprecated: use client.premium instead.
         from entity.premium_entity import PremiumEntity
         return PremiumEntity(self, data)
 

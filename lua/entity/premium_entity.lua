@@ -83,6 +83,10 @@ end
 
 
 
+---@param reqdata PremiumCreateData
+---@param ctrl? table
+---@return Premium
+---@return string? err
 function PremiumEntity:create(reqdata, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

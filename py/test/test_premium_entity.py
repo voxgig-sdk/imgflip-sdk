@@ -44,9 +44,7 @@ class TestPremiumEntity:
         premium_ref01_data = helpers.to_map(vs.getprop(
             vs.getpath(setup["data"], "new.premium"), "premium_ref01"))
 
-        premium_ref01_data_result, err = premium_ref01_ent.create(premium_ref01_data, None)
-        assert err is None
-        premium_ref01_data = helpers.to_map(premium_ref01_data_result)
+        premium_ref01_data = helpers.to_map(premium_ref01_ent.create(premium_ref01_data, None))
         assert premium_ref01_data is not None
 
 

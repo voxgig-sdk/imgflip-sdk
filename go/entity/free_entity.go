@@ -85,6 +85,27 @@ func (e *FreeEntity) Match(args ...any) any {
 	return out
 }
 
+// DataTyped is the statically-typed accessor for this entity's data. With no
+// argument it returns the current data as an Free; with an argument it
+// sets the data and returns the stored value. It delegates to the untyped Data
+// (identical runtime) and converts at the typed boundary.
+func (e *FreeEntity) DataTyped(data ...Free) Free {
+	if len(data) > 0 {
+		return typedFrom[Free](e.Data(asMap(data[0])))
+	}
+	return typedFrom[Free](e.Data())
+}
+
+// MatchTyped mirrors DataTyped for the entity's match filter. The match is a
+// partial of the entity, so it round-trips through Free (all fields
+// optional at the wire level).
+func (e *FreeEntity) MatchTyped(match ...Free) Free {
+	if len(match) > 0 {
+		return typedFrom[Free](e.Match(asMap(match[0])))
+	}
+	return typedFrom[Free](e.Match())
+}
+
 
 func (e *FreeEntity) Load(reqmatch map[string]any, ctrl map[string]any) (any, error) {
 	utility := e.utility
@@ -109,6 +130,17 @@ func (e *FreeEntity) Load(reqmatch map[string]any, ctrl map[string]any) (any, er
 			}
 		}
 	})
+}
+
+// LoadTyped is the statically-typed variant of Load: it takes an
+// FreeLoadMatch and returns an Free. It delegates to the untyped
+// Load (identical runtime) and converts at the typed boundary.
+func (e *FreeEntity) LoadTyped(reqmatch FreeLoadMatch, ctrl map[string]any) (Free, error) {
+	res, err := e.Load(asMap(reqmatch), ctrl)
+	if err != nil {
+		return Free{}, err
+	}
+	return typedFrom[Free](res), nil
 }
 
 
@@ -139,6 +171,17 @@ func (e *FreeEntity) Create(reqdata map[string]any, ctrl map[string]any) (any, e
 			}
 		}
 	})
+}
+
+// CreateTyped is the statically-typed variant of Create: it takes an
+// FreeCreateData and returns an Free. It delegates to the untyped
+// Create (identical runtime) and converts at the typed boundary.
+func (e *FreeEntity) CreateTyped(reqdata FreeCreateData, ctrl map[string]any) (Free, error) {
+	res, err := e.Create(asMap(reqdata), ctrl)
+	if err != nil {
+		return Free{}, err
+	}
+	return typedFrom[Free](res), nil
 }
 
 

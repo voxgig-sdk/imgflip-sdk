@@ -79,6 +79,10 @@ end
 
 
 
+---@param reqmatch FreeLoadMatch
+---@param ctrl? table
+---@return Free
+---@return string? err
 function FreeEntity:load(reqmatch, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({
@@ -106,6 +110,10 @@ end
 
 
 
+---@param reqdata FreeCreateData
+---@param ctrl? table
+---@return Free
+---@return string? err
 function FreeEntity:create(reqdata, ctrl)
   local utility = self._utility
   local ctx = utility.make_context({

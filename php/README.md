@@ -9,9 +9,10 @@ The PHP SDK for the Imgflip API — an entity-oriented client using PHP conventi
 
 
 ## Install
-```bash
-composer require voxgig-sdk/imgflip
-```
+This package is not yet published to Packagist. Install it from the
+GitHub release tag (`php/vX.Y.Z`):
+
+- Releases: [https://github.com/voxgig-sdk/imgflip-sdk/releases](https://github.com/voxgig-sdk/imgflip-sdk/releases)
 
 
 ## Tutorial: your first API call
@@ -33,16 +34,19 @@ $client = new ImgflipSDK([
 ### 3. Load a free
 
 ```php
-[$result, $err] = $client->Free()->load(["id" => "example_id"]);
-if ($err) { throw new \Exception($err); }
-print_r($result);
+try {
+    $result = $client->free()->load(["id" => "example_id"]);
+    print_r($result);
+} catch (\Exception $err) {
+    echo "Error: " . $err->getMessage();
+}
 ```
 
 ### 4. Create, update, and remove
 
 ```php
 // Create
-[$created, $_] = $client->Free()->create(["name" => "Example"]);
+$created = $client->free()->create(["name" => "Example"]);
 
 ```
 
@@ -54,28 +58,31 @@ print_r($result);
 For endpoints not covered by entity methods:
 
 ```php
-[$result, $err] = $client->direct([
+// direct() is the raw-HTTP escape hatch: it returns a result array
+// (it does not throw). Branch on $result["ok"].
+$result = $client->direct([
     "path" => "/api/resource/{id}",
     "method" => "GET",
     "params" => ["id" => "example"],
 ]);
-if ($err) { throw new \Exception($err); }
 
 if ($result["ok"]) {
     echo $result["status"];  // 200
     print_r($result["data"]);  // response body
+} else {
+    echo "Error: " . $result["err"]->getMessage();
 }
 ```
 
 ### Prepare a request without sending it
 
 ```php
-[$fetchdef, $err] = $client->prepare([
+// prepare() throws on error and returns the fetch definition.
+$fetchdef = $client->prepare([
     "path" => "/api/resource/{id}",
     "method" => "DELETE",
     "params" => ["id" => "example"],
 ]);
-if ($err) { throw new \Exception($err); }
 
 echo $fetchdef["url"];
 echo $fetchdef["method"];
@@ -89,7 +96,7 @@ Create a mock client for unit testing — no server required:
 ```php
 $client = ImgflipSDK::test();
 
-[$result, $err] = $client->Imgflip()->load(["id" => "test01"]);
+$result = $client->free()->load(["id" => "test01"]);
 // $result contains mock response data
 ```
 
@@ -194,8 +201,12 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return `[$result, $err]`. The first value is an
-`array` with these keys:
+Entity operations return the bare result data (an `array` for single-entity
+ops, a `list` for `list`) and throw on error. Wrap calls in
+`try`/`catch` to handle failures.
+
+The `direct()` escape hatch never throws — it returns a result `array`
+you branch on via `$result["ok"]`:
 
 | Key | Type | Description |
 | --- | --- | --- |
@@ -237,7 +248,7 @@ API path: `/ai_meme`
 
 ### Free
 
-Create an instance: `const free = client.Free()`
+Create an instance: `const free = client.free`
 
 #### Operations
 
@@ -256,20 +267,20 @@ Create an instance: `const free = client.Free()`
 #### Example: Load
 
 ```ts
-const free = await client.Free().load({ id: 'free_id' })
+const free = await client.free.load({ id: 'free_id' })
 ```
 
 #### Example: Create
 
 ```ts
-const free = await client.Free().create({
+const free = await client.free.create({
 })
 ```
 
 
 ### Premium
 
-Create an instance: `const premium = client.Premium()`
+Create an instance: `const premium = client.premium`
 
 #### Operations
 
@@ -287,7 +298,7 @@ Create an instance: `const premium = client.Premium()`
 #### Example: Create
 
 ```ts
-const premium = await client.Premium().create({
+const premium = await client.premium.create({
 })
 ```
 
@@ -363,11 +374,11 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$moon = $client->Moon();
-[$result, $err] = $moon->load(["planet_id" => "earth", "id" => "luna"]);
+$free = $client->free();
+$free->load(["id" => "example_id"]);
 
-// $moon->dataGet() now returns the loaded moon data
-// $moon->matchGet() returns the last match criteria
+// $free->dataGet() now returns the loaded free data
+// $free->matchGet() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

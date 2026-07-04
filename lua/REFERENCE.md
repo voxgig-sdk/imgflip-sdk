@@ -88,7 +88,7 @@ same parameters as `direct()`.
 ## FreeEntity
 
 ```lua
-local free = client:Free(nil)
+local free = client:free(nil)
 ```
 
 ### Fields
@@ -105,7 +105,7 @@ local free = client:Free(nil)
 Create a new entity with the given data.
 
 ```lua
-local result, err = client:Free():create({
+local result, err = client:free():create({
 })
 ```
 
@@ -114,7 +114,7 @@ local result, err = client:Free():create({
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:Free():load({ id = "free_id" })
+local result, err = client:free():load({ id = "free_id" })
 ```
 
 ### Common Methods
@@ -150,7 +150,7 @@ Return the entity name.
 ## PremiumEntity
 
 ```lua
-local premium = client:Premium(nil)
+local premium = client:premium(nil)
 ```
 
 ### Fields
@@ -167,7 +167,7 @@ local premium = client:Premium(nil)
 Create a new entity with the given data.
 
 ```lua
-local result, err = client:Premium():create({
+local result, err = client:premium():create({
 })
 ```
 

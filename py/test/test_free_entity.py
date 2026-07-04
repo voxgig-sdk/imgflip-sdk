@@ -44,15 +44,12 @@ class TestFreeEntity:
         free_ref01_data = helpers.to_map(vs.getprop(
             vs.getpath(setup["data"], "new.free"), "free_ref01"))
 
-        free_ref01_data_result, err = free_ref01_ent.create(free_ref01_data, None)
-        assert err is None
-        free_ref01_data = helpers.to_map(free_ref01_data_result)
+        free_ref01_data = helpers.to_map(free_ref01_ent.create(free_ref01_data, None))
         assert free_ref01_data is not None
 
         # LOAD
         free_ref01_match_dt0 = {}
-        free_ref01_data_dt0_loaded, err = free_ref01_ent.load(free_ref01_match_dt0, None)
-        assert err is None
+        free_ref01_data_dt0_loaded = free_ref01_ent.load(free_ref01_match_dt0, None)
         assert free_ref01_data_dt0_loaded is not None
 
 

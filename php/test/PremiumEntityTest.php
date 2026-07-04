@@ -43,8 +43,7 @@ class PremiumEntityTest extends TestCase
         $premium_ref01_data = Helpers::to_map(Vs::getprop(
             Vs::getpath($setup["data"], "new.premium"), "premium_ref01"));
 
-        [$premium_ref01_data_result, $err] = $premium_ref01_ent->create($premium_ref01_data, null);
-        $this->assertNull($err);
+        $premium_ref01_data_result = $premium_ref01_ent->create($premium_ref01_data, null);
         $premium_ref01_data = Helpers::to_map($premium_ref01_data_result);
         $this->assertNotNull($premium_ref01_data);
 

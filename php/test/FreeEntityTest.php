@@ -43,15 +43,13 @@ class FreeEntityTest extends TestCase
         $free_ref01_data = Helpers::to_map(Vs::getprop(
             Vs::getpath($setup["data"], "new.free"), "free_ref01"));
 
-        [$free_ref01_data_result, $err] = $free_ref01_ent->create($free_ref01_data, null);
-        $this->assertNull($err);
+        $free_ref01_data_result = $free_ref01_ent->create($free_ref01_data, null);
         $free_ref01_data = Helpers::to_map($free_ref01_data_result);
         $this->assertNotNull($free_ref01_data);
 
         // LOAD
         $free_ref01_match_dt0 = [];
-        [$free_ref01_data_dt0_loaded, $err] = $free_ref01_ent->load($free_ref01_match_dt0, null);
-        $this->assertNull($err);
+        $free_ref01_data_dt0_loaded = $free_ref01_ent->load($free_ref01_match_dt0, null);
         $this->assertNotNull($free_ref01_data_dt0_loaded);
 
     }

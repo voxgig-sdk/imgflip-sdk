@@ -9,9 +9,12 @@ The TypeScript SDK for the Imgflip API — a type-safe, entity-oriented client w
 
 
 ## Install
-```bash
-npm install @voxgig-sdk/imgflip
-```
+This package is not yet published to npm. Install it from the GitHub
+release tag (`ts/vX.Y.Z`):
+
+- Releases: [https://github.com/voxgig-sdk/imgflip-sdk/releases](https://github.com/voxgig-sdk/imgflip-sdk/releases)
+
+
 ## Tutorial: your first API call
 
 This tutorial walks through creating a client, listing entities, and
@@ -20,7 +23,7 @@ loading a specific record.
 ### 1. Create a client
 
 ```ts
-import { ImgflipSDK } from 'imgflip'
+import { ImgflipSDK } from '@voxgig-sdk/imgflip'
 
 const client = new ImgflipSDK({
   apikey: process.env.IMGFLIP_APIKEY,
@@ -30,7 +33,7 @@ const client = new ImgflipSDK({
 ### 3. Load a free
 
 ```ts
-const result = await client.Free().load({ id: 'example_id' })
+const result = await client.free.load({ id: 'example_id' })
 
 if (result.ok) {
   console.log(result.data)
@@ -41,7 +44,7 @@ if (result.ok) {
 
 ```ts
 // Create
-const created = await client.Free().create({
+const created = await client.free.create({
   name: 'Example',
 })
 
@@ -89,7 +92,7 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = ImgflipSDK.test()
 
-const result = await client.Planet().load({ id: 'test01' })
+const result = await client.free.load({ id: 'test01' })
 // result.ok === true
 // result.data contains mock response data
 ```
@@ -106,7 +109,7 @@ const testClient = client.tester()
 Entity instances remember their last match and data:
 
 ```ts
-const entity = client.Planet()
+const entity = client.free
 
 // First call sets internal match
 await entity.load({ id: 'example' })
@@ -289,7 +292,7 @@ API path: `/ai_meme`
 
 ### Free
 
-Create an instance: `const free = client.Free()`
+Create an instance: `const free = client.free`
 
 #### Operations
 
@@ -308,20 +311,20 @@ Create an instance: `const free = client.Free()`
 #### Example: Load
 
 ```ts
-const free = await client.Free().load({ id: 'free_id' })
+const free = await client.free.load({ id: 'free_id' })
 ```
 
 #### Example: Create
 
 ```ts
-const free = await client.Free().create({
+const free = await client.free.create({
 })
 ```
 
 
 ### Premium
 
-Create an instance: `const premium = client.Premium()`
+Create an instance: `const premium = client.premium`
 
 #### Operations
 
@@ -339,7 +342,7 @@ Create an instance: `const premium = client.Premium()`
 #### Example: Create
 
 ```ts
-const premium = await client.Premium().create({
+const premium = await client.premium.create({
 })
 ```
 
@@ -401,7 +404,7 @@ imgflip/
 Import the SDK from the package root:
 
 ```ts
-import { ImgflipSDK } from 'imgflip'
+import { ImgflipSDK } from '@voxgig-sdk/imgflip'
 ```
 
 ### Entity state
@@ -411,11 +414,11 @@ stores the returned data and match criteria internally. Subsequent
 calls on the same instance can rely on this state.
 
 ```ts
-const moon = client.Moon()
-await moon.load({ planet_id: 'earth', id: 'luna' })
+const free = client.free
+await free.load({ id: "example_id" })
 
-// moon.data() now returns the loaded moon data
-// moon.match() returns { planet_id: 'earth', id: 'luna' }
+// free.data() now returns the loaded free data
+// free.match() returns { id: "example_id" }
 ```
 
 Call `make()` to create a fresh instance with the same configuration

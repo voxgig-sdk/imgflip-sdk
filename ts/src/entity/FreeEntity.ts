@@ -14,9 +14,14 @@ import type {
   Control,
 } from '../types'
 
+import type {
+  Free,
+  FreeLoadMatch,
+  FreeCreateData,
+} from '../ImgflipTypes'
 
 // TODO: needs Entity superclass
-class FreeEntity extends ImgflipEntityBase {
+class FreeEntity extends ImgflipEntityBase<Free> {
 
   constructor(client: ImgflipSDK, entopts: any) {
     super(client, entopts)
@@ -32,7 +37,7 @@ class FreeEntity extends ImgflipEntityBase {
 
 
 
-  async load(this: any, reqmatch?: any, ctrl?: Control) {
+  async load(this: any, reqmatch?: FreeLoadMatch, ctrl?: Control): Promise<Free> {
 
     const utility = this._utility
 
@@ -136,7 +141,9 @@ class FreeEntity extends ImgflipEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Free> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }
@@ -144,7 +151,7 @@ class FreeEntity extends ImgflipEntityBase {
 
 
 
-  async create(this: any, reqdata?: any, ctrl?: Control) {
+  async create(this: any, reqdata?: FreeCreateData, ctrl?: Control): Promise<Free> {
 
     const utility = this._utility
     const {
@@ -243,7 +250,9 @@ class FreeEntity extends ImgflipEntityBase {
         throw err
       }
       else {
-        return undefined
+        // Off-happy-path (throw disabled): typed as any so the method's
+        // Promise<Free> return stays clean under strict null checks.
+        return undefined as any
       }
     }
   }

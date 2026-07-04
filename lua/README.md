@@ -9,12 +9,9 @@ The Lua SDK for the Imgflip API — an entity-oriented client using Lua conventi
 
 
 ## Install
-```bash
-luarocks install voxgig-sdk-imgflip
-```
-
-If the module is not yet published, add the source directory to
-your `LUA_PATH`:
+This package is not yet published to LuaRocks. Install it from the
+GitHub release tag (`lua/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/imgflip-sdk/releases)),
+or add the source directory to your `LUA_PATH`:
 
 ```bash
 export LUA_PATH="path/to/lua/?.lua;path/to/lua/?/init.lua;;"
@@ -39,7 +36,7 @@ local client = sdk.new({
 ### 3. Load a free
 
 ```lua
-local result, err = client:Free():load({ id = "example_id" })
+local result, err = client:free():load({ id = "example_id" })
 if err then error(err) end
 print(result)
 ```
@@ -48,7 +45,7 @@ print(result)
 
 ```lua
 -- Create
-local created, _ = client:Free():create({ name = "Example" })
+local created, _ = client:free():create({ name = "Example" })
 
 ```
 
@@ -95,7 +92,7 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:Imgflip():load({ id = "test01" })
+local result, err = client:free():load({ id = "test01" })
 -- result contains mock response data
 ```
 
@@ -242,7 +239,7 @@ API path: `/ai_meme`
 
 ### Free
 
-Create an instance: `const free = client.Free()`
+Create an instance: `const free = client.free`
 
 #### Operations
 
@@ -261,20 +258,20 @@ Create an instance: `const free = client.Free()`
 #### Example: Load
 
 ```ts
-const free = await client.Free().load({ id: 'free_id' })
+const free = await client.free.load({ id: 'free_id' })
 ```
 
 #### Example: Create
 
 ```ts
-const free = await client.Free().create({
+const free = await client.free.create({
 })
 ```
 
 
 ### Premium
 
-Create an instance: `const premium = client.Premium()`
+Create an instance: `const premium = client.premium`
 
 #### Operations
 
@@ -292,7 +289,7 @@ Create an instance: `const premium = client.Premium()`
 #### Example: Create
 
 ```ts
-const premium = await client.Premium().create({
+const premium = await client.premium.create({
 })
 ```
 
@@ -368,11 +365,11 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local moon = client:Moon(nil)
-moon:load({ planet_id = "earth", id = "luna" }, nil)
+local free = client:free()
+free:load({ id = "example_id" })
 
--- moon:data_get() now returns the loaded moon data
--- moon:match_get() returns the last match criteria
+-- free:data_get() now returns the loaded free data
+-- free:match_get() returns the last match criteria
 ```
 
 Call `make()` to create a fresh instance with the same configuration

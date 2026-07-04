@@ -36,15 +36,13 @@ class FreeEntityTest < Minitest::Test
     free_ref01_data = Helpers.to_map(Vs.getprop(
       Vs.getpath(setup[:data], "new.free"), "free_ref01"))
 
-    free_ref01_data_result, err = free_ref01_ent.create(free_ref01_data, nil)
-    assert_nil err
+    free_ref01_data_result = free_ref01_ent.create(free_ref01_data, nil)
     free_ref01_data = Helpers.to_map(free_ref01_data_result)
     assert !free_ref01_data.nil?
 
     # LOAD
     free_ref01_match_dt0 = {}
-    free_ref01_data_dt0_loaded, err = free_ref01_ent.load(free_ref01_match_dt0, nil)
-    assert_nil err
+    free_ref01_data_dt0_loaded = free_ref01_ent.load(free_ref01_match_dt0, nil)
     assert !free_ref01_data_dt0_loaded.nil?
 
   end

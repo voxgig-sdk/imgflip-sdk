@@ -45,6 +45,7 @@ class FreeEntity
     end
   end
 
+  # @return [Free, Hash] the current Free data
   def data_get
     @_utility.feature_hook.call(@_entctx, "GetData")
     VoxgigStruct.clone(@_data)
@@ -57,12 +58,18 @@ class FreeEntity
     end
   end
 
+  # @return [Hash] the current match filter (any subset of Free fields)
   def match_get
     @_utility.feature_hook.call(@_entctx, "GetMatch")
     VoxgigStruct.clone(@_match)
   end
 
   
+  # Load a single Free.
+  #
+  # @param reqmatch [FreeLoadMatch, Hash, nil] match criteria (id/query fields)
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Free, Hash] the loaded Free; raises ImgflipError on failure
   def load(reqmatch, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({
@@ -88,6 +95,11 @@ class FreeEntity
   
 
   
+  # Create a new Free.
+  #
+  # @param reqdata [FreeCreateData, Hash, nil] body data
+  # @param ctrl [Object, nil] optional per-call control
+  # @return [Free, Hash] the created Free; raises ImgflipError on failure
   def create(reqdata, ctrl = nil)
     utility = @_utility
     ctx = utility.make_context.call({

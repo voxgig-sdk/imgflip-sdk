@@ -3,6 +3,8 @@
 import { FreeEntity } from './entity/FreeEntity'
 import { PremiumEntity } from './entity/PremiumEntity'
 
+export type * from './ImgflipTypes'
+
 
 import { inspect } from 'node:util'
 
@@ -203,12 +205,28 @@ class ImgflipSDK {
 
 
 
+  _free?: FreeEntity
+
+  // Idiomatic facade: `client.free.list()` / `client.free.load({ id })`.
+  get free(): FreeEntity {
+    return (this._free ??= new FreeEntity(this, undefined))
+  }
+
+  /** @deprecated Use `client.free` instead. */
   Free(data?: any) {
     const self = this
     return new FreeEntity(self,data)
   }
 
 
+  _premium?: PremiumEntity
+
+  // Idiomatic facade: `client.premium.list()` / `client.premium.load({ id })`.
+  get premium(): PremiumEntity {
+    return (this._premium ??= new PremiumEntity(this, undefined))
+  }
+
+  /** @deprecated Use `client.premium` instead. */
   Premium(data?: any) {
     const self = this
     return new PremiumEntity(self,data)

@@ -245,11 +245,17 @@ func (sdk *ImgflipSDK) Direct(fetchargs map[string]any) (map[string]any, error) 
 }
 
 
+// Free returns a Free entity bound to this client.
+// Idiomatic usage: client.Free(nil).List(nil, nil) or
+// client.Free(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *ImgflipSDK) Free(data map[string]any) ImgflipEntity {
 	return NewFreeEntityFunc(sdk, data)
 }
 
 
+// Premium returns a Premium entity bound to this client.
+// Idiomatic usage: client.Premium(nil).List(nil, nil) or
+// client.Premium(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *ImgflipSDK) Premium(data map[string]any) ImgflipEntity {
 	return NewPremiumEntityFunc(sdk, data)
 }
