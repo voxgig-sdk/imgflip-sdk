@@ -35,9 +35,10 @@ $client = new ImgflipSDK([
 
 ```php
 try {
-    $result = $client->free()->load(["id" => "example_id"]);
-    print_r($result);
-} catch (\Exception $err) {
+    // load() returns the bare Free record (throws on error).
+    $free = $client->Free()->load(["id" => "example_id"]);
+    print_r($free);
+} catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
 ```
@@ -45,8 +46,8 @@ try {
 ### 4. Create, update, and remove
 
 ```php
-// Create
-$created = $client->free()->create(["name" => "Example"]);
+// create() returns the bare created Free record.
+$created = $client->Free()->create(["name" => "Example"]);
 
 ```
 
@@ -91,13 +92,17 @@ print_r($fetchdef["headers"]);
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```php
-$client = ImgflipSDK::test();
+$client = ImgflipSDK::test([
+    "entity" => ["free" => ["test01" => ["id" => "test01"]]],
+]);
 
-$result = $client->free()->load(["id" => "test01"]);
-// $result contains mock response data
+// load() returns the bare mock record (throws on error).
+$free = $client->Free()->load(["id" => "test01"]);
+print_r($free);
 ```
 
 ### Use a custom fetch function
@@ -248,7 +253,7 @@ API path: `/ai_meme`
 
 ### Free
 
-Create an instance: `const free = client.free`
+Create an instance: `$free = $client->Free();`
 
 #### Operations
 
@@ -266,21 +271,22 @@ Create an instance: `const free = client.free`
 
 #### Example: Load
 
-```ts
-const free = await client.free.load({ id: 'free_id' })
+```php
+// load() returns the bare Free record (throws on error).
+$free = $client->Free()->load(["id" => "free_id"]);
 ```
 
 #### Example: Create
 
-```ts
-const free = await client.free.create({
-})
+```php
+$free = $client->Free()->create([
+]);
 ```
 
 
 ### Premium
 
-Create an instance: `const premium = client.premium`
+Create an instance: `$premium = $client->Premium();`
 
 #### Operations
 
@@ -297,9 +303,9 @@ Create an instance: `const premium = client.premium`
 
 #### Example: Create
 
-```ts
-const premium = await client.premium.create({
-})
+```php
+$premium = $client->Premium()->create([
+]);
 ```
 
 
@@ -374,7 +380,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$free = $client->free();
+$free = $client->Free();
 $free->load(["id" => "example_id"]);
 
 // $free->dataGet() now returns the loaded free data

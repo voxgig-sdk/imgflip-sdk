@@ -208,26 +208,14 @@ class ImgflipSDK
   end
 
 
-  # Idiomatic facade: client.free.list / client.free.load({ "id" => ... })
-  def free
-    require_relative 'entity/free_entity'
-    @free ||= FreeEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.free instead.
+  # Canonical facade: client.Free.list / client.Free.load({ "id" => ... })
   def Free(data = nil)
     require_relative 'entity/free_entity'
     FreeEntity.new(self, data)
   end
 
 
-  # Idiomatic facade: client.premium.list / client.premium.load({ "id" => ... })
-  def premium
-    require_relative 'entity/premium_entity'
-    @premium ||= PremiumEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.premium instead.
+  # Canonical facade: client.Premium.list / client.Premium.load({ "id" => ... })
   def Premium(data = nil)
     require_relative 'entity/premium_entity'
     PremiumEntity.new(self, data)

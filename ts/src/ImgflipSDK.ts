@@ -205,28 +205,14 @@ class ImgflipSDK {
 
 
 
-  _free?: FreeEntity
-
-  // Idiomatic facade: `client.free.list()` / `client.free.load({ id })`.
-  get free(): FreeEntity {
-    return (this._free ??= new FreeEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.free` instead. */
+  // Entity access: `client.Free().list()` / `client.Free().load({ id })`.
   Free(data?: any) {
     const self = this
     return new FreeEntity(self,data)
   }
 
 
-  _premium?: PremiumEntity
-
-  // Idiomatic facade: `client.premium.list()` / `client.premium.load({ id })`.
-  get premium(): PremiumEntity {
-    return (this._premium ??= new PremiumEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.premium` instead. */
+  // Entity access: `client.Premium().list()` / `client.Premium().load({ id })`.
   Premium(data?: any) {
     const self = this
     return new PremiumEntity(self,data)

@@ -220,41 +220,21 @@ class ImgflipSDK:
         }
 
 
-    @property
-    def free(self):
-        """Idiomatic facade: client.free.list() / client.free.load({"id": ...})."""
-        from entity.free_entity import FreeEntity
-        cached = getattr(self, "_free", None)
-        if cached is None:
-            cached = FreeEntity(self, None)
-            self._free = cached
-        return cached
-
-    def Free(self, data=None):
-        # Deprecated: use client.free instead.
+    def Free(self, data=None) -> "FreeEntity":
+        """Entity factory: client.Free().list({}) / client.Free().load({"id": ...})."""
         from entity.free_entity import FreeEntity
         return FreeEntity(self, data)
 
 
-    @property
-    def premium(self):
-        """Idiomatic facade: client.premium.list() / client.premium.load({"id": ...})."""
-        from entity.premium_entity import PremiumEntity
-        cached = getattr(self, "_premium", None)
-        if cached is None:
-            cached = PremiumEntity(self, None)
-            self._premium = cached
-        return cached
-
-    def Premium(self, data=None):
-        # Deprecated: use client.premium instead.
+    def Premium(self, data=None) -> "PremiumEntity":
+        """Entity factory: client.Premium().list({}) / client.Premium().load({"id": ...})."""
         from entity.premium_entity import PremiumEntity
         return PremiumEntity(self, data)
 
 
 
     @classmethod
-    def test(cls, testopts=None, sdkopts=None):
+    def test(cls, testopts=None, sdkopts=None) -> "ImgflipSDK":
         if sdkopts is None:
             sdkopts = {}
         sdkopts = vs.clone(sdkopts)
@@ -274,3 +254,10 @@ class ImgflipSDK:
         sdk.mode = "test"
 
         return sdk
+
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from entity.free_entity import FreeEntity
+    from entity.premium_entity import PremiumEntity

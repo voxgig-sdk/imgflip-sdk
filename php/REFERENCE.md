@@ -90,7 +90,7 @@ Prepare a fetch definition without sending the request. Returns the
 ## FreeEntity
 
 ```php
-$free = $client->free();
+$free = $client->Free();
 ```
 
 ### Fields
@@ -107,7 +107,7 @@ $free = $client->free();
 Create a new entity with the given data. Throws on error.
 
 ```php
-$result = $client->free()->create([
+$result = $client->Free()->create([
 ]);
 ```
 
@@ -116,7 +116,7 @@ $result = $client->free()->create([
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->free()->load(["id" => "free_id"]);
+$result = $client->Free()->load(["id" => "free_id"]);
 ```
 
 ### Common Methods
@@ -152,7 +152,7 @@ Return the entity name.
 ## PremiumEntity
 
 ```php
-$premium = $client->premium();
+$premium = $client->Premium();
 ```
 
 ### Fields
@@ -169,7 +169,7 @@ $premium = $client->premium();
 Create a new entity with the given data. Throws on error.
 
 ```php
-$result = $client->premium()->create([
+$result = $client->Premium()->create([
 ]);
 ```
 

@@ -36,16 +36,17 @@ local client = sdk.new({
 ### 3. Load a free
 
 ```lua
-local result, err = client:free():load({ id = "example_id" })
+local free, err = client:Free():load({ id = "example_id" })
 if err then error(err) end
-print(result)
+print(free)
 ```
 
 ### 4. Create, update, and remove
 
 ```lua
 -- Create
-local created, _ = client:free():create({ name = "Example" })
+local created, err = client:Free():create({ name = "Example" })
+if err then error(err) end
 
 ```
 
@@ -92,8 +93,8 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:free():load({ id = "test01" })
--- result contains mock response data
+local result, err = client:Free():load({ id = "test01" })
+-- result is the loaded data; err is set on failure
 ```
 
 ### Use a custom fetch function
@@ -196,17 +197,22 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return `(any, err)`. The first value is a
-`table` with these keys:
+Entity operations return `(value, err)`. The `value` is the operation's
+data **directly** — there is no wrapper:
 
-| Key | Type | Description |
-| --- | --- | --- |
-| `ok` | `boolean` | `true` if the HTTP status is 2xx. |
-| `status` | `number` | HTTP status code. |
-| `headers` | `table` | Response headers. |
-| `data` | `any` | Parsed JSON response body. |
+| Operation | `value` |
+| --- | --- |
+| `load` / `create` / `update` / `remove` | the entity record (a `table`) |
+| `list` | an array (`table`) of entity records |
 
-On error, `ok` is `false` and `err` contains the error value.
+Check `err` first (it is non-`nil` on failure), then use `value`:
+
+    local free, err = client:Free():load({ id = "example_id" })
+    if err then error(err) end
+    -- free is the loaded record
+
+Only `direct()` returns a response envelope — a `table` with `ok`,
+`status`, `headers`, and `data` keys.
 
 ### Entities
 
@@ -239,7 +245,7 @@ API path: `/ai_meme`
 
 ### Free
 
-Create an instance: `const free = client.free`
+Create an instance: `local free = client:Free(nil)`
 
 #### Operations
 
@@ -257,21 +263,21 @@ Create an instance: `const free = client.free`
 
 #### Example: Load
 
-```ts
-const free = await client.free.load({ id: 'free_id' })
+```lua
+local free, err = client:Free():load({ id = "free_id" })
 ```
 
 #### Example: Create
 
-```ts
-const free = await client.free.create({
+```lua
+local free, err = client:Free():create({
 })
 ```
 
 
 ### Premium
 
-Create an instance: `const premium = client.premium`
+Create an instance: `local premium = client:Premium(nil)`
 
 #### Operations
 
@@ -288,8 +294,8 @@ Create an instance: `const premium = client.premium`
 
 #### Example: Create
 
-```ts
-const premium = await client.premium.create({
+```lua
+local premium, err = client:Premium():create({
 })
 ```
 
@@ -365,7 +371,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```lua
-local free = client:free()
+local free = client:Free()
 free:load({ id = "example_id" })
 
 -- free:data_get() now returns the loaded free data

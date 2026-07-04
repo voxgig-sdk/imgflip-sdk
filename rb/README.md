@@ -34,8 +34,9 @@ client = ImgflipSDK.new({
 
 ```ruby
 begin
-  result = client.free.load({ "id" => "example_id" })
-  puts result
+  # load returns the bare Free record (raises on error).
+  free = client.Free.load({ "id" => "example_id" })
+  puts free
 rescue => err
   warn "load failed: #{err}"
 end
@@ -44,8 +45,8 @@ end
 ### 4. Create, update, and remove
 
 ```ruby
-# Create
-created = client.free.create({ "name" => "Example" })
+# create returns the bare created Free record.
+created = client.Free.create({ "name" => "Example" })
 
 ```
 
@@ -90,13 +91,17 @@ end
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```ruby
-client = ImgflipSDK.test
+client = ImgflipSDK.test({
+  "entity" => { "free" => { "test01" => { "id" => "test01" } } },
+})
 
-result = client.free.load({ "id" => "test01" })
-# result contains mock response data
+# load returns the bare mock record (raises on error).
+free = client.Free.load({ "id" => "test01" })
+puts free
 ```
 
 ### Use a custom fetch function
@@ -243,7 +248,7 @@ API path: `/ai_meme`
 
 ### Free
 
-Create an instance: `const free = client.free`
+Create an instance: `free = client.Free`
 
 #### Operations
 
@@ -261,21 +266,22 @@ Create an instance: `const free = client.free`
 
 #### Example: Load
 
-```ts
-const free = await client.free.load({ id: 'free_id' })
+```ruby
+# load returns the bare Free record (raises on error).
+free = client.Free.load({ "id" => "free_id" })
 ```
 
 #### Example: Create
 
-```ts
-const free = await client.free.create({
+```ruby
+free = client.Free.create({
 })
 ```
 
 
 ### Premium
 
-Create an instance: `const premium = client.premium`
+Create an instance: `premium = client.Premium`
 
 #### Operations
 
@@ -292,8 +298,8 @@ Create an instance: `const premium = client.premium`
 
 #### Example: Create
 
-```ts
-const premium = await client.premium.create({
+```ruby
+premium = client.Premium.create({
 })
 ```
 
@@ -369,7 +375,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```ruby
-free = client.free
+free = client.Free
 free.load({ "id" => "example_id" })
 
 # free.data_get now returns the loaded free data

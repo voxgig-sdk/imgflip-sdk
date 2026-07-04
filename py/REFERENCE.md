@@ -85,7 +85,7 @@ Prepare a fetch definition without sending. Returns the `fetchdef` and raises on
 ## FreeEntity
 
 ```python
-free = client.free
+free = client.Free()
 ```
 
 ### Fields
@@ -102,7 +102,7 @@ free = client.free
 Create a new entity with the given data. Returns the created entity data and raises on error.
 
 ```python
-result = client.free.create({
+result = client.Free().create({
 })
 ```
 
@@ -111,7 +111,7 @@ result = client.free.create({
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.free.load({"id": "free_id"})
+result = client.Free().load({"id": "free_id"})
 ```
 
 ### Common Methods
@@ -146,7 +146,7 @@ Return the entity name.
 ## PremiumEntity
 
 ```python
-premium = client.premium
+premium = client.Premium()
 ```
 
 ### Fields
@@ -163,7 +163,7 @@ premium = client.premium
 Create a new entity with the given data. Returns the created entity data and raises on error.
 
 ```python
-result = client.premium.create({
+result = client.Premium().create({
 })
 ```
 

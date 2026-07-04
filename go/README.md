@@ -30,7 +30,12 @@ go mod edit -replace github.com/voxgig-sdk/imgflip-sdk/go=../imgflip-sdk/go
 This tutorial walks through creating a client, listing entities, and
 loading a specific record.
 
-### 1. Create a client
+### Quickstart
+
+A complete program: create a client, then call the entity operations.
+Each operation returns `(value, error)` — the value is the data itself
+(there is no `{ok, data}` wrapper), so check `err` and use the value
+directly.
 
 ```go
 package main
@@ -38,44 +43,28 @@ package main
 import (
     "fmt"
     "os"
-
     sdk "github.com/voxgig-sdk/imgflip-sdk/go"
-    "github.com/voxgig-sdk/imgflip-sdk/go/core"
 )
 
 func main() {
     client := sdk.NewImgflipSDK(map[string]any{
         "apikey": os.Getenv("IMGFLIP_APIKEY"),
     })
-```
 
-### 3. Load a free
-
-```go
-    result, err = client.Free(nil).Load(
-        map[string]any{"id": "example_id"}, nil,
-    )
+    // Load a single free — the value is the loaded record.
+    free, err := client.Free(nil).Load(map[string]any{"id": "example_id"}, nil)
     if err != nil {
         panic(err)
     }
+    fmt.Println(free)
 
-    rm = core.ToMapAny(result)
-    if rm["ok"] == true {
-        fmt.Println(rm["data"])
+    // Create a free.
+    created, err := client.Free(nil).Create(map[string]any{"name": "Example"}, nil)
+    if err != nil {
+        panic(err)
     }
+    fmt.Println(created)
 }
-```
-
-### 4. Create, update, and remove
-
-```go
-// Create
-created, _ := client.Free(nil).Create(
-    map[string]any{"name": "Example"}, nil,
-)
-cm := core.ToMapAny(created)
-newID := core.ToMapAny(cm["data"])["id"]
-
 ```
 
 
@@ -125,10 +114,13 @@ Create a mock client for unit testing — no server required:
 ```go
 client := sdk.Test()
 
-result, err := client.Free(nil).Load(
+free, err := client.Free(nil).Load(
     map[string]any{"id": "test01"}, nil,
 )
-// result contains mock response data
+if err != nil {
+    panic(err)
+}
+fmt.Println(free) // the loaded mock data
 ```
 
 ### Use a custom fetch function
@@ -228,17 +220,24 @@ All entities implement the `ImgflipEntity` interface.
 
 ### Result shape
 
-Entity operations return `(any, error)`. The `any` value is a
-`map[string]any` with these keys:
+Entity operations return `(value, error)`. The `value` is the
+operation's data **directly** — there is no wrapper:
 
-| Key | Type | Description |
-| --- | --- | --- |
-| `"ok"` | `bool` | `true` if the HTTP status is 2xx. |
-| `"status"` | `int` | HTTP status code. |
-| `"headers"` | `map[string]any` | Response headers. |
-| `"data"` | `any` | Parsed JSON response body. |
+| Operation | `value` |
+| --- | --- |
+| `Load` / `Create` / `Update` / `Remove` | the entity record (`map[string]any`) |
+| `List` | a `[]any` of entity records |
 
-On error, `"ok"` is `false` and `"err"` contains the error value.
+Check `err` first, then use the value directly (or the typed
+`...Typed` variants, which return the entity's model struct and a typed
+slice):
+
+    free, err := client.Free(nil).Load(map[string]any{"id": "example_id"}, nil)
+    if err != nil { /* handle */ }
+    // free is the loaded record
+
+Only `Direct()` returns a response envelope — a `map[string]any` with
+`"ok"`, `"status"`, `"headers"`, and `"data"` keys.
 
 ### Entities
 
@@ -290,7 +289,11 @@ Create an instance: `free := client.Free(nil)`
 #### Example: Load
 
 ```go
-result, err := client.Free(nil).Load(map[string]any{"id": "free_id"}, nil)
+free, err := client.Free(nil).Load(map[string]any{"id": "free_id"}, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(free) // the loaded record
 ```
 
 #### Example: Create

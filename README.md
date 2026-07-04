@@ -28,9 +28,9 @@ const client = new ImgflipSDK({
   apikey: process.env.IMGFLIP_APIKEY,
 })
 
-// Load free data
-const free = await client.free.load({})
-console.log(free.data)
+// Load free data (returns a Free)
+const free = await client.Free().load()
+console.log(free)
 ```
 
 See the [TypeScript README](ts/README.md) for the full guide.
@@ -90,8 +90,8 @@ client = ImgflipSDK({
 })
 
 
-# Load a specific free
-free = client.free.load({"id": "example_id"})
+# Load a specific free (returns the record, raises on error)
+free = client.Free().load({"id": "example_id"})
 print(free)
 ```
 
@@ -106,8 +106,8 @@ $client = new ImgflipSDK([
 ]);
 
 
-// Load a specific free
-$free = $client->free()->load(["id" => "example_id"]);
+// Load a specific free (returns the bare record; throws on error)
+$free = $client->Free()->load(["id" => "example_id"]);
 print_r($free);
 ```
 
@@ -135,8 +135,8 @@ client = ImgflipSDK.new({
 })
 
 
-# Load a specific free
-free = client.free.load({ "id" => "example_id" })
+# Load a specific free (returns the bare record; raises on error)
+free = client.Free.load({ "id" => "example_id" })
 puts free
 ```
 
@@ -151,7 +151,7 @@ local client = sdk.new({
 
 
 -- Load a specific free
-local free, err = client:free():load({ id = "example_id" })
+local free, err = client:Free():load({ id = "example_id" })
 print(free)
 ```
 
@@ -164,22 +164,27 @@ in-memory mock, so unit tests run offline.
 
 ```ts
 const client = ImgflipSDK.test()
-const result = await client.free.load({ id: 'test01' })
-// result.ok === true, result.data contains mock data
+const free = await client.Free().load({ id: 'test01' })
+// free is a bare Free populated with mock data
+console.log(free)
 ```
 
 ### Python
 
 ```python
 client = ImgflipSDK.test()
-result = client.free.load({"id": "test01"})
+free = client.Free().load({"id": "test01"})
+print(free)
 ```
 
 ### PHP
 
 ```php
-$client = ImgflipSDK::test();
-$result = $client->free()->load(["id" => "test01"]);
+// Seed fixture data so offline calls resolve without a live server.
+$client = ImgflipSDK::test([
+    "entity" => ["free" => ["test01" => ["id" => "test01"]]],
+]);
+$free = $client->Free()->load(["id" => "test01"]);
 ```
 
 ### Golang
@@ -194,15 +199,18 @@ result, err := client.Free(nil).Load(
 ### Ruby
 
 ```ruby
-client = ImgflipSDK.test
-result = client.free.load({ "id" => "test01" })
+# Seed fixture data so offline calls resolve without a live server.
+client = ImgflipSDK.test({
+  "entity" => { "free" => { "test01" => { "id" => "test01" } } },
+})
+free = client.Free.load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local result, err = client:free():load({ id = "test01" })
+local result, err = client:Free():load({ id = "test01" })
 ```
 
 ## How it works
@@ -250,6 +258,9 @@ const result = await client.direct({
   method: 'GET',
   params: { id: 'example' },
 })
+if (result instanceof Error) {
+  throw result
+}
 console.log(result.data)
 ```
 

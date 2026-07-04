@@ -244,8 +244,9 @@ end
 
 
 
--- Idiomatic facade: client:free():list() / client:free():load({ id = ... })
-function ImgflipSDK:free(data)
+-- Idiomatic facade: client:Free():list() / client:Free():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function ImgflipSDK:Free(data)
   local EntityMod = require("entity.free_entity")
   if data == nil then
     if self._free == nil then
@@ -256,15 +257,10 @@ function ImgflipSDK:free(data)
   return EntityMod.new(self, data)
 end
 
--- Deprecated: use client:free() instead.
-function ImgflipSDK:Free(data)
-  local EntityMod = require("entity.free_entity")
-  return EntityMod.new(self, data)
-end
 
-
--- Idiomatic facade: client:premium():list() / client:premium():load({ id = ... })
-function ImgflipSDK:premium(data)
+-- Idiomatic facade: client:Premium():list() / client:Premium():load({ id = ... })
+-- Entity access is capitalised (PascalCase) for parity with the other SDKs.
+function ImgflipSDK:Premium(data)
   local EntityMod = require("entity.premium_entity")
   if data == nil then
     if self._premium == nil then
@@ -272,12 +268,6 @@ function ImgflipSDK:premium(data)
     end
     return self._premium
   end
-  return EntityMod.new(self, data)
-end
-
--- Deprecated: use client:premium() instead.
-function ImgflipSDK:Premium(data)
-  local EntityMod = require("entity.premium_entity")
   return EntityMod.new(self, data)
 end
 

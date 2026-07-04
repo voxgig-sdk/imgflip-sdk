@@ -233,10 +233,10 @@ class ImgflipSDK
 
     private $_free = null;
 
-    // Idiomatic facade: $client->free()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Free() (PHP method
-    // names are case-insensitive).
-    public function free($data = null)
+    // Canonical facade: $client->Free()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->free()
+    // resolves here too.
+    public function Free($data = null)
     {
         require_once __DIR__ . '/entity/free_entity.php';
         if ($data === null) {
@@ -251,10 +251,10 @@ class ImgflipSDK
 
     private $_premium = null;
 
-    // Idiomatic facade: $client->premium()->list() / ->load(["id" => ...]).
-    // Also serves the deprecated PascalCase alias Premium() (PHP method
-    // names are case-insensitive).
-    public function premium($data = null)
+    // Canonical facade: $client->Premium()->list() / ->load(["id" => ...]).
+    // PHP method names are case-insensitive, so lowercase $client->premium()
+    // resolves here too.
+    public function Premium($data = null)
     {
         require_once __DIR__ . '/entity/premium_entity.php';
         if ($data === null) {

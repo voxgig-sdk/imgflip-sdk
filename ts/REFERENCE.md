@@ -122,7 +122,7 @@ Alias for `ImgflipSDK.test()`.
 ## FreeEntity
 
 ```ts
-const free = client.free
+const free = client.Free()
 ```
 
 ### Fields
@@ -139,7 +139,7 @@ const free = client.free
 Create a new entity with the given data.
 
 ```ts
-const result = await client.free.create({
+const result = await client.Free().create({
 })
 ```
 
@@ -148,7 +148,7 @@ const result = await client.free.create({
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.free.load({ id: 'free_id' })
+const result = await client.Free().load({ id: 'free_id' })
 ```
 
 ### Common Methods
@@ -182,7 +182,7 @@ Return a copy of the entity options.
 ## PremiumEntity
 
 ```ts
-const premium = client.premium
+const premium = client.Premium()
 ```
 
 ### Fields
@@ -199,7 +199,7 @@ const premium = client.premium
 Create a new entity with the given data.
 
 ```ts
-const result = await client.premium.create({
+const result = await client.Premium().create({
 })
 ```
 

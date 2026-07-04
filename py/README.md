@@ -36,10 +36,12 @@ client = ImgflipSDK({
 
 ### 3. Load a free
 
+`load()` returns the bare record (a `dict`) and raises on error.
+
 ```python
 try:
-    result = client.free.load({"id": "example_id"})
-    print(result)
+    free = client.Free().load({"id": "example_id"})
+    print(free)
 except Exception as err:
     print(f"load failed: {err}")
 ```
@@ -47,8 +49,8 @@ except Exception as err:
 ### 4. Create, update, and remove
 
 ```python
-# Create
-created = client.free.create({"name": "Example"})
+# Create — returns the bare created record (a dict)
+created = client.Free().create({"name": "Example"})
 
 ```
 
@@ -95,8 +97,9 @@ Create a mock client for unit testing — no server required:
 ```python
 client = ImgflipSDK.test()
 
-result = client.free.load({"id": "test01"})
-# result contains mock response data
+# Entity ops return the bare record and raise on error.
+free = client.Free().load({"id": "test01"})
+# free contains the mock response record
 ```
 
 ### Use a custom fetch function
@@ -244,7 +247,7 @@ API path: `/ai_meme`
 
 ### Free
 
-Create an instance: `const free = client.free`
+Create an instance: `free = client.Free()`
 
 #### Operations
 
@@ -262,21 +265,21 @@ Create an instance: `const free = client.free`
 
 #### Example: Load
 
-```ts
-const free = await client.free.load({ id: 'free_id' })
+```python
+free = client.Free().load({"id": "free_id"})
 ```
 
 #### Example: Create
 
-```ts
-const free = await client.free.create({
+```python
+free = client.Free().create({
 })
 ```
 
 
 ### Premium
 
-Create an instance: `const premium = client.premium`
+Create an instance: `premium = client.Premium()`
 
 #### Operations
 
@@ -293,8 +296,8 @@ Create an instance: `const premium = client.premium`
 
 #### Example: Create
 
-```ts
-const premium = await client.premium.create({
+```python
+premium = client.Premium().create({
 })
 ```
 
@@ -369,7 +372,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```python
-free = client.free
+free = client.Free()
 free.load({"id": "example_id"})
 
 # free.data_get() now returns the loaded free data

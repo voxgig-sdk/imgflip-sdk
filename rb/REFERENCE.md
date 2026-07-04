@@ -91,7 +91,7 @@ same parameters as `direct()`. Raises on error.
 ## FreeEntity
 
 ```ruby
-free = client.free
+free = client.Free
 ```
 
 ### Fields
@@ -108,7 +108,7 @@ free = client.free
 Create a new entity with the given data. Raises on error.
 
 ```ruby
-result = client.free.create({
+result = client.Free.create({
 })
 ```
 
@@ -117,7 +117,7 @@ result = client.free.create({
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.free.load({ "id" => "free_id" })
+result = client.Free.load({ "id" => "free_id" })
 ```
 
 ### Common Methods
@@ -153,7 +153,7 @@ Return the entity name.
 ## PremiumEntity
 
 ```ruby
-premium = client.premium
+premium = client.Premium
 ```
 
 ### Fields
@@ -170,7 +170,7 @@ premium = client.premium
 Create a new entity with the given data. Raises on error.
 
 ```ruby
-result = client.premium.create({
+result = client.Premium.create({
 })
 ```
 
