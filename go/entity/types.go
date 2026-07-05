@@ -14,15 +14,13 @@ type Free struct {
 	Success *bool `json:"success,omitempty"`
 }
 
-// FreeLoadMatch mirrors the free fields as an all-optional match
-// filter (Go analog of Partial<Free>).
+// FreeLoadMatch is the typed request payload for Free.LoadTyped.
 type FreeLoadMatch struct {
 	Data *map[string]any `json:"data,omitempty"`
 	Success *bool `json:"success,omitempty"`
 }
 
-// FreeCreateData mirrors the free fields as an all-optional match
-// filter (Go analog of Partial<Free>).
+// FreeCreateData is the typed request payload for Free.CreateTyped.
 type FreeCreateData struct {
 	Data *map[string]any `json:"data,omitempty"`
 	Success *bool `json:"success,omitempty"`
@@ -34,8 +32,7 @@ type Premium struct {
 	Success *bool `json:"success,omitempty"`
 }
 
-// PremiumCreateData mirrors the premium fields as an all-optional match
-// filter (Go analog of Partial<Premium>).
+// PremiumCreateData is the typed request payload for Premium.CreateTyped.
 type PremiumCreateData struct {
 	Data *map[string]any `json:"data,omitempty"`
 	Success *bool `json:"success,omitempty"`

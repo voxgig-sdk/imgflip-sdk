@@ -10,14 +10,23 @@ export interface Free {
   success?: boolean
 }
 
-export type FreeLoadMatch = Partial<Free>
+export interface FreeLoadMatch {
+  data?: Record<string, any>
+  success?: boolean
+}
 
-export type FreeCreateData = Partial<Free>
+export interface FreeCreateData {
+  data?: Record<string, any>
+  success?: boolean
+}
 
 export interface Premium {
   data?: Record<string, any>
   success?: boolean
 }
 
-export type PremiumCreateData = Partial<Premium>
+export interface PremiumCreateData {
+  data?: Record<string, any>
+  success?: boolean
+}
 

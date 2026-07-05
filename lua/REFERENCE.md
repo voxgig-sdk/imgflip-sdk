@@ -95,8 +95,8 @@ local free = client:Free(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | ``$OBJECT`` | No |  |
-| `success` | ``$BOOLEAN`` | No |  |
+| `data` | `table` | No |  |
+| `success` | `boolean` | No |  |
 
 ### Operations
 
@@ -114,7 +114,7 @@ local result, err = client:Free():create({
 Load a single entity matching the given criteria.
 
 ```lua
-local result, err = client:Free():load({ id = "free_id" })
+local result, err = client:Free():load()
 ```
 
 ### Common Methods
@@ -157,8 +157,8 @@ local premium = client:Premium(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | ``$OBJECT`` | No |  |
-| `success` | ``$BOOLEAN`` | No |  |
+| `data` | `table` | No |  |
+| `success` | `boolean` | No |  |
 
 ### Operations
 

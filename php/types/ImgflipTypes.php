@@ -19,14 +19,14 @@ class Free
     public ?bool $success = null;
 }
 
-/** Match filter for Free#load (any subset of Free fields). */
+/** Request payload for Free#load. */
 class FreeLoadMatch
 {
     public ?array $data = null;
     public ?bool $success = null;
 }
 
-/** Match filter for Free#create (any subset of Free fields). */
+/** Request payload for Free#create. */
 class FreeCreateData
 {
     public ?array $data = null;
@@ -40,7 +40,7 @@ class Premium
     public ?bool $success = null;
 }
 
-/** Match filter for Premium#create (any subset of Premium fields). */
+/** Request payload for Premium#create. */
 class PremiumCreateData
 {
     public ?array $data = null;

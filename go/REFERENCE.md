@@ -102,8 +102,8 @@ free := client.Free(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | ``$OBJECT`` | No |  |
-| `success` | ``$BOOLEAN`` | No |  |
+| `data` | `map[string]any` | No |  |
+| `success` | `bool` | No |  |
 
 ### Operations
 
@@ -121,7 +121,7 @@ result, err := client.Free(nil).Create(map[string]any{
 Load a single entity matching the given criteria.
 
 ```go
-result, err := client.Free(nil).Load(map[string]any{"id": "free_id"}, nil)
+result, err := client.Free(nil).Load(nil, nil)
 ```
 
 ### Common Methods
@@ -158,8 +158,8 @@ premium := client.Premium(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | ``$OBJECT`` | No |  |
-| `success` | ``$BOOLEAN`` | No |  |
+| `data` | `map[string]any` | No |  |
+| `success` | `bool` | No |  |
 
 ### Operations
 

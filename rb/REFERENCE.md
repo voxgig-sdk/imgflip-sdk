@@ -8,7 +8,7 @@ Complete API reference for the Imgflip Ruby SDK.
 ### Constructor
 
 ```ruby
-require_relative 'imgflip_sdk'
+require_relative 'Imgflip_sdk'
 
 client = ImgflipSDK.new(options)
 ```
@@ -98,8 +98,8 @@ free = client.Free
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | ``$OBJECT`` | No |  |
-| `success` | ``$BOOLEAN`` | No |  |
+| `data` | `Hash` | No |  |
+| `success` | `Boolean` | No |  |
 
 ### Operations
 
@@ -117,7 +117,7 @@ result = client.Free.create({
 Load a single entity matching the given criteria. Raises on error.
 
 ```ruby
-result = client.Free.load({ "id" => "free_id" })
+result = client.Free.load()
 ```
 
 ### Common Methods
@@ -160,8 +160,8 @@ premium = client.Premium
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | ``$OBJECT`` | No |  |
-| `success` | ``$BOOLEAN`` | No |  |
+| `data` | `Hash` | No |  |
+| `success` | `Boolean` | No |  |
 
 ### Operations
 

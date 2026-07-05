@@ -129,8 +129,8 @@ const free = client.Free()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | ``$OBJECT`` | No |  |
-| `success` | ``$BOOLEAN`` | No |  |
+| `data` | `Record<string, any>` | No |  |
+| `success` | `boolean` | No |  |
 
 ### Operations
 
@@ -148,7 +148,7 @@ const result = await client.Free().create({
 Load a single entity matching the given criteria.
 
 ```ts
-const result = await client.Free().load({ id: 'free_id' })
+const result = await client.Free().load()
 ```
 
 ### Common Methods
@@ -189,8 +189,8 @@ const premium = client.Premium()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | ``$OBJECT`` | No |  |
-| `success` | ``$BOOLEAN`` | No |  |
+| `data` | `Record<string, any>` | No |  |
+| `success` | `boolean` | No |  |
 
 ### Operations
 

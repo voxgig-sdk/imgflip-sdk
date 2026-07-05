@@ -21,7 +21,7 @@ Free = Struct.new(
   keyword_init: true
 )
 
-# Match filter for Free#load (any subset of Free fields).
+# Request payload for Free#load.
 #
 # @!attribute [rw] data
 #   @return [Hash, nil]
@@ -34,7 +34,7 @@ FreeLoadMatch = Struct.new(
   keyword_init: true
 )
 
-# Match filter for Free#create (any subset of Free fields).
+# Request payload for Free#create.
 #
 # @!attribute [rw] data
 #   @return [Hash, nil]
@@ -60,7 +60,7 @@ Premium = Struct.new(
   keyword_init: true
 )
 
-# Match filter for Premium#create (any subset of Premium fields).
+# Request payload for Premium#create.
 #
 # @!attribute [rw] data
 #   @return [Hash, nil]

@@ -11,14 +11,20 @@
 ---@field success? boolean
 
 ---@class FreeLoadMatch
+---@field data? table
+---@field success? boolean
 
 ---@class FreeCreateData
+---@field data? table
+---@field success? boolean
 
 ---@class Premium
 ---@field data? table
 ---@field success? boolean
 
 ---@class PremiumCreateData
+---@field data? table
+---@field success? boolean
 
 local M = {}
 

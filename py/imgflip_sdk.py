@@ -221,13 +221,13 @@ class ImgflipSDK:
 
 
     def Free(self, data=None) -> "FreeEntity":
-        """Entity factory: client.Free().list({}) / client.Free().load({"id": ...})."""
+        """Entity factory: client.Free().list() / client.Free().load({"id": ...})."""
         from entity.free_entity import FreeEntity
         return FreeEntity(self, data)
 
 
     def Premium(self, data=None) -> "PremiumEntity":
-        """Entity factory: client.Premium().list({}) / client.Premium().load({"id": ...})."""
+        """Entity factory: client.Premium().list() / client.Premium().load({"id": ...})."""
         from entity.premium_entity import PremiumEntity
         return PremiumEntity(self, data)
 

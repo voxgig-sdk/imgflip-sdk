@@ -92,8 +92,8 @@ free = client.Free()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | ``$OBJECT`` | No |  |
-| `success` | ``$BOOLEAN`` | No |  |
+| `data` | `dict` | No |  |
+| `success` | `bool` | No |  |
 
 ### Operations
 
@@ -111,7 +111,7 @@ result = client.Free().create({
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.Free().load({"id": "free_id"})
+result = client.Free().load()
 ```
 
 ### Common Methods
@@ -153,8 +153,8 @@ premium = client.Premium()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | ``$OBJECT`` | No |  |
-| `success` | ``$BOOLEAN`` | No |  |
+| `data` | `dict` | No |  |
+| `success` | `bool` | No |  |
 
 ### Operations
 
