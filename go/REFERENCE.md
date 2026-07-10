@@ -96,6 +96,7 @@ same parameters as `Direct()`.
 
 ```go
 free := client.Free(nil)
+fmt.Println(free.GetName()) // "free"
 ```
 
 ### Fields
@@ -107,6 +108,18 @@ free := client.Free(nil)
 
 ### Operations
 
+#### `Load(reqmatch, ctrl map[string]any) (any, error)`
+
+Load a single entity matching the given criteria.
+
+```go
+result, err := client.Free(nil).Load(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
+```
+
 #### `Create(reqdata, ctrl map[string]any) (any, error)`
 
 Create a new entity with the given data.
@@ -114,14 +127,10 @@ Create a new entity with the given data.
 ```go
 result, err := client.Free(nil).Create(map[string]any{
 }, nil)
-```
-
-#### `Load(reqmatch, ctrl map[string]any) (any, error)`
-
-Load a single entity matching the given criteria.
-
-```go
-result, err := client.Free(nil).Load(nil, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods
@@ -152,6 +161,7 @@ Return the entity name.
 
 ```go
 premium := client.Premium(nil)
+fmt.Println(premium.GetName()) // "premium"
 ```
 
 ### Fields
@@ -170,6 +180,10 @@ Create a new entity with the given data.
 ```go
 result, err := client.Premium(nil).Create(map[string]any{
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 ### Common Methods

@@ -39,7 +39,7 @@ class Config {
     base: 'https://api.imgflip.com',
 
     auth: {
-      prefix: 'Bearer',
+      prefix: 'Basic',
     },
 
     headers: {

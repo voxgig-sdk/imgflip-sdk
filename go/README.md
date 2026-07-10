@@ -303,8 +303,8 @@ Create an instance: `free := client.Free(nil)`
 
 | Method | Description |
 | --- | --- |
-| `Create(data, ctrl)` | Create a new entity with the given data. |
 | `Load(match, ctrl)` | Load a single entity by match criteria. |
+| `Create(data, ctrl)` | Create a new entity with the given data. |
 
 #### Fields
 
@@ -328,6 +328,10 @@ fmt.Println(free) // the loaded record
 ```go
 result, err := client.Free(nil).Create(map[string]any{
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 
@@ -353,6 +357,10 @@ Create an instance: `premium := client.Premium(nil)`
 ```go
 result, err := client.Premium(nil).Create(map[string]any{
 }, nil)
+if err != nil {
+    panic(err)
+}
+fmt.Println(result)
 ```
 
 

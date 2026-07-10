@@ -16,7 +16,7 @@ def make_config():
         "options": {
             "base": "https://api.imgflip.com",
             "auth": {
-                "prefix": "Bearer",
+                "prefix": "Basic",
             },
             "headers": {
         "content-type": "application/json",
