@@ -1,4 +1,4 @@
--- ProjectName SDK exists test
+-- Imgflip SDK exists test
 
 local sdk = require("imgflip_sdk")
 
