@@ -38,9 +38,18 @@ network, and no credentials:
 ### TypeScript
 
 ```ts
-const client = ImgflipSDK.test()
+// The offline mock starts EMPTY — seed it with the records the test needs.
+// Shape: { entity: { <entity-name>: { <id>: <record> } } }
+const client = ImgflipSDK.test({
+  entity: {
+    free: {
+      test01: { id: 'test01' },
+    },
+  },
+})
 const free = await client.Free().load()
-// free is a bare Free populated with mock data
+// free is the Free entity, populated with mock data
+// — call free.data() for the record itself
 console.log(free)
 ```
 
@@ -155,7 +164,7 @@ The API exposes 2 entities:
 
 | Entity | Description | API path |
 | --- | --- | --- |
-| **Free** | The Free entity (create, load). | `/caption_image` |
+| **Free** | The Free entity (create, load). | `/get_memes` |
 | **Premium** | The Premium entity (create). | `/ai_meme` |
 
 The operations available across these entities are **load**, **create** — see each entity's
@@ -190,7 +199,7 @@ $client = new ImgflipSDK([
 ]);
 
 
-// Load a specific free (returns the bare record; throws on error)
+// Load a specific free (returns the ENTITY; call data_get() for the record; throws on error)
 $free = $client->Free()->load();
 print_r($free);
 ```
@@ -222,7 +231,7 @@ client = ImgflipSDK.new({
 })
 
 
-# Load a specific free (returns the bare record; raises on error)
+# Load a specific free (returns the ENTITY; call data_get for the record)
 free = client.Free.load()
 puts free
 ```
@@ -358,6 +367,9 @@ Pass custom features via the `extend` option at construction time.
 
 This SDK is generated from the upstream OpenAPI specification. It is an
 unofficial client and is not affiliated with the API provider.
+
+The OpenAPI spec(s) this SDK was generated from are kept in the
+[`.sdk/def/`](.sdk/def/) folder.
 
 - Upstream API: [https://imgflip.com/api](https://imgflip.com/api)
 

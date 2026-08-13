@@ -92,8 +92,7 @@ free = client.Free()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `dict` | No |  |
-| `success` | `bool` | No |  |
+| `memes` | `list` | No |  |
 
 ### Operations
 
@@ -153,8 +152,8 @@ premium = client.Premium()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `dict` | No |  |
-| `success` | `bool` | No |  |
+| `meme` | `Any` | No |  |
+| `memes` | `list` | No |  |
 
 ### Operations
 

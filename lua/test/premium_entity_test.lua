@@ -41,7 +41,7 @@ describe("PremiumEntity", function()
 
     local premium_ref01_data_result, err = premium_ref01_ent:create(premium_ref01_data, nil)
     assert.is_nil(err)
-    premium_ref01_data = helpers.to_map(premium_ref01_data_result)
+    premium_ref01_data = helpers.to_map(type(premium_ref01_data_result) == 'table' and premium_ref01_data_result.data_get and premium_ref01_data_result:data_get() or premium_ref01_data_result)
     assert.is_not_nil(premium_ref01_data)
 
   end)

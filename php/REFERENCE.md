@@ -97,8 +97,7 @@ $free = $client->Free();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `array` | No |  |
-| `success` | `bool` | No |  |
+| `memes` | `array` | No |  |
 
 ### Operations
 
@@ -159,8 +158,8 @@ $premium = $client->Premium();
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `array` | No |  |
-| `success` | `bool` | No |  |
+| `meme` | `mixed` | No |  |
+| `memes` | `array` | No |  |
 
 ### Operations
 

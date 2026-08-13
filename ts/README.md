@@ -51,10 +51,9 @@ try {
 ### 4. Create, update, and remove
 
 ```ts
-// Create — returns the created Free
+// Create — returns the created Free ENTITY (.data() for the record)
 const created = await client.Free().create({
-  data: {},
-  success: true,
+  memes: [],
 })
 
 ```
@@ -134,7 +133,8 @@ Create a mock client for unit testing — no server required:
 const client = ImgflipSDK.test()
 
 const free = await client.Free().load()
-// free is a bare entity populated with mock response data
+// free is the entity, populated with mock response data
+// — call free.data() for the record itself
 console.log(free)
 ```
 
@@ -303,8 +303,7 @@ The `prepare()` method returns:
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `success` |  |
+| `memes` |  |
 
 Operations: create, load.
 
@@ -314,8 +313,8 @@ API path: `/caption_image`
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `success` |  |
+| `meme` |  |
+| `memes` |  |
 
 Operations: create.
 
@@ -341,8 +340,7 @@ Create an instance: `const free = client.Free()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `Record<string, any>` |  |
-| `success` | `boolean` |  |
+| `memes` | `any[]` |  |
 
 #### Example: Load
 
@@ -372,8 +370,8 @@ Create an instance: `const premium = client.Premium()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `Record<string, any>` |  |
-| `success` | `boolean` |  |
+| `meme` | `any` |  |
+| `memes` | `any[]` |  |
 
 #### Example: Create
 

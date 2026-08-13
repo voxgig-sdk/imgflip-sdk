@@ -61,7 +61,7 @@ func main() {
     fmt.Println(free)
 
     // Create a free.
-    created, err := client.Free(nil).Create(map[string]any{"data": map[string]any{}, "success": true}, nil)
+    created, err := client.Free(nil).Create(map[string]any{"memes": []any{}}, nil)
     if err != nil {
         panic(err)
     }
@@ -272,8 +272,7 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 
 | Field | Description |
 | --- | --- |
-| `"data"` |  |
-| `"success"` |  |
+| `"memes"` |  |
 
 Operations: Create, Load.
 
@@ -283,8 +282,8 @@ API path: `/caption_image`
 
 | Field | Description |
 | --- | --- |
-| `"data"` |  |
-| `"success"` |  |
+| `"meme"` |  |
+| `"memes"` |  |
 
 Operations: Create.
 
@@ -310,8 +309,7 @@ Create an instance: `free := client.Free(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `map[string]any` |  |
-| `success` | `bool` |  |
+| `memes` | `[]any` |  |
 
 #### Example: Load
 
@@ -349,8 +347,8 @@ Create an instance: `premium := client.Premium(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `map[string]any` |  |
-| `success` | `bool` |  |
+| `meme` | `any` |  |
+| `memes` | `[]any` |  |
 
 #### Example: Create
 

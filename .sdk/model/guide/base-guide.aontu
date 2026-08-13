@@ -11,6 +11,7 @@ guide: {
     }
     path: "/get_memes": {
       op: load: method: *GET
+      op: load: transform: res: *("`body.data`")|top
     }
   }
 
@@ -26,9 +27,11 @@ guide: {
     }
     path: "/get_meme": {
       op: create: method: *POST
+      op: create: transform: res: *("`body.data`")|top
     }
     path: "/search_memes": {
       op: create: method: *POST
+      op: create: transform: res: *("`body.data`")|top
     }
   }
 

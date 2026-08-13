@@ -37,7 +37,7 @@ class PremiumEntityTest < Minitest::Test
       Vs.getpath(setup[:data], "new.premium"), "premium_ref01"))
 
     premium_ref01_data_result = premium_ref01_ent.create(premium_ref01_data, nil)
-    premium_ref01_data = Helpers.to_map(premium_ref01_data_result)
+    premium_ref01_data = Helpers.to_map(premium_ref01_data_result.respond_to?(:data_get) ? premium_ref01_data_result.data_get : premium_ref01_data_result)
     assert !premium_ref01_data.nil?
 
   end

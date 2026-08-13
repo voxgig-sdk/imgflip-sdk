@@ -129,8 +129,7 @@ const free = client.Free()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `Record<string, any>` | No |  |
-| `success` | `boolean` | No |  |
+| `memes` | `any[]` | No |  |
 
 ### Operations
 
@@ -189,8 +188,8 @@ const premium = client.Premium()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `Record<string, any>` | No |  |
-| `success` | `boolean` | No |  |
+| `meme` | `any` | No |  |
+| `memes` | `any[]` | No |  |
 
 ### Operations
 

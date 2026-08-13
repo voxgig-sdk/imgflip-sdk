@@ -6,9 +6,9 @@ import time
 
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from imgflip_sdk.utility.voxgig_struct import voxgig_struct as vs
 from imgflip_sdk import ImgflipSDK
-from core import helpers
+from imgflip_sdk.core import helpers
 
 _TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 from test import runner
@@ -44,7 +44,7 @@ class TestPremiumEntity:
         premium_ref01_data = helpers.to_map(vs.getprop(
             vs.getpath(setup["data"], "new.premium"), "premium_ref01"))
 
-        premium_ref01_data = helpers.to_map(premium_ref01_ent.create(premium_ref01_data, None))
+        premium_ref01_data = helpers.to_map(runner.entity_data(premium_ref01_ent.create(premium_ref01_data, None)))
         assert premium_ref01_data is not None
 
 

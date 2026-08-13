@@ -36,17 +36,10 @@ class ImgflipConfig
           'fields' => [
             [
               'active' => true,
-              'name' => 'data',
+              'name' => 'memes',
               'req' => false,
-              'type' => '`$OBJECT`',
+              'type' => '`$ARRAY`',
               'index$' => 0,
-            ],
-            [
-              'active' => true,
-              'name' => 'success',
-              'req' => false,
-              'type' => '`$BOOLEAN`',
-              'index$' => 1,
             ],
           ],
           'name' => 'free',
@@ -58,6 +51,7 @@ class ImgflipConfig
                 [
                   'active' => true,
                   'args' => [],
+                  'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/caption_image',
                   'parts' => [
@@ -92,6 +86,7 @@ class ImgflipConfig
                       ],
                     ],
                   ],
+                  'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/get_memes',
                   'parts' => [
@@ -104,7 +99,7 @@ class ImgflipConfig
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body`',
+                    'res' => '`body.data`',
                   ],
                   'index$' => 0,
                 ],
@@ -120,16 +115,16 @@ class ImgflipConfig
           'fields' => [
             [
               'active' => true,
-              'name' => 'data',
+              'name' => 'meme',
               'req' => false,
-              'type' => '`$OBJECT`',
+              'type' => '`$ANY`',
               'index$' => 0,
             ],
             [
               'active' => true,
-              'name' => 'success',
+              'name' => 'memes',
               'req' => false,
-              'type' => '`$BOOLEAN`',
+              'type' => '`$ARRAY`',
               'index$' => 1,
             ],
           ],
@@ -142,6 +137,7 @@ class ImgflipConfig
                 [
                   'active' => true,
                   'args' => [],
+                  'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/ai_meme',
                   'parts' => [
@@ -157,6 +153,7 @@ class ImgflipConfig
                 [
                   'active' => true,
                   'args' => [],
+                  'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/automeme',
                   'parts' => [
@@ -172,6 +169,7 @@ class ImgflipConfig
                 [
                   'active' => true,
                   'args' => [],
+                  'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/caption_gif',
                   'parts' => [
@@ -187,6 +185,7 @@ class ImgflipConfig
                 [
                   'active' => true,
                   'args' => [],
+                  'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/get_meme',
                   'parts' => [
@@ -195,13 +194,14 @@ class ImgflipConfig
                   'select' => [],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body`',
+                    'res' => '`body.data`',
                   ],
                   'index$' => 3,
                 ],
                 [
                   'active' => true,
                   'args' => [],
+                  'kind' => 'http',
                   'method' => 'POST',
                   'orig' => '/search_memes',
                   'parts' => [
@@ -210,7 +210,7 @@ class ImgflipConfig
                   'select' => [],
                   'transform' => [
                     'req' => '`reqdata`',
-                    'res' => '`body`',
+                    'res' => '`body.data`',
                   ],
                   'index$' => 4,
                 ],

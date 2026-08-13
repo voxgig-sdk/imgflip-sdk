@@ -2,18 +2,18 @@
   "existing": {
     "premium": {
       "PREMIUM00": {
-        "data": {},
-        "success": false,
+        "meme": "s14",
+        "memes": [],
         "id": "PREMIUM00"
       },
       "PREMIUM01": {
-        "data": {},
-        "success": false,
+        "meme": "s28",
+        "memes": [],
         "id": "PREMIUM01"
       },
       "PREMIUM02": {
-        "data": {},
-        "success": false,
+        "meme": "s3c",
+        "memes": [],
         "id": "PREMIUM02"
       }
     }
@@ -21,8 +21,8 @@
   "new": {
     "premium": {
       "premium_ref01": {
-        "data": {},
-        "success": false
+        "meme": "s50",
+        "memes": []
       }
     }
   }

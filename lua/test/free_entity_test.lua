@@ -41,7 +41,7 @@ describe("FreeEntity", function()
 
     local free_ref01_data_result, err = free_ref01_ent:create(free_ref01_data, nil)
     assert.is_nil(err)
-    free_ref01_data = helpers.to_map(free_ref01_data_result)
+    free_ref01_data = helpers.to_map(type(free_ref01_data_result) == 'table' and free_ref01_data_result.data_get and free_ref01_data_result:data_get() or free_ref01_data_result)
     assert.is_not_nil(free_ref01_data)
 
     -- LOAD

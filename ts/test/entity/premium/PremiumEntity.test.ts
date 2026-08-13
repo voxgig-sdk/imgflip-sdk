@@ -62,7 +62,7 @@ describe('PremiumEntity', async () => {
     const premium_ref01_ent = client.Premium()
     let premium_ref01_data = setup.data.new.premium['premium_ref01']
 
-    premium_ref01_data = await premium_ref01_ent.create(premium_ref01_data)
+    premium_ref01_data = (await premium_ref01_ent.create(premium_ref01_data)).data()
     assert(null != premium_ref01_data)
 
 

@@ -41,7 +41,7 @@ client = ImgflipSDK({
 
 ### 3. Load a free
 
-`load()` returns the bare record (a `dict`) and raises on error.
+`load()` returns the ENTITY — call data_get() for the record — and raises on error.
 
 ```python
 try:
@@ -54,8 +54,8 @@ except Exception as err:
 ### 4. Create, update, and remove
 
 ```python
-# Create — returns the bare created record (a dict)
-created = client.Free().create({"data": {}, "success": True})
+# Create — returns the ENTITY (call data_get() for the record)
+created = client.Free().create({"memes": []})
 
 ```
 
@@ -133,7 +133,8 @@ Create a mock client for unit testing — no server required:
 ```python
 client = ImgflipSDK.test()
 
-# Entity ops return the bare record and raise on error.
+# Entity ops return the ENTITY and raises on error;
+# call data_get() for the record.
 free = client.Free().load()
 # free contains the mock response record
 ```
@@ -233,7 +234,7 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the bare result data (a `dict` for single-entity
+Entity operations return the ENTITY (call data_get() for the record) (a `dict` for single-entity
 ops, a `list` for `list`) and raise on error. Wrap calls in
 `try`/`except` to handle failures.
 
@@ -255,8 +256,7 @@ On error, `ok` is `False` and `err` contains the error value.
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `success` |  |
+| `memes` |  |
 
 Operations: Create, Load.
 
@@ -266,8 +266,8 @@ API path: `/caption_image`
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `success` |  |
+| `meme` |  |
+| `memes` |  |
 
 Operations: Create.
 
@@ -293,8 +293,7 @@ Create an instance: `free = client.Free()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `dict` |  |
-| `success` | `bool` |  |
+| `memes` | `list` |  |
 
 #### Example: Load
 
@@ -324,8 +323,8 @@ Create an instance: `premium = client.Premium()`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `dict` |  |
-| `success` | `bool` |  |
+| `meme` | `Any` |  |
+| `memes` | `list` |  |
 
 #### Example: Create
 

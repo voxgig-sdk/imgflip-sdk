@@ -58,7 +58,7 @@ func TestFreeEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("create failed: %v", err)
 		}
-		freeRef01Data = core.ToMapAny(freeRef01DataResult)
+		freeRef01Data = core.ToMapAny(entityData(freeRef01DataResult))
 		if freeRef01Data == nil {
 			t.Fatal("expected create result to be a map")
 		}

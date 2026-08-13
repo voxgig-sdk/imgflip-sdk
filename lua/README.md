@@ -47,7 +47,7 @@ print(free)
 
 ```lua
 -- Create
-local created, err = client:Free():create({ data = {}, success = true })
+local created, err = client:Free():create({ memes = {} })
 if err then error(err) end
 
 ```
@@ -240,8 +240,7 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `success` |  |
+| `memes` |  |
 
 Operations: Create, Load.
 
@@ -251,8 +250,8 @@ API path: `/caption_image`
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `success` |  |
+| `meme` |  |
+| `memes` |  |
 
 Operations: Create.
 
@@ -278,8 +277,7 @@ Create an instance: `local free = client:Free(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `table` |  |
-| `success` | `boolean` |  |
+| `memes` | `table` |  |
 
 #### Example: Load
 
@@ -309,8 +307,8 @@ Create an instance: `local premium = client:Premium(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `table` |  |
-| `success` | `boolean` |  |
+| `meme` | `any` |  |
+| `memes` | `table` |  |
 
 #### Example: Create
 

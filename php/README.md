@@ -37,7 +37,7 @@ $client = new ImgflipSDK([
 
 ```php
 try {
-    // load() returns the bare Free record (throws on error).
+    // load() returns the ENTITY — call data_get() for the Free record (throws on error).
     $free = $client->Free()->load();
     print_r($free);
 } catch (\Throwable $err) {
@@ -48,8 +48,8 @@ try {
 ### 4. Create, update, and remove
 
 ```php
-// create() returns the bare created Free record.
-$created = $client->Free()->create(["data" => [], "success" => true]);
+// create() returns the ENTITY — call data_get() for the created Free record.
+$created = $client->Free()->create(["memes" => []]);
 
 ```
 
@@ -133,7 +133,8 @@ Create a mock client for unit testing — no server required:
 ```php
 $client = ImgflipSDK::test();
 
-// Entity ops return the bare mock record (throws on error).
+// Entity ops return the ENTITY (throws on error);
+// call data_get() for the mock record.
 $free = $client->Free()->load();
 print_r($free);
 ```
@@ -236,7 +237,7 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the bare result data (an `array` for single-entity
+Entity operations return the ENTITY (call data_get() for the record) (an `array` for single-entity
 ops, a `list` for `list`) and throw on error. Wrap calls in
 `try`/`catch` to handle failures.
 
@@ -258,8 +259,7 @@ On error, `ok` is `false` and `$err` contains the error value.
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `success` |  |
+| `memes` |  |
 
 Operations: Create, Load.
 
@@ -269,8 +269,8 @@ API path: `/caption_image`
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `success` |  |
+| `meme` |  |
+| `memes` |  |
 
 Operations: Create.
 
@@ -296,13 +296,12 @@ Create an instance: `$free = $client->Free();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `array` |  |
-| `success` | `bool` |  |
+| `memes` | `array` |  |
 
 #### Example: Load
 
 ```php
-// load() returns the bare Free record (throws on error).
+// load() returns the ENTITY — call data_get() for the Free record (throws on error).
 $free = $client->Free()->load();
 ```
 
@@ -328,8 +327,8 @@ Create an instance: `$premium = $client->Premium();`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `array` |  |
-| `success` | `bool` |  |
+| `meme` | `mixed` |  |
+| `memes` | `array` |  |
 
 #### Example: Create
 

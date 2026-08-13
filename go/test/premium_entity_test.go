@@ -58,7 +58,7 @@ func TestPremiumEntity(t *testing.T) {
 		if err != nil {
 			t.Fatalf("create failed: %v", err)
 		}
-		premiumRef01Data = core.ToMapAny(premiumRef01DataResult)
+		premiumRef01Data = core.ToMapAny(entityData(premiumRef01DataResult))
 		if premiumRef01Data == nil {
 			t.Fatal("expected create result to be a map")
 		}

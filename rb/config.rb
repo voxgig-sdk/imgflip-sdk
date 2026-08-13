@@ -31,17 +31,10 @@ module ImgflipConfig
           "fields" => [
             {
               "active" => true,
-              "name" => "data",
+              "name" => "memes",
               "req" => false,
-              "type" => "`$OBJECT`",
+              "type" => "`$ARRAY`",
               "index$" => 0,
-            },
-            {
-              "active" => true,
-              "name" => "success",
-              "req" => false,
-              "type" => "`$BOOLEAN`",
-              "index$" => 1,
             },
           ],
           "name" => "free",
@@ -53,6 +46,7 @@ module ImgflipConfig
                 {
                   "active" => true,
                   "args" => {},
+                  "kind" => "http",
                   "method" => "POST",
                   "orig" => "/caption_image",
                   "parts" => [
@@ -87,6 +81,7 @@ module ImgflipConfig
                       },
                     ],
                   },
+                  "kind" => "http",
                   "method" => "GET",
                   "orig" => "/get_memes",
                   "parts" => [
@@ -99,7 +94,7 @@ module ImgflipConfig
                   },
                   "transform" => {
                     "req" => "`reqdata`",
-                    "res" => "`body`",
+                    "res" => "`body.data`",
                   },
                   "index$" => 0,
                 },
@@ -115,16 +110,16 @@ module ImgflipConfig
           "fields" => [
             {
               "active" => true,
-              "name" => "data",
+              "name" => "meme",
               "req" => false,
-              "type" => "`$OBJECT`",
+              "type" => "`$ANY`",
               "index$" => 0,
             },
             {
               "active" => true,
-              "name" => "success",
+              "name" => "memes",
               "req" => false,
-              "type" => "`$BOOLEAN`",
+              "type" => "`$ARRAY`",
               "index$" => 1,
             },
           ],
@@ -137,6 +132,7 @@ module ImgflipConfig
                 {
                   "active" => true,
                   "args" => {},
+                  "kind" => "http",
                   "method" => "POST",
                   "orig" => "/ai_meme",
                   "parts" => [
@@ -152,6 +148,7 @@ module ImgflipConfig
                 {
                   "active" => true,
                   "args" => {},
+                  "kind" => "http",
                   "method" => "POST",
                   "orig" => "/automeme",
                   "parts" => [
@@ -167,6 +164,7 @@ module ImgflipConfig
                 {
                   "active" => true,
                   "args" => {},
+                  "kind" => "http",
                   "method" => "POST",
                   "orig" => "/caption_gif",
                   "parts" => [
@@ -182,6 +180,7 @@ module ImgflipConfig
                 {
                   "active" => true,
                   "args" => {},
+                  "kind" => "http",
                   "method" => "POST",
                   "orig" => "/get_meme",
                   "parts" => [
@@ -190,13 +189,14 @@ module ImgflipConfig
                   "select" => {},
                   "transform" => {
                     "req" => "`reqdata`",
-                    "res" => "`body`",
+                    "res" => "`body.data`",
                   },
                   "index$" => 3,
                 },
                 {
                   "active" => true,
                   "args" => {},
+                  "kind" => "http",
                   "method" => "POST",
                   "orig" => "/search_memes",
                   "parts" => [
@@ -205,7 +205,7 @@ module ImgflipConfig
                   "select" => {},
                   "transform" => {
                     "req" => "`reqdata`",
-                    "res" => "`body`",
+                    "res" => "`body.data`",
                   },
                   "index$" => 4,
                 },

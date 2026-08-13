@@ -36,7 +36,7 @@ client = ImgflipSDK.new({
 
 ```ruby
 begin
-  # load returns the bare Free record (raises on error).
+  # load returns the ENTITY — call data_get for the Free record (raises on error).
   free = client.Free.load()
   puts free
 rescue => err
@@ -47,8 +47,8 @@ end
 ### 4. Create, update, and remove
 
 ```ruby
-# create returns the bare created Free record.
-created = client.Free.create({ "data" => {}, "success" => true })
+# create returns the ENTITY — call data_get for the created Free record.
+created = client.Free.create({ "memes" => [] })
 
 ```
 
@@ -127,7 +127,8 @@ Create a mock client for unit testing — no server required:
 ```ruby
 client = ImgflipSDK.test
 
-# Entity ops return the bare mock record (raises on error).
+# Entity ops return the ENTITY (raises on error);
+# call data_get for the mock record.
 free = client.Free.load()
 puts free
 ```
@@ -248,8 +249,7 @@ returns a result `Hash` with these keys:
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `success` |  |
+| `memes` |  |
 
 Operations: Create, Load.
 
@@ -259,8 +259,8 @@ API path: `/caption_image`
 
 | Field | Description |
 | --- | --- |
-| `data` |  |
-| `success` |  |
+| `meme` |  |
+| `memes` |  |
 
 Operations: Create.
 
@@ -286,13 +286,12 @@ Create an instance: `free = client.Free`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `Hash` |  |
-| `success` | `Boolean` |  |
+| `memes` | `Array` |  |
 
 #### Example: Load
 
 ```ruby
-# load returns the bare Free record (raises on error).
+# load returns the ENTITY — call data_get for the Free record (raises on error).
 free = client.Free.load()
 ```
 
@@ -318,8 +317,8 @@ Create an instance: `premium = client.Premium`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `data` | `Hash` |  |
-| `success` | `Boolean` |  |
+| `meme` | `Object` |  |
+| `memes` | `Array` |  |
 
 #### Example: Create
 

@@ -37,7 +37,7 @@ class FreeEntityTest < Minitest::Test
       Vs.getpath(setup[:data], "new.free"), "free_ref01"))
 
     free_ref01_data_result = free_ref01_ent.create(free_ref01_data, nil)
-    free_ref01_data = Helpers.to_map(free_ref01_data_result)
+    free_ref01_data = Helpers.to_map(free_ref01_data_result.respond_to?(:data_get) ? free_ref01_data_result.data_get : free_ref01_data_result)
     assert !free_ref01_data.nil?
 
     # LOAD

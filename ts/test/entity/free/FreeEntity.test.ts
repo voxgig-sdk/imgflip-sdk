@@ -62,13 +62,13 @@ describe('FreeEntity', async () => {
     const free_ref01_ent = client.Free()
     let free_ref01_data = setup.data.new.free['free_ref01']
 
-    free_ref01_data = await free_ref01_ent.create(free_ref01_data)
+    free_ref01_data = (await free_ref01_ent.create(free_ref01_data)).data()
     assert(null != free_ref01_data)
 
 
     // LOAD
     const free_ref01_match_dt0: any = {}
-    const free_ref01_data_dt0 = await free_ref01_ent.load(free_ref01_match_dt0)
+    const free_ref01_data_dt0 = (await free_ref01_ent.load(free_ref01_match_dt0)).data()
     assert(null != free_ref01_data_dt0)
 
 

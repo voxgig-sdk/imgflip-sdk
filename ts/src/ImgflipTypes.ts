@@ -6,27 +6,24 @@
 // @voxgig/apidef VALID_CANON). Do not edit by hand.
 
 export interface Free {
-  data?: Record<string, any>
-  success?: boolean
+  memes?: any[]
 }
 
 export interface FreeLoadMatch {
-  data?: Record<string, any>
-  success?: boolean
+  memes?: any[]
 }
 
 export interface FreeCreateData {
-  data?: Record<string, any>
-  success?: boolean
+  memes?: any[]
 }
 
 export interface Premium {
-  data?: Record<string, any>
-  success?: boolean
+  meme?: any
+  memes?: any[]
 }
 
 export interface PremiumCreateData {
-  data?: Record<string, any>
-  success?: boolean
+  meme?: any
+  memes?: any[]
 }
 

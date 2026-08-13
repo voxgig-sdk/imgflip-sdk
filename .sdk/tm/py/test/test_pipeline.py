@@ -16,11 +16,11 @@
 import pytest
 
 from projectname_sdk import ImgflipSDK
-from core.error import ImgflipError
-from core.result import ImgflipResult
-from core.response import ImgflipResponse
-from core.spec import ImgflipSpec
-from feature.base_feature import ImgflipBaseFeature
+from projectname_sdk.core.error import ImgflipError
+from projectname_sdk.core.result import ImgflipResult
+from projectname_sdk.core.response import ImgflipResponse
+from projectname_sdk.core.spec import ImgflipSpec
+from projectname_sdk.feature.base_feature import ImgflipBaseFeature
 
 
 def _client():

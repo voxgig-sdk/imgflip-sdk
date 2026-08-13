@@ -21,7 +21,7 @@ class Config {
 
 
   main = {
-    name: 'ProjectName',
+    name: 'Imgflip',
   }
 
 
@@ -63,17 +63,10 @@ class Config {
       "fields": [
         {
           "active": true,
-          "name": "data",
+          "name": "memes",
           "req": false,
-          "type": "`$OBJECT`",
+          "type": "`$ARRAY`",
           "index$": 0
-        },
-        {
-          "active": true,
-          "name": "success",
-          "req": false,
-          "type": "`$BOOLEAN`",
-          "index$": 1
         }
       ],
       "name": "free",
@@ -85,6 +78,7 @@ class Config {
             {
               "active": true,
               "args": {},
+              "kind": "http",
               "method": "POST",
               "orig": "/caption_image",
               "parts": [
@@ -119,6 +113,7 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/get_memes",
               "parts": [
@@ -131,7 +126,7 @@ class Config {
               },
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.data`"
               },
               "index$": 0
             }
@@ -147,16 +142,16 @@ class Config {
       "fields": [
         {
           "active": true,
-          "name": "data",
+          "name": "meme",
           "req": false,
-          "type": "`$OBJECT`",
+          "type": "`$ANY`",
           "index$": 0
         },
         {
           "active": true,
-          "name": "success",
+          "name": "memes",
           "req": false,
-          "type": "`$BOOLEAN`",
+          "type": "`$ARRAY`",
           "index$": 1
         }
       ],
@@ -169,6 +164,7 @@ class Config {
             {
               "active": true,
               "args": {},
+              "kind": "http",
               "method": "POST",
               "orig": "/ai_meme",
               "parts": [
@@ -184,6 +180,7 @@ class Config {
             {
               "active": true,
               "args": {},
+              "kind": "http",
               "method": "POST",
               "orig": "/automeme",
               "parts": [
@@ -199,6 +196,7 @@ class Config {
             {
               "active": true,
               "args": {},
+              "kind": "http",
               "method": "POST",
               "orig": "/caption_gif",
               "parts": [
@@ -214,6 +212,7 @@ class Config {
             {
               "active": true,
               "args": {},
+              "kind": "http",
               "method": "POST",
               "orig": "/get_meme",
               "parts": [
@@ -222,13 +221,14 @@ class Config {
               "select": {},
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.data`"
               },
               "index$": 3
             },
             {
               "active": true,
               "args": {},
+              "kind": "http",
               "method": "POST",
               "orig": "/search_memes",
               "parts": [
@@ -237,7 +237,7 @@ class Config {
               "select": {},
               "transform": {
                 "req": "`reqdata`",
-                "res": "`body`"
+                "res": "`body.data`"
               },
               "index$": 4
             }

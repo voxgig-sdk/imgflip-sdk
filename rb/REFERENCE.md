@@ -98,8 +98,7 @@ free = client.Free
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `Hash` | No |  |
-| `success` | `Boolean` | No |  |
+| `memes` | `Array` | No |  |
 
 ### Operations
 
@@ -160,8 +159,8 @@ premium = client.Premium
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `Hash` | No |  |
-| `success` | `Boolean` | No |  |
+| `meme` | `Object` | No |  |
+| `memes` | `Array` | No |  |
 
 ### Operations
 

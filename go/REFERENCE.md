@@ -103,8 +103,7 @@ fmt.Println(free.GetName()) // "free"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `map[string]any` | No |  |
-| `success` | `bool` | No |  |
+| `memes` | `[]any` | No |  |
 
 ### Operations
 
@@ -168,8 +167,8 @@ fmt.Println(premium.GetName()) // "premium"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `map[string]any` | No |  |
-| `success` | `bool` | No |  |
+| `meme` | `any` | No |  |
+| `memes` | `[]any` | No |  |
 
 ### Operations
 

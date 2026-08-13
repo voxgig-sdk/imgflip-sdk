@@ -6,14 +6,9 @@ main: kit: entity: free: {
 
   fields: [
     {
-      name: "data"
+      name: "memes"
       req: false
-      type: "`$OBJECT`"
-    }
-    {
-      name: "success"
-      req: false
-      type: "`$BOOLEAN`"
+      type: "`$ARRAY`"
     }
   ]
 
@@ -63,7 +58,7 @@ main: kit: entity: free: {
           }
           transform: {
             req: "`reqdata`"
-            res: "`body`"
+            res: "`body.data`"
           }
         }
       ]

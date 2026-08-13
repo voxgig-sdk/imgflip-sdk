@@ -15,35 +15,32 @@ declare(strict_types=1);
 /** Free entity data model. */
 class Free
 {
-    public ?array $data = null;
-    public ?bool $success = null;
+    public ?array $memes = null;
 }
 
 /** Request payload for Free#load. */
 class FreeLoadMatch
 {
-    public ?array $data = null;
-    public ?bool $success = null;
+    public ?array $memes = null;
 }
 
 /** Request payload for Free#create. */
 class FreeCreateData
 {
-    public ?array $data = null;
-    public ?bool $success = null;
+    public ?array $memes = null;
 }
 
 /** Premium entity data model. */
 class Premium
 {
-    public ?array $data = null;
-    public ?bool $success = null;
+    public mixed $meme = null;
+    public ?array $memes = null;
 }
 
 /** Request payload for Premium#create. */
 class PremiumCreateData
 {
-    public ?array $data = null;
-    public ?bool $success = null;
+    public mixed $meme = null;
+    public ?array $memes = null;
 }
 

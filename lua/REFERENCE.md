@@ -95,8 +95,7 @@ local free = client:Free(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `table` | No |  |
-| `success` | `boolean` | No |  |
+| `memes` | `table` | No |  |
 
 ### Operations
 
@@ -157,8 +156,8 @@ local premium = client:Premium(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `data` | `table` | No |  |
-| `success` | `boolean` | No |  |
+| `meme` | `any` | No |  |
+| `memes` | `table` | No |  |
 
 ### Operations
 

@@ -24,6 +24,7 @@ require_relative 'prepare_method'
 require_relative 'prepare_params'
 require_relative 'prepare_path'
 require_relative 'prepare_query'
+require_relative 'graphql'
 require_relative 'result_basic'
 require_relative 'result_body'
 require_relative 'result_headers'
@@ -55,6 +56,8 @@ ImgflipUtility.registrar = ->(u) {
   u.prepare_params = ImgflipUtilities::PrepareParams
   u.prepare_path = ImgflipUtilities::PreparePath
   u.prepare_query = ImgflipUtilities::PrepareQuery
+  u.graphql_body = ImgflipUtilities::GraphqlBody
+  u.graphql_errors = ImgflipUtilities::GraphqlErrors
   u.result_basic = ImgflipUtilities::ResultBasic
   u.result_body = ImgflipUtilities::ResultBody
   u.result_headers = ImgflipUtilities::ResultHeaders

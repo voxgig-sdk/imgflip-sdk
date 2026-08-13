@@ -14,12 +14,12 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from config import make_config
-from features import _make_feature
-from core.control import ImgflipControl
-from core.error import ImgflipError
-from core.result import ImgflipResult
-from core.spec import ImgflipSpec
+from imgflip_sdk.config import make_config
+from imgflip_sdk.features import _make_feature
+from imgflip_sdk.core.control import ImgflipControl
+from imgflip_sdk.core.error import ImgflipError
+from imgflip_sdk.core.result import ImgflipResult
+from imgflip_sdk.core.spec import ImgflipSpec
 
 
 # True when this SDK was generated with the named feature.

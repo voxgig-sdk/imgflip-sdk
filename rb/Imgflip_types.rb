@@ -10,66 +10,54 @@
 
 # Free entity data model.
 #
-# @!attribute [rw] data
-#   @return [Hash, nil]
-#
-# @!attribute [rw] success
-#   @return [Boolean, nil]
+# @!attribute [rw] memes
+#   @return [Array, nil]
 Free = Struct.new(
-  :data,
-  :success,
+  :memes,
   keyword_init: true
 )
 
 # Request payload for Free#load.
 #
-# @!attribute [rw] data
-#   @return [Hash, nil]
-#
-# @!attribute [rw] success
-#   @return [Boolean, nil]
+# @!attribute [rw] memes
+#   @return [Array, nil]
 FreeLoadMatch = Struct.new(
-  :data,
-  :success,
+  :memes,
   keyword_init: true
 )
 
 # Request payload for Free#create.
 #
-# @!attribute [rw] data
-#   @return [Hash, nil]
-#
-# @!attribute [rw] success
-#   @return [Boolean, nil]
+# @!attribute [rw] memes
+#   @return [Array, nil]
 FreeCreateData = Struct.new(
-  :data,
-  :success,
+  :memes,
   keyword_init: true
 )
 
 # Premium entity data model.
 #
-# @!attribute [rw] data
-#   @return [Hash, nil]
+# @!attribute [rw] meme
+#   @return [Object, nil]
 #
-# @!attribute [rw] success
-#   @return [Boolean, nil]
+# @!attribute [rw] memes
+#   @return [Array, nil]
 Premium = Struct.new(
-  :data,
-  :success,
+  :meme,
+  :memes,
   keyword_init: true
 )
 
 # Request payload for Premium#create.
 #
-# @!attribute [rw] data
-#   @return [Hash, nil]
+# @!attribute [rw] meme
+#   @return [Object, nil]
 #
-# @!attribute [rw] success
-#   @return [Boolean, nil]
+# @!attribute [rw] memes
+#   @return [Array, nil]
 PremiumCreateData = Struct.new(
-  :data,
-  :success,
+  :meme,
+  :memes,
   keyword_init: true
 )
 

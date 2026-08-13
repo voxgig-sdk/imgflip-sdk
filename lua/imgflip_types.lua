@@ -7,24 +7,21 @@
 -- edit by hand.
 
 ---@class Free
----@field data? table
----@field success? boolean
+---@field memes? table
 
 ---@class FreeLoadMatch
----@field data? table
----@field success? boolean
+---@field memes? table
 
 ---@class FreeCreateData
----@field data? table
----@field success? boolean
+---@field memes? table
 
 ---@class Premium
----@field data? table
----@field success? boolean
+---@field meme? any
+---@field memes? table
 
 ---@class PremiumCreateData
----@field data? table
----@field success? boolean
+---@field meme? any
+---@field memes? table
 
 local M = {}
 

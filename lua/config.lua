@@ -30,17 +30,10 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "data",
+            ["name"] = "memes",
             ["req"] = false,
-            ["type"] = "`$OBJECT`",
+            ["type"] = "`$ARRAY`",
             ["index$"] = 0,
-          },
-          {
-            ["active"] = true,
-            ["name"] = "success",
-            ["req"] = false,
-            ["type"] = "`$BOOLEAN`",
-            ["index$"] = 1,
           },
         },
         ["name"] = "free",
@@ -52,6 +45,7 @@ local function make_config()
               {
                 ["active"] = true,
                 ["args"] = {},
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/caption_image",
                 ["parts"] = {
@@ -86,6 +80,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/get_memes",
                 ["parts"] = {
@@ -98,7 +93,7 @@ local function make_config()
                 },
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.data`",
                 },
                 ["index$"] = 0,
               },
@@ -114,16 +109,16 @@ local function make_config()
         ["fields"] = {
           {
             ["active"] = true,
-            ["name"] = "data",
+            ["name"] = "meme",
             ["req"] = false,
-            ["type"] = "`$OBJECT`",
+            ["type"] = "`$ANY`",
             ["index$"] = 0,
           },
           {
             ["active"] = true,
-            ["name"] = "success",
+            ["name"] = "memes",
             ["req"] = false,
-            ["type"] = "`$BOOLEAN`",
+            ["type"] = "`$ARRAY`",
             ["index$"] = 1,
           },
         },
@@ -136,6 +131,7 @@ local function make_config()
               {
                 ["active"] = true,
                 ["args"] = {},
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/ai_meme",
                 ["parts"] = {
@@ -151,6 +147,7 @@ local function make_config()
               {
                 ["active"] = true,
                 ["args"] = {},
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/automeme",
                 ["parts"] = {
@@ -166,6 +163,7 @@ local function make_config()
               {
                 ["active"] = true,
                 ["args"] = {},
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/caption_gif",
                 ["parts"] = {
@@ -181,6 +179,7 @@ local function make_config()
               {
                 ["active"] = true,
                 ["args"] = {},
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/get_meme",
                 ["parts"] = {
@@ -189,13 +188,14 @@ local function make_config()
                 ["select"] = {},
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.data`",
                 },
                 ["index$"] = 3,
               },
               {
                 ["active"] = true,
                 ["args"] = {},
+                ["kind"] = "http",
                 ["method"] = "POST",
                 ["orig"] = "/search_memes",
                 ["parts"] = {
@@ -204,7 +204,7 @@ local function make_config()
                 ["select"] = {},
                 ["transform"] = {
                   ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
+                  ["res"] = "`body.data`",
                 },
                 ["index$"] = 4,
               },

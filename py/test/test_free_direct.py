@@ -3,9 +3,9 @@
 import json
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from imgflip_sdk.utility.voxgig_struct import voxgig_struct as vs
 from imgflip_sdk import ImgflipSDK
-from core import helpers
+from imgflip_sdk.core import helpers
 from test import runner
 
 

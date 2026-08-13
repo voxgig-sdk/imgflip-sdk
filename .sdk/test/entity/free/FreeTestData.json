@@ -2,18 +2,15 @@
   "existing": {
     "free": {
       "FREE00": {
-        "data": {},
-        "success": false,
+        "memes": [],
         "id": "FREE00"
       },
       "FREE01": {
-        "data": {},
-        "success": false,
+        "memes": [],
         "id": "FREE01"
       },
       "FREE02": {
-        "data": {},
-        "success": false,
+        "memes": [],
         "id": "FREE02"
       }
     }
@@ -21,8 +18,7 @@
   "new": {
     "free": {
       "free_ref01": {
-        "data": {},
-        "success": false
+        "memes": []
       }
     }
   }
