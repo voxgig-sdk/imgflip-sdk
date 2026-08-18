@@ -28,7 +28,7 @@ class ImgflipSDK
     utility = ImgflipUtility.new
     @_utility = utility
 
-    config = ImgflipConfig.make_config
+    config = ImgflipConfig.shared_config
 
     @_rootctx = utility.make_context.call({
       "client" => self,

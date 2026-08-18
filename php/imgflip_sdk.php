@@ -40,7 +40,7 @@ class ImgflipSDK
         $utility = new ImgflipUtility();
         $this->_utility = $utility;
 
-        $config = ImgflipConfig::make_config();
+        $config = ImgflipConfig::shared_config();
 
         $this->_rootctx = ($utility->make_context)([
             "client" => $this,

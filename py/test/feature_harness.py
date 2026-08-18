@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from imgflip_sdk.config import make_config
+from imgflip_sdk.config import shared_config
 from imgflip_sdk.features import _make_feature
 from imgflip_sdk.core.control import ImgflipControl
 from imgflip_sdk.core.error import ImgflipError
@@ -24,7 +24,7 @@ from imgflip_sdk.core.spec import ImgflipSpec
 
 # True when this SDK was generated with the named feature.
 def has_feature(name):
-    feature = make_config().get("feature")
+    feature = shared_config().get("feature")
     return isinstance(feature, dict) and feature.get(name) is not None
 
 
