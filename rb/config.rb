@@ -19,6 +19,9 @@ module ImgflipConfig
     {
       "main" => {
         "name" => "Imgflip",
+        "slug" => "imgflip",
+        "version" => "0.0.1",
+        "target" => "rb",
       },
       "feature" => {
         "test" => {
