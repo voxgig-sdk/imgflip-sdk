@@ -28,6 +28,7 @@ module ImgflipConfig
           "options" => {
             "active" => false,
           },
+          "transport" => "base",
         },
       },
       "options" => {
