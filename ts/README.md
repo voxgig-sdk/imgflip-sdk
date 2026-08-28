@@ -32,6 +32,7 @@ import { ImgflipSDK } from '@voxgig-sdk/imgflip'
 
 const client = new ImgflipSDK({
   apikey: process.env.IMGFLIP_APIKEY,
+  secret: process.env.IMGFLIP_SECRET,
 })
 ```
 
@@ -141,7 +142,7 @@ console.log(free)
 You can also use the instance method:
 
 ```ts
-const client = new ImgflipSDK({ apikey: '...' })
+const client = new ImgflipSDK({ apikey: '...', secret: '...' })
 const testClient = client.tester()
 ```
 
@@ -178,6 +179,7 @@ const logger = {
 
 const client = new ImgflipSDK({
   apikey: '...',
+  secret: '...',
   extend: [logger],
 })
 ```
@@ -189,6 +191,7 @@ Create a `.env.local` file at the project root:
 ```
 IMGFLIP_TEST_LIVE=TRUE
 IMGFLIP_APIKEY=<your-key>
+IMGFLIP_SECRET=<your-secret>
 ```
 
 Then run:
@@ -207,6 +210,7 @@ cd ts && npm test
 ```ts
 new ImgflipSDK(options?: {
   apikey?: string
+  secret?: string
   base?: string
   prefix?: string
   suffix?: string
@@ -218,6 +222,7 @@ new ImgflipSDK(options?: {
 | Option | Type | Description |
 | --- | --- | --- |
 | `apikey` | `string` | API key for authentication. |
+| `secret` | `string` | API secret for authentication. |
 | `base` | `string` | Base URL of the API server. |
 | `prefix` | `string` | URL path prefix prepended to all requests. |
 | `suffix` | `string` | URL path suffix appended to all requests. |
@@ -379,6 +384,29 @@ Create an instance: `const premium = client.Premium()`
 const premium = await client.Premium().create({
 })
 ```
+
+## Features
+
+This SDK ships 1 optional features. Each is **inactive until you
+switch it on**, so an SDK you have not configured behaves exactly as if none of
+them existed — no retries, no cache, no logging, no measurable overhead.
+
+Activate a feature by name in the client options, alongside the options shown
+above:
+
+| Feature | What it does |
+|---|---|
+| [`test`](#test) | In-memory mock transport for testing without a live server |
+
+### test
+
+In-memory mock transport for testing without a live server.
+
+| Option | Default |
+|---|---|
+| `active` | `false` |
+
+Set `feature.test.active` to enable it, then override any of the options above.
 
 
 ## Advanced

@@ -21,7 +21,7 @@ class Free
 /** Request payload for Free#load. */
 class FreeLoadMatch
 {
-    public ?array $memes = null;
+    public ?string $type = null;
 }
 
 /** Request payload for Free#create. */

@@ -10,7 +10,7 @@
 ---@field memes? table
 
 ---@class FreeLoadMatch
----@field memes? table
+---@field type? string
 
 ---@class FreeCreateData
 ---@field memes? table

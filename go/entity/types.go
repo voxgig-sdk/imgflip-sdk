@@ -19,7 +19,7 @@ type Free struct {
 
 // FreeLoadMatch is the typed request payload for Free.LoadTyped.
 type FreeLoadMatch struct {
-	Memes *[]any `json:"memes,omitempty"`
+	Type *string `json:"type,omitempty"`
 }
 
 // FreeCreateData is the typed request payload for Free.CreateTyped.

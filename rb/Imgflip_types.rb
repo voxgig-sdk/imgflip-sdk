@@ -19,10 +19,10 @@ Free = Struct.new(
 
 # Request payload for Free#load.
 #
-# @!attribute [rw] memes
-#   @return [Array, nil]
+# @!attribute [rw] type
+#   @return [String, nil]
 FreeLoadMatch = Struct.new(
-  :memes,
+  :type,
   keyword_init: true
 )
 

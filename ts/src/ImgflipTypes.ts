@@ -10,7 +10,7 @@ export interface Free {
 }
 
 export interface FreeLoadMatch {
-  memes?: any[]
+  type?: string
 }
 
 export interface FreeCreateData {

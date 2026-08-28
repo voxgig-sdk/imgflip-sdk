@@ -21,7 +21,7 @@ class Free(TypedDict, total=False):
 
 
 class FreeLoadMatch(TypedDict, total=False):
-    memes: list
+    type: str
 
 
 class FreeCreateData(TypedDict, total=False):
