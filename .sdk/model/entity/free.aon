@@ -20,8 +20,10 @@ main: kit: entity: free: {
         {
           method: "POST"
           orig: "/caption_image"
-          parts: [
-            "caption_image"
+          segments: [
+            {
+              lit: "caption_image"
+            }
           ]
           transform: {
             req: "`reqdata`"
@@ -48,8 +50,10 @@ main: kit: entity: free: {
           }
           method: "GET"
           orig: "/get_memes"
-          parts: [
-            "get_memes"
+          segments: [
+            {
+              lit: "get_memes"
+            }
           ]
           select: {
             exist: [

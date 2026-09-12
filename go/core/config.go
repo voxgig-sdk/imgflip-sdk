@@ -55,13 +55,18 @@ func MakeConfig() map[string]any {
 								"kind": "http",
 								"method": "POST",
 								"orig": "/caption_image",
-								"parts": []any{
-									"caption_image",
+								"segments": []any{
+									map[string]any{
+										"lit": "caption_image",
+									},
 								},
 								"select": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
+								},
+								"parts": []any{
+									"caption_image",
 								},
 							},
 						},
@@ -85,8 +90,10 @@ func MakeConfig() map[string]any {
 								"kind": "http",
 								"method": "GET",
 								"orig": "/get_memes",
-								"parts": []any{
-									"get_memes",
+								"segments": []any{
+									map[string]any{
+										"lit": "get_memes",
+									},
 								},
 								"select": map[string]any{
 									"exist": []any{
@@ -96,6 +103,9 @@ func MakeConfig() map[string]any {
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body.data`",
+								},
+								"parts": []any{
+									"get_memes",
 								},
 							},
 						},
@@ -127,13 +137,18 @@ func MakeConfig() map[string]any {
 								"kind": "http",
 								"method": "POST",
 								"orig": "/ai_meme",
-								"parts": []any{
-									"ai_meme",
+								"segments": []any{
+									map[string]any{
+										"lit": "ai_meme",
+									},
 								},
 								"select": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
+								},
+								"parts": []any{
+									"ai_meme",
 								},
 							},
 							map[string]any{
@@ -141,13 +156,18 @@ func MakeConfig() map[string]any {
 								"kind": "http",
 								"method": "POST",
 								"orig": "/automeme",
-								"parts": []any{
-									"automeme",
+								"segments": []any{
+									map[string]any{
+										"lit": "automeme",
+									},
 								},
 								"select": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
+								},
+								"parts": []any{
+									"automeme",
 								},
 							},
 							map[string]any{
@@ -155,13 +175,18 @@ func MakeConfig() map[string]any {
 								"kind": "http",
 								"method": "POST",
 								"orig": "/caption_gif",
-								"parts": []any{
-									"caption_gif",
+								"segments": []any{
+									map[string]any{
+										"lit": "caption_gif",
+									},
 								},
 								"select": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
+								},
+								"parts": []any{
+									"caption_gif",
 								},
 							},
 							map[string]any{
@@ -169,13 +194,18 @@ func MakeConfig() map[string]any {
 								"kind": "http",
 								"method": "POST",
 								"orig": "/get_meme",
-								"parts": []any{
-									"get_meme",
+								"segments": []any{
+									map[string]any{
+										"lit": "get_meme",
+									},
 								},
 								"select": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body.data`",
+								},
+								"parts": []any{
+									"get_meme",
 								},
 							},
 							map[string]any{
@@ -183,13 +213,18 @@ func MakeConfig() map[string]any {
 								"kind": "http",
 								"method": "POST",
 								"orig": "/search_memes",
-								"parts": []any{
-									"search_memes",
+								"segments": []any{
+									map[string]any{
+										"lit": "search_memes",
+									},
 								},
 								"select": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body.data`",
+								},
+								"parts": []any{
+									"search_memes",
 								},
 							},
 						},
@@ -201,6 +236,17 @@ func MakeConfig() map[string]any {
 			},
 		},
 	}
+}
+
+// The plugin definitions the model selected per feature, as []any so a
+// feature package can consume them without core naming its types. Empty
+// when no active feature declares active plugin groups for this target.
+var featurePlugins = map[string][]any{
+}
+
+// FeaturePlugins is the definitions list for one feature's chain.
+func FeaturePlugins(name string) []any {
+	return featurePlugins[name]
 }
 
 var (

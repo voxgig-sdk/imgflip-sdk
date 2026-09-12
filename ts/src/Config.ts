@@ -10,6 +10,17 @@ const FEATURE_CLASS: Record<string, typeof BaseFeature> = {
 }
 
 
+// Per-feature plugin DEFINITIONS (voxgig/plugin `Definition` values), from
+// the model's active plugin groups. A feature that takes a `plugins` option
+// (secrets over sekreto) reads its own entry; a feature with no plugins has
+// none. Named imports above make each definition statically reachable, so
+// an SDK carries exactly the plugin modules its model selects — the same
+// leanness the old side-effect registry imports bought, without a registry.
+const FEATURE_PLUGINS: Record<string, any[]> = {
+  
+}
+
+
 class Config {
 
   makeFeature(this: any, fn: string) {
@@ -90,14 +101,19 @@ class Config {
               "kind": "http",
               "method": "POST",
               "orig": "/caption_image",
-              "parts": [
-                "caption_image"
+              "segments": [
+                {
+                  "lit": "caption_image"
+                }
               ],
               "select": {},
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              }
+              },
+              "parts": [
+                "caption_image"
+              ]
             }
           ]
         },
@@ -120,8 +136,10 @@ class Config {
               "kind": "http",
               "method": "GET",
               "orig": "/get_memes",
-              "parts": [
-                "get_memes"
+              "segments": [
+                {
+                  "lit": "get_memes"
+                }
               ],
               "select": {
                 "exist": [
@@ -131,7 +149,10 @@ class Config {
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body.data`"
-              }
+              },
+              "parts": [
+                "get_memes"
+              ]
             }
           ]
         }
@@ -162,70 +183,95 @@ class Config {
               "kind": "http",
               "method": "POST",
               "orig": "/ai_meme",
-              "parts": [
-                "ai_meme"
+              "segments": [
+                {
+                  "lit": "ai_meme"
+                }
               ],
               "select": {},
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              }
+              },
+              "parts": [
+                "ai_meme"
+              ]
             },
             {
               "args": {},
               "kind": "http",
               "method": "POST",
               "orig": "/automeme",
-              "parts": [
-                "automeme"
+              "segments": [
+                {
+                  "lit": "automeme"
+                }
               ],
               "select": {},
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              }
+              },
+              "parts": [
+                "automeme"
+              ]
             },
             {
               "args": {},
               "kind": "http",
               "method": "POST",
               "orig": "/caption_gif",
-              "parts": [
-                "caption_gif"
+              "segments": [
+                {
+                  "lit": "caption_gif"
+                }
               ],
               "select": {},
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
-              }
+              },
+              "parts": [
+                "caption_gif"
+              ]
             },
             {
               "args": {},
               "kind": "http",
               "method": "POST",
               "orig": "/get_meme",
-              "parts": [
-                "get_meme"
+              "segments": [
+                {
+                  "lit": "get_meme"
+                }
               ],
               "select": {},
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body.data`"
-              }
+              },
+              "parts": [
+                "get_meme"
+              ]
             },
             {
               "args": {},
               "kind": "http",
               "method": "POST",
               "orig": "/search_memes",
-              "parts": [
-                "search_memes"
+              "segments": [
+                {
+                  "lit": "search_memes"
+                }
               ],
               "select": {},
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body.data`"
-              }
+              },
+              "parts": [
+                "search_memes"
+              ]
             }
           ]
         }
@@ -241,6 +287,7 @@ class Config {
 const config = new Config()
 
 export {
-  config
+  config,
+  FEATURE_PLUGINS,
 }
 

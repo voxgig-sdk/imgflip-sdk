@@ -1,6 +1,14 @@
 # Imgflip SDK configuration
 
 
+# The sekreto plugin DEFINITIONS the model selected per feature, imported
+# above by name from the modules the catalogue's active `plugin.def`
+# entries declare. Handed to each feature (secrets builds its Sekreto
+# with them): a provider kind not listed here is unknown to that SDK.
+FEATURE_PLUGINS = {
+}
+
+
 _shared_config = None
 
 
@@ -72,14 +80,19 @@ def make_config():
                 "kind": "http",
                 "method": "POST",
                 "orig": "/caption_image",
-                "parts": [
-                  "caption_image",
+                "segments": [
+                  {
+                    "lit": "caption_image",
+                  },
                 ],
                 "select": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "caption_image",
+                ],
               },
             ],
           },
@@ -102,8 +115,10 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/get_memes",
-                "parts": [
-                  "get_memes",
+                "segments": [
+                  {
+                    "lit": "get_memes",
+                  },
                 ],
                 "select": {
                   "exist": [
@@ -114,6 +129,9 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body.data`",
                 },
+                "parts": [
+                  "get_memes",
+                ],
               },
             ],
           },
@@ -144,70 +162,95 @@ def make_config():
                 "kind": "http",
                 "method": "POST",
                 "orig": "/ai_meme",
-                "parts": [
-                  "ai_meme",
+                "segments": [
+                  {
+                    "lit": "ai_meme",
+                  },
                 ],
                 "select": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "ai_meme",
+                ],
               },
               {
                 "args": {},
                 "kind": "http",
                 "method": "POST",
                 "orig": "/automeme",
-                "parts": [
-                  "automeme",
+                "segments": [
+                  {
+                    "lit": "automeme",
+                  },
                 ],
                 "select": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "automeme",
+                ],
               },
               {
                 "args": {},
                 "kind": "http",
                 "method": "POST",
                 "orig": "/caption_gif",
-                "parts": [
-                  "caption_gif",
+                "segments": [
+                  {
+                    "lit": "caption_gif",
+                  },
                 ],
                 "select": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "caption_gif",
+                ],
               },
               {
                 "args": {},
                 "kind": "http",
                 "method": "POST",
                 "orig": "/get_meme",
-                "parts": [
-                  "get_meme",
+                "segments": [
+                  {
+                    "lit": "get_meme",
+                  },
                 ],
                 "select": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body.data`",
                 },
+                "parts": [
+                  "get_meme",
+                ],
               },
               {
                 "args": {},
                 "kind": "http",
                 "method": "POST",
                 "orig": "/search_memes",
-                "parts": [
-                  "search_memes",
+                "segments": [
+                  {
+                    "lit": "search_memes",
+                  },
                 ],
                 "select": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body.data`",
                 },
+                "parts": [
+                  "search_memes",
+                ],
               },
             ],
           },

@@ -52,7 +52,7 @@ func TestFreeEntity(t *testing.T) {
 		// CREATE
 		freeRef01Ent := client.Free(nil)
 		freeRef01Data := core.ToMapAny(vs.GetProp(
-			vs.GetPath([]any{"new", "free"}, setup.data), "free_ref01"))
+			vs.GetPath(setup.data, []any{"new", "free"}), "free_ref01"))
 
 		freeRef01DataResult, err := freeRef01Ent.Create(freeRef01Data, nil)
 		if err != nil {
@@ -100,7 +100,7 @@ func freeBasicSetup(extra map[string]any) *entityTestSetup {
 	client := sdk.TestSDK(options, extra)
 
 	// Generate idmap via transform, matching TS pattern.
-	idmap := vs.Transform(
+	idmap, _ := vs.Transform(
 		[]any{"free01", "free02", "free03"},
 		map[string]any{
 			"`$PACK`": []any{"", map[string]any{
@@ -120,7 +120,7 @@ func freeBasicSetup(extra map[string]any) *entityTestSetup {
 		"IMGFLIP_TEST_FREE_ENTID": idmap,
 		"IMGFLIP_TEST_LIVE":      "FALSE",
 		"IMGFLIP_TEST_EXPLAIN":   "FALSE",
-		"IMGFLIP_APIKEY":         "NONE",
+		"IMGFLIP_APIKEY":         "",
 	})
 
 	idmapResolved := core.ToMapAny(env["IMGFLIP_TEST_FREE_ENTID"])
@@ -129,11 +129,23 @@ func freeBasicSetup(extra map[string]any) *entityTestSetup {
 	}
 
 	if env["IMGFLIP_TEST_LIVE"] == "TRUE" {
+		// An empty map, not a nil one: Merge returns nil when its last entry
+		// is nil, and BasicSetup is normally called with no extras - so a
+		// bare nil silently discarded the apikey and server values below.
+		extraOpts := extra
+		if extraOpts == nil {
+			extraOpts = map[string]any{}
+		}
+
 		mergedOpts := vs.Merge([]any{
+			// liveClientOptions() FIRST, so the generated fields below win:
+			// sdk-test-control.json's test.client.options adds to the live
+			// client, it does not redirect it.
+			liveClientOptions(),
 			map[string]any{
 				"apikey": env["IMGFLIP_APIKEY"],
 			},
-			extra,
+			extraOpts,
 		})
 		client = sdk.NewImgflipSDK(core.ToMapAny(mergedOpts))
 	}
