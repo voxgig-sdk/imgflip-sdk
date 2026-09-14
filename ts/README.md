@@ -28,7 +28,7 @@ loading a specific record.
 ### 1. Create a client
 
 ```ts
-import { ImgflipSDK } from '@voxgig-sdk/imgflip'
+import { ImgflipSDK } from '@voxgig-sdk/imgflip-sdk'
 
 const client = new ImgflipSDK({
   apikey: process.env.IMGFLIP_APIKEY,
@@ -468,7 +468,7 @@ imgflip/
 Import the SDK from the package root:
 
 ```ts
-import { ImgflipSDK } from '@voxgig-sdk/imgflip'
+import { ImgflipSDK } from '@voxgig-sdk/imgflip-sdk'
 ```
 
 ### Entity state

@@ -1,5 +1,5 @@
 {
-  "name": "@voxgig-sdk/imgflip",
+  "name": "@voxgig-sdk/imgflip-sdk",
   "version": "0.0.1",
   "description": "Unofficial generated TypeScript SDK for the Imgflip public API. Not affiliated with or endorsed by the upstream API provider.",
   "keywords": [

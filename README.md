@@ -105,7 +105,7 @@ local result, err = client:Free():load()
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/imgflip` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/releases) |
+| TypeScript | `@voxgig-sdk/imgflip-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/releases) |
 | Python | `voxgig-sdk-imgflip` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/releases) |
 | PHP | `voxgig-sdk/imgflip` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/releases) |
 | Golang | `github.com/voxgig-sdk/imgflip-sdk/go` | `go get github.com/voxgig-sdk/imgflip-sdk/go@latest` |
@@ -119,7 +119,7 @@ local result, err = client:Free():load()
 ### TypeScript
 
 ```ts
-import { ImgflipSDK } from '@voxgig-sdk/imgflip'
+import { ImgflipSDK } from '@voxgig-sdk/imgflip-sdk'
 
 const client = new ImgflipSDK({
   apikey: process.env.IMGFLIP_APIKEY,
