@@ -4,7 +4,10 @@ declare(strict_types=1);
 // Imgflip SDK feature factory
 
 require_once __DIR__ . '/feature/BaseFeature.php';
+require_once __DIR__ . '/feature/RatelimitFeature.php';
+require_once __DIR__ . '/feature/RetryFeature.php';
 require_once __DIR__ . '/feature/TestFeature.php';
+require_once __DIR__ . '/feature/TimeoutFeature.php';
 
 
 class ImgflipFeatures
@@ -14,8 +17,14 @@ class ImgflipFeatures
         switch ($name) {
             case "base":
                 return new ImgflipBaseFeature();
+            case "ratelimit":
+                return new ImgflipRatelimitFeature();
+            case "retry":
+                return new ImgflipRetryFeature();
             case "test":
                 return new ImgflipTestFeature();
+            case "timeout":
+                return new ImgflipTimeoutFeature();
             default:
                 return new ImgflipBaseFeature();
         }
@@ -31,7 +40,10 @@ class ImgflipFeatures
     {
         switch ($name) {
             case "base":
+            case "ratelimit":
+            case "retry":
             case "test":
+            case "timeout":
                 return true;
             default:
                 return false;

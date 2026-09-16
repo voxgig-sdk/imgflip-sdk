@@ -25,5 +25,673 @@
         "memes": []
       }
     }
+  },
+  "requests": {
+    "POST /ai_meme": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "aiMeme",
+        "parameters": [],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "model": {
+                    "default": "openai",
+                    "description": "Which neural network model to use",
+                    "enum": [
+                      "openai",
+                      "classic"
+                    ],
+                    "type": "string"
+                  },
+                  "no_watermark": {
+                    "description": "Remove the imgflip.com watermark",
+                    "type": "boolean"
+                  },
+                  "password": {
+                    "description": "Password for the Imgflip account",
+                    "type": "string"
+                  },
+                  "prefix_text": {
+                    "description": "Max 64 chars. Initial prefix text to seed the meme text. For openai model, used as a general topic. For classic model, shorter is generally better",
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "template_id": {
+                    "description": "Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). If not specified, randomly selects from available templates",
+                    "type": "string"
+                  },
+                  "username": {
+                    "description": "Username of the Imgflip account with the Premium API subscription",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "data": {
+                          "properties": {
+                            "page_url": {
+                              "description": "URL to the meme page on Imgflip",
+                              "example": "https://imgflip.com/i/123abc",
+                              "format": "uri",
+                              "type": "string"
+                            },
+                            "template_id": {
+                              "description": "The template ID that was used",
+                              "example": 89370399,
+                              "type": "integer"
+                            },
+                            "texts": {
+                              "description": "The AI-generated text for each text box",
+                              "example": [
+                                "you can't get caught to sing a conversation",
+                                "if you don't have any money"
+                              ],
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
+                            "url": {
+                              "description": "URL to the generated meme image",
+                              "example": "https://i.imgflip.com/123abc.jpg",
+                              "format": "uri",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "success": {
+                          "example": true,
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "error_message": {
+                          "description": "A description of why the request failed",
+                          "example": "Some hopefully-useful statement about why it failed",
+                          "type": "string"
+                        },
+                        "success": {
+                          "example": false,
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Successful AI meme generation"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "securitySchemes": {
+          "basicAuth": {
+            "description": "Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers",
+            "scheme": "basic",
+            "type": "http"
+          }
+        },
+        "securitySource": "operation"
+      }
+    },
+    "POST /automeme": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "automeme",
+        "parameters": [],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "no_watermark": {
+                    "description": "Remove the imgflip.com watermark",
+                    "type": "boolean"
+                  },
+                  "password": {
+                    "description": "Password for the Imgflip account",
+                    "type": "string"
+                  },
+                  "text": {
+                    "description": "The text to display on the meme. This will also be used to determine which meme template to use",
+                    "type": "string"
+                  },
+                  "username": {
+                    "description": "Username of the Imgflip account with the Premium API subscription",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password",
+                  "text"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "data": {
+                          "properties": {
+                            "page_url": {
+                              "description": "URL to the meme page on Imgflip",
+                              "example": "https://imgflip.com/i/123abc",
+                              "format": "uri",
+                              "type": "string"
+                            },
+                            "url": {
+                              "description": "URL to the generated meme image",
+                              "example": "https://i.imgflip.com/123abc.jpg",
+                              "format": "uri",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "success": {
+                          "example": true,
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "error_message": {
+                          "description": "A description of why the request failed",
+                          "example": "Some hopefully-useful statement about why it failed",
+                          "type": "string"
+                        },
+                        "success": {
+                          "example": false,
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Successful or failed automeme creation"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "securitySchemes": {
+          "basicAuth": {
+            "description": "Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers",
+            "scheme": "basic",
+            "type": "http"
+          }
+        },
+        "securitySource": "operation"
+      }
+    },
+    "POST /caption_gif": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "captionGif",
+        "parameters": [],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "boxes": {
+                    "description": "Text boxes for the meme. Limited to 20 text boxes per image.",
+                    "items": {
+                      "properties": {
+                        "color": {
+                          "description": "Text color in hex format",
+                          "example": "#ffffff",
+                          "type": "string"
+                        },
+                        "height": {
+                          "description": "Height of the text box",
+                          "type": "integer"
+                        },
+                        "outline_color": {
+                          "description": "Text outline color in hex format",
+                          "example": "#000000",
+                          "type": "string"
+                        },
+                        "text": {
+                          "description": "The text to display in this box",
+                          "type": "string"
+                        },
+                        "width": {
+                          "description": "Width of the text box",
+                          "type": "integer"
+                        },
+                        "x": {
+                          "description": "X coordinate of the top left corner of the text box",
+                          "type": "integer"
+                        },
+                        "y": {
+                          "description": "Y coordinate of the top left corner of the text box",
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "text"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "font": {
+                    "default": "impact",
+                    "description": "The font family to use for the text",
+                    "type": "string"
+                  },
+                  "max_font_size": {
+                    "default": 50,
+                    "description": "Maximum font size in pixels",
+                    "type": "integer"
+                  },
+                  "no_watermark": {
+                    "description": "Remove the imgflip.com watermark",
+                    "type": "boolean"
+                  },
+                  "password": {
+                    "description": "Password for the Imgflip account",
+                    "type": "string"
+                  },
+                  "template_id": {
+                    "description": "An animated template ID",
+                    "type": "string"
+                  },
+                  "username": {
+                    "description": "Username of a valid Imgflip account",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "template_id",
+                  "username",
+                  "password",
+                  "boxes"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "data": {
+                          "properties": {
+                            "page_url": {
+                              "description": "URL to the meme page on Imgflip",
+                              "example": "https://imgflip.com/i/123abc",
+                              "format": "uri",
+                              "type": "string"
+                            },
+                            "url": {
+                              "description": "URL to the generated meme image",
+                              "example": "https://i.imgflip.com/123abc.jpg",
+                              "format": "uri",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "success": {
+                          "example": true,
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "properties": {
+                        "error_message": {
+                          "description": "A description of why the request failed",
+                          "example": "Some hopefully-useful statement about why it failed",
+                          "type": "string"
+                        },
+                        "success": {
+                          "example": false,
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Successful or failed GIF creation"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "securitySchemes": {
+          "basicAuth": {
+            "description": "Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers",
+            "scheme": "basic",
+            "type": "http"
+          }
+        },
+        "securitySource": "operation"
+      }
+    },
+    "POST /get_meme": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "getMeme",
+        "parameters": [],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "password": {
+                    "description": "Password for the Imgflip account",
+                    "type": "string"
+                  },
+                  "template_id": {
+                    "description": "The template ID to retrieve",
+                    "type": "string"
+                  },
+                  "username": {
+                    "description": "Username of a valid Imgflip account",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password",
+                  "template_id"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "meme": {
+                          "allOf": [
+                            {
+                              "properties": {
+                                "box_count": {
+                                  "description": "The default number of text boxes the meme uses",
+                                  "example": 2,
+                                  "type": "integer"
+                                },
+                                "height": {
+                                  "description": "Height of the image in pixels",
+                                  "example": 335,
+                                  "type": "integer"
+                                },
+                                "id": {
+                                  "description": "The unique template ID",
+                                  "example": "61579",
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "description": "The name of the meme template",
+                                  "example": "One Does Not Simply",
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "description": "URL to the meme template image",
+                                  "example": "https://i.imgflip.com/1bij.jpg",
+                                  "format": "uri",
+                                  "type": "string"
+                                },
+                                "width": {
+                                  "description": "Width of the image in pixels",
+                                  "example": 568,
+                                  "type": "integer"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            {
+                              "properties": {
+                                "captions": {
+                                  "description": "Estimated number of all-time captions of this meme, rounded",
+                                  "example": 1750,
+                                  "type": "integer"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          ]
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "success": {
+                      "example": true,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful response with meme details"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "securitySchemes": {
+          "basicAuth": {
+            "description": "Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers",
+            "scheme": "basic",
+            "type": "http"
+          }
+        },
+        "securitySource": "operation"
+      }
+    },
+    "POST /search_memes": {
+      "provenance": "operation-contract",
+      "contract": {
+        "operationId": "searchMemes",
+        "parameters": [],
+        "protocol": "http",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "include_nsfw": {
+                    "default": 0,
+                    "description": "Use include_nsfw=1 to allow not-safe-for-work memes to be returned",
+                    "enum": [
+                      0,
+                      1
+                    ],
+                    "type": "integer"
+                  },
+                  "password": {
+                    "description": "Password for the Imgflip account",
+                    "type": "string"
+                  },
+                  "query": {
+                    "description": "A text query to search the meme database for. Searches both names and alternate names",
+                    "type": "string"
+                  },
+                  "type": {
+                    "default": "image",
+                    "description": "The type of meme templates to search for. Valid values are 'gif' or 'image'. Specify one or multiple separated by commas",
+                    "type": "string"
+                  },
+                  "username": {
+                    "description": "Username of the Imgflip account with the Premium API subscription",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password",
+                  "query"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "memes": {
+                          "items": {
+                            "allOf": [
+                              {
+                                "properties": {
+                                  "box_count": {
+                                    "description": "The default number of text boxes the meme uses",
+                                    "example": 2,
+                                    "type": "integer"
+                                  },
+                                  "height": {
+                                    "description": "Height of the image in pixels",
+                                    "example": 335,
+                                    "type": "integer"
+                                  },
+                                  "id": {
+                                    "description": "The unique template ID",
+                                    "example": "61579",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "description": "The name of the meme template",
+                                    "example": "One Does Not Simply",
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "description": "URL to the meme template image",
+                                    "example": "https://i.imgflip.com/1bij.jpg",
+                                    "format": "uri",
+                                    "type": "string"
+                                  },
+                                  "width": {
+                                    "description": "Width of the image in pixels",
+                                    "example": 568,
+                                    "type": "integer"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              {
+                                "properties": {
+                                  "captions": {
+                                    "description": "Estimated number of all-time captions of this meme, rounded",
+                                    "example": 1750,
+                                    "type": "integer"
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "success": {
+                      "example": true,
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful search response"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "securitySchemes": {
+          "basicAuth": {
+            "description": "Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers",
+            "scheme": "basic",
+            "type": "http"
+          }
+        },
+        "securitySource": "operation"
+      }
+    }
   }
 }

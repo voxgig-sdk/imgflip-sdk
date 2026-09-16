@@ -24,7 +24,71 @@
         "repr": "auto"
       },
       "contributor": {},
-      "docs": {},
+      "doc": {
+        "active": true,
+        "assets": {
+          "path": ".sdk/doc/assets"
+        },
+        "brand": {
+          "label": "",
+          "notice": "",
+          "shortNotice": "",
+          "url": ""
+        },
+        "ci": {
+          "active": true,
+          "branch": "main"
+        },
+        "content": {
+          "path": ".sdk/doc/content"
+        },
+        "edition": {
+          "summary": {
+            "active": true,
+            "base": "node_modules/@voxgig/docgen/project/.sdk",
+            "brand": {},
+            "filter": {
+              "entities": [],
+              "features": [],
+              "targets": []
+            },
+            "kind": "summary",
+            "name": "summary",
+            "origname": "",
+            "output": {
+              "path": "SUMMARY.md"
+            },
+            "package": "@voxgig/docgen",
+            "site": {
+              "active": true
+            },
+            "style": {},
+            "title": ""
+          }
+        },
+        "qa": {
+          "vocabulary": []
+        },
+        "style": {
+          "color": {
+            "accent": "#00c6d8",
+            "background": "#f5f5f9",
+            "darkBackground": "#0f1117",
+            "darkText": "#e6edf3",
+            "primary": "#e70042",
+            "text": "#0a0a0a"
+          },
+          "font": "Nunito, system-ui, sans-serif",
+          "fontFile": "",
+          "headingFont": "Nunito, system-ui, sans-serif",
+          "headingFontFile": "",
+          "logo": "",
+          "mode": "light",
+          "mono": "ui-monospace, monospace",
+          "monoFile": ""
+        },
+        "target": {}
+      },
       "entity": {
         "free": {
           "active": true,
@@ -48,6 +112,12 @@
                 {
                   "active": true,
                   "args": {},
+                  "contract": {
+                    "id": "POST /caption_image",
+                    "json": "{\"operationId\":\"captionImage\",\"parameters\":[],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/x-www-form-urlencoded\":{\"schema\":{\"properties\":{\"boxes\":{\"description\":\"For creating memes with more than two text boxes or for further customization. Limited to 20 text boxes per image.\",\"items\":{\"properties\":{\"color\":{\"description\":\"Text color in hex format\",\"example\":\"#ffffff\",\"type\":\"string\"},\"height\":{\"description\":\"Height of the text box\",\"type\":\"integer\"},\"outline_color\":{\"description\":\"Text outline color in hex format\",\"example\":\"#000000\",\"type\":\"string\"},\"text\":{\"description\":\"The text to display in this box\",\"type\":\"string\"},\"width\":{\"description\":\"Width of the text box\",\"type\":\"integer\"},\"x\":{\"description\":\"X coordinate of the top left corner of the text box\",\"type\":\"integer\"},\"y\":{\"description\":\"Y coordinate of the top left corner of the text box\",\"type\":\"integer\"}},\"required\":[\"text\"],\"type\":\"object\"},\"type\":\"array\"},\"font\":{\"default\":\"impact\",\"description\":\"The font family to use for the text. Defaults to impact. Can also use arial or any of the 1,500+ Google Fonts\",\"type\":\"string\"},\"max_font_size\":{\"default\":50,\"description\":\"Maximum font size in pixels\",\"type\":\"integer\"},\"no_watermark\":{\"description\":\"[Premium only] Remove the imgflip.com watermark\",\"type\":\"boolean\"},\"password\":{\"description\":\"Password for the Imgflip account\",\"type\":\"string\"},\"template_id\":{\"description\":\"A template ID as returned by the get_memes response\",\"example\":\"61579\",\"type\":\"string\"},\"text0\":{\"description\":\"Top text for the meme (do not use if using boxes parameter)\",\"type\":\"string\"},\"text1\":{\"description\":\"Bottom text for the meme (do not use if using boxes parameter)\",\"type\":\"string\"},\"username\":{\"description\":\"Username of a valid Imgflip account\",\"type\":\"string\"}},\"required\":[\"template_id\",\"username\",\"password\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"oneOf\":[{\"properties\":{\"data\":{\"properties\":{\"page_url\":{\"description\":\"URL to the meme page on Imgflip\",\"example\":\"https://imgflip.com/i/123abc\",\"format\":\"uri\",\"type\":\"string\"},\"url\":{\"description\":\"URL to the generated meme image\",\"example\":\"https://i.imgflip.com/123abc.jpg\",\"format\":\"uri\",\"type\":\"string\"}},\"type\":\"object\"},\"success\":{\"example\":true,\"type\":\"boolean\"}},\"type\":\"object\"},{\"properties\":{\"error_message\":{\"description\":\"A description of why the request failed\",\"example\":\"Some hopefully-useful statement about why it failed\",\"type\":\"string\"},\"success\":{\"example\":false,\"type\":\"boolean\"}},\"type\":\"object\"}]}}},\"description\":\"Successful or failed meme creation\"}},\"securitySchemes\":{\"basicAuth\":{\"description\":\"Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers\",\"scheme\":\"basic\",\"type\":\"http\"}},\"securitySource\":\"unspecified\"}",
+                    "source": "openapi3",
+                    "version": 1
+                  },
                   "kind": "http",
                   "method": "POST",
                   "orig": "/caption_image",
@@ -82,6 +152,12 @@
                         "type": "`$STRING`"
                       }
                     ]
+                  },
+                  "contract": {
+                    "id": "GET /get_memes",
+                    "json": "{\"operationId\":\"getMemes\",\"parameters\":[{\"description\":\"The type of meme templates to return. Valid values are 'gif' or 'image'. Specify one or multiple separated by commas (e.g. type=gif,image).\",\"in\":\"query\",\"name\":\"type\",\"required\":false,\"schema\":{\"default\":\"image\",\"example\":\"image\",\"type\":\"string\"}}],\"protocol\":\"http\",\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"data\":{\"properties\":{\"memes\":{\"items\":{\"properties\":{\"box_count\":{\"description\":\"The default number of text boxes the meme uses\",\"example\":2,\"type\":\"integer\"},\"height\":{\"description\":\"Height of the image in pixels\",\"example\":335,\"type\":\"integer\"},\"id\":{\"description\":\"The unique template ID\",\"example\":\"61579\",\"type\":\"string\"},\"name\":{\"description\":\"The name of the meme template\",\"example\":\"One Does Not Simply\",\"type\":\"string\"},\"url\":{\"description\":\"URL to the meme template image\",\"example\":\"https://i.imgflip.com/1bij.jpg\",\"format\":\"uri\",\"type\":\"string\"},\"width\":{\"description\":\"Width of the image in pixels\",\"example\":568,\"type\":\"integer\"}},\"type\":\"object\"},\"type\":\"array\"}},\"type\":\"object\"},\"success\":{\"example\":true,\"type\":\"boolean\"}},\"type\":\"object\"}}},\"description\":\"Successful response with meme templates\"}},\"securitySchemes\":{\"basicAuth\":{\"description\":\"Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers\",\"scheme\":\"basic\",\"type\":\"http\"}},\"securitySource\":\"unspecified\"}",
+                    "source": "openapi3",
+                    "version": 1
                   },
                   "kind": "http",
                   "method": "GET",
@@ -136,6 +212,12 @@
                 {
                   "active": true,
                   "args": {},
+                  "contract": {
+                    "id": "POST /ai_meme",
+                    "json": "{\"operationId\":\"aiMeme\",\"parameters\":[],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/x-www-form-urlencoded\":{\"schema\":{\"properties\":{\"model\":{\"default\":\"openai\",\"description\":\"Which neural network model to use\",\"enum\":[\"openai\",\"classic\"],\"type\":\"string\"},\"no_watermark\":{\"description\":\"Remove the imgflip.com watermark\",\"type\":\"boolean\"},\"password\":{\"description\":\"Password for the Imgflip account\",\"type\":\"string\"},\"prefix_text\":{\"description\":\"Max 64 chars. Initial prefix text to seed the meme text. For openai model, used as a general topic. For classic model, shorter is generally better\",\"maxLength\":64,\"type\":\"string\"},\"template_id\":{\"description\":\"Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). If not specified, randomly selects from available templates\",\"type\":\"string\"},\"username\":{\"description\":\"Username of the Imgflip account with the Premium API subscription\",\"type\":\"string\"}},\"required\":[\"username\",\"password\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"oneOf\":[{\"properties\":{\"data\":{\"properties\":{\"page_url\":{\"description\":\"URL to the meme page on Imgflip\",\"example\":\"https://imgflip.com/i/123abc\",\"format\":\"uri\",\"type\":\"string\"},\"template_id\":{\"description\":\"The template ID that was used\",\"example\":89370399,\"type\":\"integer\"},\"texts\":{\"description\":\"The AI-generated text for each text box\",\"example\":[\"you can't get caught to sing a conversation\",\"if you don't have any money\"],\"items\":{\"type\":\"string\"},\"type\":\"array\"},\"url\":{\"description\":\"URL to the generated meme image\",\"example\":\"https://i.imgflip.com/123abc.jpg\",\"format\":\"uri\",\"type\":\"string\"}},\"type\":\"object\"},\"success\":{\"example\":true,\"type\":\"boolean\"}},\"type\":\"object\"},{\"properties\":{\"error_message\":{\"description\":\"A description of why the request failed\",\"example\":\"Some hopefully-useful statement about why it failed\",\"type\":\"string\"},\"success\":{\"example\":false,\"type\":\"boolean\"}},\"type\":\"object\"}]}}},\"description\":\"Successful AI meme generation\"}},\"security\":[{\"basicAuth\":[]}],\"securitySchemes\":{\"basicAuth\":{\"description\":\"Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers\",\"scheme\":\"basic\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
+                    "source": "openapi3",
+                    "version": 1
+                  },
                   "kind": "http",
                   "method": "POST",
                   "orig": "/ai_meme",
@@ -153,6 +235,12 @@
                 {
                   "active": true,
                   "args": {},
+                  "contract": {
+                    "id": "POST /automeme",
+                    "json": "{\"operationId\":\"automeme\",\"parameters\":[],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/x-www-form-urlencoded\":{\"schema\":{\"properties\":{\"no_watermark\":{\"description\":\"Remove the imgflip.com watermark\",\"type\":\"boolean\"},\"password\":{\"description\":\"Password for the Imgflip account\",\"type\":\"string\"},\"text\":{\"description\":\"The text to display on the meme. This will also be used to determine which meme template to use\",\"type\":\"string\"},\"username\":{\"description\":\"Username of the Imgflip account with the Premium API subscription\",\"type\":\"string\"}},\"required\":[\"username\",\"password\",\"text\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"oneOf\":[{\"properties\":{\"data\":{\"properties\":{\"page_url\":{\"description\":\"URL to the meme page on Imgflip\",\"example\":\"https://imgflip.com/i/123abc\",\"format\":\"uri\",\"type\":\"string\"},\"url\":{\"description\":\"URL to the generated meme image\",\"example\":\"https://i.imgflip.com/123abc.jpg\",\"format\":\"uri\",\"type\":\"string\"}},\"type\":\"object\"},\"success\":{\"example\":true,\"type\":\"boolean\"}},\"type\":\"object\"},{\"properties\":{\"error_message\":{\"description\":\"A description of why the request failed\",\"example\":\"Some hopefully-useful statement about why it failed\",\"type\":\"string\"},\"success\":{\"example\":false,\"type\":\"boolean\"}},\"type\":\"object\"}]}}},\"description\":\"Successful or failed automeme creation\"}},\"security\":[{\"basicAuth\":[]}],\"securitySchemes\":{\"basicAuth\":{\"description\":\"Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers\",\"scheme\":\"basic\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
+                    "source": "openapi3",
+                    "version": 1
+                  },
                   "kind": "http",
                   "method": "POST",
                   "orig": "/automeme",
@@ -170,6 +258,12 @@
                 {
                   "active": true,
                   "args": {},
+                  "contract": {
+                    "id": "POST /caption_gif",
+                    "json": "{\"operationId\":\"captionGif\",\"parameters\":[],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/x-www-form-urlencoded\":{\"schema\":{\"properties\":{\"boxes\":{\"description\":\"Text boxes for the meme. Limited to 20 text boxes per image.\",\"items\":{\"properties\":{\"color\":{\"description\":\"Text color in hex format\",\"example\":\"#ffffff\",\"type\":\"string\"},\"height\":{\"description\":\"Height of the text box\",\"type\":\"integer\"},\"outline_color\":{\"description\":\"Text outline color in hex format\",\"example\":\"#000000\",\"type\":\"string\"},\"text\":{\"description\":\"The text to display in this box\",\"type\":\"string\"},\"width\":{\"description\":\"Width of the text box\",\"type\":\"integer\"},\"x\":{\"description\":\"X coordinate of the top left corner of the text box\",\"type\":\"integer\"},\"y\":{\"description\":\"Y coordinate of the top left corner of the text box\",\"type\":\"integer\"}},\"required\":[\"text\"],\"type\":\"object\"},\"type\":\"array\"},\"font\":{\"default\":\"impact\",\"description\":\"The font family to use for the text\",\"type\":\"string\"},\"max_font_size\":{\"default\":50,\"description\":\"Maximum font size in pixels\",\"type\":\"integer\"},\"no_watermark\":{\"description\":\"Remove the imgflip.com watermark\",\"type\":\"boolean\"},\"password\":{\"description\":\"Password for the Imgflip account\",\"type\":\"string\"},\"template_id\":{\"description\":\"An animated template ID\",\"type\":\"string\"},\"username\":{\"description\":\"Username of a valid Imgflip account\",\"type\":\"string\"}},\"required\":[\"template_id\",\"username\",\"password\",\"boxes\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"oneOf\":[{\"properties\":{\"data\":{\"properties\":{\"page_url\":{\"description\":\"URL to the meme page on Imgflip\",\"example\":\"https://imgflip.com/i/123abc\",\"format\":\"uri\",\"type\":\"string\"},\"url\":{\"description\":\"URL to the generated meme image\",\"example\":\"https://i.imgflip.com/123abc.jpg\",\"format\":\"uri\",\"type\":\"string\"}},\"type\":\"object\"},\"success\":{\"example\":true,\"type\":\"boolean\"}},\"type\":\"object\"},{\"properties\":{\"error_message\":{\"description\":\"A description of why the request failed\",\"example\":\"Some hopefully-useful statement about why it failed\",\"type\":\"string\"},\"success\":{\"example\":false,\"type\":\"boolean\"}},\"type\":\"object\"}]}}},\"description\":\"Successful or failed GIF creation\"}},\"security\":[{\"basicAuth\":[]}],\"securitySchemes\":{\"basicAuth\":{\"description\":\"Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers\",\"scheme\":\"basic\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
+                    "source": "openapi3",
+                    "version": 1
+                  },
                   "kind": "http",
                   "method": "POST",
                   "orig": "/caption_gif",
@@ -187,6 +281,12 @@
                 {
                   "active": true,
                   "args": {},
+                  "contract": {
+                    "id": "POST /get_meme",
+                    "json": "{\"operationId\":\"getMeme\",\"parameters\":[],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/x-www-form-urlencoded\":{\"schema\":{\"properties\":{\"password\":{\"description\":\"Password for the Imgflip account\",\"type\":\"string\"},\"template_id\":{\"description\":\"The template ID to retrieve\",\"type\":\"string\"},\"username\":{\"description\":\"Username of a valid Imgflip account\",\"type\":\"string\"}},\"required\":[\"username\",\"password\",\"template_id\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"data\":{\"properties\":{\"meme\":{\"allOf\":[{\"properties\":{\"box_count\":{\"description\":\"The default number of text boxes the meme uses\",\"example\":2,\"type\":\"integer\"},\"height\":{\"description\":\"Height of the image in pixels\",\"example\":335,\"type\":\"integer\"},\"id\":{\"description\":\"The unique template ID\",\"example\":\"61579\",\"type\":\"string\"},\"name\":{\"description\":\"The name of the meme template\",\"example\":\"One Does Not Simply\",\"type\":\"string\"},\"url\":{\"description\":\"URL to the meme template image\",\"example\":\"https://i.imgflip.com/1bij.jpg\",\"format\":\"uri\",\"type\":\"string\"},\"width\":{\"description\":\"Width of the image in pixels\",\"example\":568,\"type\":\"integer\"}},\"type\":\"object\"},{\"properties\":{\"captions\":{\"description\":\"Estimated number of all-time captions of this meme, rounded\",\"example\":1750,\"type\":\"integer\"}},\"type\":\"object\"}]}},\"type\":\"object\"},\"success\":{\"example\":true,\"type\":\"boolean\"}},\"type\":\"object\"}}},\"description\":\"Successful response with meme details\"}},\"security\":[{\"basicAuth\":[]}],\"securitySchemes\":{\"basicAuth\":{\"description\":\"Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers\",\"scheme\":\"basic\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
+                    "source": "openapi3",
+                    "version": 1
+                  },
                   "kind": "http",
                   "method": "POST",
                   "orig": "/get_meme",
@@ -204,6 +304,12 @@
                 {
                   "active": true,
                   "args": {},
+                  "contract": {
+                    "id": "POST /search_memes",
+                    "json": "{\"operationId\":\"searchMemes\",\"parameters\":[],\"protocol\":\"http\",\"requestBody\":{\"content\":{\"application/x-www-form-urlencoded\":{\"schema\":{\"properties\":{\"include_nsfw\":{\"default\":0,\"description\":\"Use include_nsfw=1 to allow not-safe-for-work memes to be returned\",\"enum\":[0,1],\"type\":\"integer\"},\"password\":{\"description\":\"Password for the Imgflip account\",\"type\":\"string\"},\"query\":{\"description\":\"A text query to search the meme database for. Searches both names and alternate names\",\"type\":\"string\"},\"type\":{\"default\":\"image\",\"description\":\"The type of meme templates to search for. Valid values are 'gif' or 'image'. Specify one or multiple separated by commas\",\"type\":\"string\"},\"username\":{\"description\":\"Username of the Imgflip account with the Premium API subscription\",\"type\":\"string\"}},\"required\":[\"username\",\"password\",\"query\"],\"type\":\"object\"}}},\"required\":true},\"responses\":{\"200\":{\"content\":{\"application/json\":{\"schema\":{\"properties\":{\"data\":{\"properties\":{\"memes\":{\"items\":{\"allOf\":[{\"properties\":{\"box_count\":{\"description\":\"The default number of text boxes the meme uses\",\"example\":2,\"type\":\"integer\"},\"height\":{\"description\":\"Height of the image in pixels\",\"example\":335,\"type\":\"integer\"},\"id\":{\"description\":\"The unique template ID\",\"example\":\"61579\",\"type\":\"string\"},\"name\":{\"description\":\"The name of the meme template\",\"example\":\"One Does Not Simply\",\"type\":\"string\"},\"url\":{\"description\":\"URL to the meme template image\",\"example\":\"https://i.imgflip.com/1bij.jpg\",\"format\":\"uri\",\"type\":\"string\"},\"width\":{\"description\":\"Width of the image in pixels\",\"example\":568,\"type\":\"integer\"}},\"type\":\"object\"},{\"properties\":{\"captions\":{\"description\":\"Estimated number of all-time captions of this meme, rounded\",\"example\":1750,\"type\":\"integer\"}},\"type\":\"object\"}]},\"type\":\"array\"}},\"type\":\"object\"},\"success\":{\"example\":true,\"type\":\"boolean\"}},\"type\":\"object\"}}},\"description\":\"Successful search response\"}},\"security\":[{\"basicAuth\":[]}],\"securitySchemes\":{\"basicAuth\":{\"description\":\"Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers\",\"scheme\":\"basic\",\"type\":\"http\"}},\"securitySource\":\"operation\"}",
+                    "source": "openapi3",
+                    "version": 1
+                  },
                   "kind": "http",
                   "method": "POST",
                   "orig": "/search_memes",
@@ -227,13 +333,223 @@
         }
       },
       "feature": {
+        "ratelimit": {
+          "active": true,
+          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
+          "config": {
+            "options": {
+              "active": false,
+              "burst": 5,
+              "rate": 5
+            },
+            "optspec": {
+              "now": "`$FUNCTION`",
+              "sleep": "`$FUNCTION`"
+            },
+            "strict": false
+          },
+          "hook": {
+            "GetData": {
+              "active": false,
+              "await": false
+            },
+            "GetMatch": {
+              "active": false,
+              "await": false
+            },
+            "PostConstruct": {
+              "active": false,
+              "await": false
+            },
+            "PostConstructEntity": {
+              "active": false,
+              "await": false
+            },
+            "PostOperation": {
+              "active": false,
+              "await": false
+            },
+            "PreRequest": {
+              "active": false,
+              "await": false
+            },
+            "PreResponse": {
+              "active": false,
+              "await": false
+            },
+            "PreResult": {
+              "active": false,
+              "await": false
+            },
+            "PreSpec": {
+              "active": false,
+              "await": false
+            },
+            "PreTarget": {
+              "active": false,
+              "await": false
+            },
+            "SetData": {
+              "active": false,
+              "await": false
+            }
+          },
+          "name": "ratelimit",
+          "needs": {},
+          "origname": "",
+          "package": "@voxgig/sdkgen",
+          "plugin": {},
+          "spec": {},
+          "target": {
+            "go": {
+              "deps": {}
+            },
+            "go-cli": {
+              "deps": {}
+            },
+            "go-mcp": {
+              "deps": {}
+            },
+            "lua": {
+              "deps": {}
+            },
+            "php": {
+              "deps": {}
+            },
+            "py": {
+              "deps": {}
+            },
+            "rb": {
+              "deps": {}
+            },
+            "ts": {
+              "deps": {}
+            }
+          },
+          "title": "Client-side rate limiting via a token bucket",
+          "transport": "wrap",
+          "version": "0.0.1"
+        },
+        "retry": {
+          "active": true,
+          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
+          "config": {
+            "options": {
+              "active": false,
+              "factor": 2,
+              "maxDelay": 2000,
+              "minDelay": 50,
+              "retries": 2,
+              "statuses": [
+                408,
+                425,
+                429,
+                500,
+                502,
+                503,
+                504
+              ]
+            },
+            "optspec": {
+              "jitter": "`$BOOLEAN`",
+              "sleep": "`$FUNCTION`"
+            },
+            "strict": false
+          },
+          "hook": {
+            "GetData": {
+              "active": false,
+              "await": false
+            },
+            "GetMatch": {
+              "active": false,
+              "await": false
+            },
+            "PostConstruct": {
+              "active": false,
+              "await": false
+            },
+            "PostConstructEntity": {
+              "active": false,
+              "await": false
+            },
+            "PostOperation": {
+              "active": false,
+              "await": false
+            },
+            "PreRequest": {
+              "active": false,
+              "await": false
+            },
+            "PreResponse": {
+              "active": false,
+              "await": false
+            },
+            "PreResult": {
+              "active": false,
+              "await": false
+            },
+            "PreSpec": {
+              "active": false,
+              "await": false
+            },
+            "PreTarget": {
+              "active": false,
+              "await": false
+            },
+            "SetData": {
+              "active": false,
+              "await": false
+            }
+          },
+          "name": "retry",
+          "needs": {},
+          "origname": "",
+          "package": "@voxgig/sdkgen",
+          "plugin": {},
+          "spec": {},
+          "target": {
+            "go": {
+              "deps": {}
+            },
+            "go-cli": {
+              "deps": {}
+            },
+            "go-mcp": {
+              "deps": {}
+            },
+            "lua": {
+              "deps": {}
+            },
+            "php": {
+              "deps": {}
+            },
+            "py": {
+              "deps": {}
+            },
+            "rb": {
+              "deps": {}
+            },
+            "ts": {
+              "deps": {}
+            }
+          },
+          "title": "Automatic retry of transient failures with exponential backoff",
+          "transport": "wrap",
+          "version": "0.0.1"
+        },
         "test": {
           "active": true,
           "base": "node_modules/@voxgig/sdkgen/project/.sdk",
           "config": {
             "options": {
               "active": false
-            }
+            },
+            "optspec": {
+              "entity": "`$MAP`",
+              "net": "`$MAP`"
+            },
+            "strict": false
           },
           "hook": {
             "GetData": {
@@ -323,6 +639,102 @@
           },
           "title": "In-memory mock transport for testing without a live server",
           "transport": "base",
+          "version": "0.0.1"
+        },
+        "timeout": {
+          "active": true,
+          "base": "node_modules/@voxgig/sdkgen/project/.sdk",
+          "config": {
+            "options": {
+              "active": false,
+              "ms": 30000
+            },
+            "optspec": {
+              "clearTimer": "`$FUNCTION`",
+              "setTimer": "`$FUNCTION`"
+            },
+            "strict": false
+          },
+          "hook": {
+            "GetData": {
+              "active": false,
+              "await": false
+            },
+            "GetMatch": {
+              "active": false,
+              "await": false
+            },
+            "PostConstruct": {
+              "active": false,
+              "await": false
+            },
+            "PostConstructEntity": {
+              "active": false,
+              "await": false
+            },
+            "PostOperation": {
+              "active": false,
+              "await": false
+            },
+            "PreRequest": {
+              "active": false,
+              "await": false
+            },
+            "PreResponse": {
+              "active": false,
+              "await": false
+            },
+            "PreResult": {
+              "active": false,
+              "await": false
+            },
+            "PreSpec": {
+              "active": false,
+              "await": false
+            },
+            "PreTarget": {
+              "active": false,
+              "await": false
+            },
+            "SetData": {
+              "active": false,
+              "await": false
+            }
+          },
+          "name": "timeout",
+          "needs": {},
+          "origname": "",
+          "package": "@voxgig/sdkgen",
+          "plugin": {},
+          "spec": {},
+          "target": {
+            "go": {
+              "deps": {}
+            },
+            "go-cli": {
+              "deps": {}
+            },
+            "go-mcp": {
+              "deps": {}
+            },
+            "lua": {
+              "deps": {}
+            },
+            "php": {
+              "deps": {}
+            },
+            "py": {
+              "deps": {}
+            },
+            "rb": {
+              "deps": {}
+            },
+            "ts": {
+              "deps": {}
+            }
+          },
+          "title": "Per-request timeout with transport abort",
+          "transport": "wrap",
           "version": "0.0.1"
         }
       },
@@ -415,6 +827,48 @@
         "website": "https://imgflip.com"
       },
       "option": {},
+      "optspec": {
+        "allow": {
+          "method": "GET,PUT,POST,PATCH,DELETE,OPTIONS",
+          "op": "create,update,load,list,remove,command,direct,graphql"
+        },
+        "apikey": "",
+        "auth": {
+          "basic": false,
+          "prefix": ""
+        },
+        "base": "http://localhost:8000",
+        "clean": {
+          "keys": "key,token,id"
+        },
+        "entity": {
+          "`$CHILD`": {
+            "`$OPEN`": true,
+            "active": false,
+            "alias": {}
+          }
+        },
+        "extend": "`$ANY`",
+        "headers": {
+          "`$CHILD`": "`$STRING`"
+        },
+        "prefix": "",
+        "secret": "",
+        "server": {
+          "`$CHILD`": ""
+        },
+        "suffix": "",
+        "system": {
+          "fetch": "`$ANY`"
+        },
+        "test": {
+          "active": false,
+          "entity": {
+            "`$OPEN`": true
+          }
+        },
+        "utility": {}
+      },
       "repo": {
         "host": "github.com",
         "path": ""
@@ -969,6 +1423,7 @@
           },
           "package": "@voxgig/sdkgen",
           "provides": {
+            "schema": true,
             "sekreto": true
           },
           "publish": {
@@ -1010,7 +1465,7 @@
         "live": {
           "app": false,
           "base": "",
-          "strict": false
+          "strict": true
         }
       }
     }
