@@ -1,4 +1,4 @@
 # Flows
 
-@"BasicFreeFlow.aon"
-@"BasicPremiumFlow.aon"
+@"./BasicFreeFlow.aon"
+@"./BasicPremiumFlow.aon"

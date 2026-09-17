@@ -132,12 +132,12 @@ class Config {
 
     entity: {
       
-      free: {
-      },
-
-      premium: {
-      },
-
+        free: {
+        },
+  
+        premium: {
+        },
+  
     }
   }
 

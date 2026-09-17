@@ -105,12 +105,12 @@ local result, err = client:Free():load()
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/imgflip-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/releases) |
-| Python | `voxgig-sdk-imgflip` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/releases) |
-| PHP | `voxgig-sdk/imgflip` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/releases) |
+| TypeScript | `@voxgig-sdk/imgflip-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/tags) |
+| Python | `voxgig-sdk-imgflip` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/tags) |
+| PHP | `voxgig-sdk/imgflip` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/tags) |
 | Golang | `github.com/voxgig-sdk/imgflip-sdk/go` | `go get github.com/voxgig-sdk/imgflip-sdk/go@latest` |
-| Ruby | `voxgig-sdk-imgflip` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/releases) |
-| Lua | `voxgig-sdk-imgflip` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/releases) |
+| Ruby | `voxgig-sdk-imgflip` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/tags) |
+| Lua | `voxgig-sdk-imgflip` | publish pending — [install from git tag](https://github.com/voxgig-sdk/imgflip-sdk/tags) |
 | Go CLI | `github.com/voxgig-sdk/imgflip-sdk/go-cli` | `go install github.com/voxgig-sdk/imgflip-sdk/go-cli/cmd/imgflip@latest` |
 | Go MCP server | `github.com/voxgig-sdk/imgflip-sdk/go-mcp` | `go get github.com/voxgig-sdk/imgflip-sdk/go-mcp@latest` |
 

@@ -89,6 +89,7 @@ module ImgflipConfig
         "base" => "https://api.imgflip.com",
         "auth" => {
           "prefix" => "Basic",
+          "basic" => true,
         },
         "headers" => {
           "content-type" => "application/json",
