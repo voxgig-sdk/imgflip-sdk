@@ -11,19 +11,12 @@ const FEATURE_CLASS = {
     test: TestFeature_1.TestFeature,
     timeout: TimeoutFeature_1.TimeoutFeature,
 };
-// Per-feature plugin DEFINITIONS (voxgig/plugin `Definition` values), from
-// the model's active plugin groups. A feature that takes a `plugins` option
-// (secrets over sekreto) reads its own entry; a feature with no plugins has
-// none. Named imports above make each definition statically reachable, so
-// an SDK carries exactly the plugin modules its model selects — the same
-// leanness the old side-effect registry imports bought, without a registry.
 const FEATURE_PLUGINS = {};
 exports.FEATURE_PLUGINS = FEATURE_PLUGINS;
 class Config {
     makeFeature(fn) {
         const fc = FEATURE_CLASS[fn];
         const fi = new fc();
-        // TODO: errors etc
         return fi;
     }
     // False for a feature added at runtime via options.extend (station's
@@ -119,6 +112,7 @@ class Config {
             "fields": [
                 {
                     "name": "memes",
+                    "title": "Memes",
                     "type": "`$ARRAY`"
                 }
             ],
@@ -129,7 +123,6 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {},
                             "kind": "http",
                             "method": "POST",
                             "orig": "/caption_image",
@@ -138,14 +131,16 @@ class Config {
                                     "lit": "caption_image"
                                 }
                             ],
-                            "select": {},
+                            "parts": [
+                                "caption_image"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "caption_image"
-                            ]
+                            "args": {},
+                            "select": {}
                         }
                     ]
                 },
@@ -154,17 +149,6 @@ class Config {
                     "name": "load",
                     "points": [
                         {
-                            "args": {
-                                "query": [
-                                    {
-                                        "example": "image",
-                                        "kind": "query",
-                                        "name": "type",
-                                        "orig": "type",
-                                        "type": "`$STRING`"
-                                    }
-                                ]
-                            },
                             "kind": "http",
                             "method": "GET",
                             "orig": "/get_memes",
@@ -173,18 +157,30 @@ class Config {
                                     "lit": "get_memes"
                                 }
                             ],
-                            "select": {
-                                "exist": [
-                                    "type"
-                                ]
-                            },
+                            "parts": [
+                                "get_memes"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body.data`"
                             },
-                            "parts": [
-                                "get_memes"
-                            ]
+                            "args": {
+                                "query": [
+                                    {
+                                        "name": "type",
+                                        "orig": "type",
+                                        "type": "`$STRING`",
+                                        "kind": "query",
+                                        "example": "image"
+                                    }
+                                ]
+                            },
+                            "select": {
+                                "exist": [
+                                    "type"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -197,10 +193,12 @@ class Config {
             "fields": [
                 {
                     "name": "meme",
+                    "title": "Meme",
                     "type": "`$ANY`"
                 },
                 {
                     "name": "memes",
+                    "title": "Memes",
                     "type": "`$ARRAY`"
                 }
             ],
@@ -211,7 +209,6 @@ class Config {
                     "name": "create",
                     "points": [
                         {
-                            "args": {},
                             "kind": "http",
                             "method": "POST",
                             "orig": "/ai_meme",
@@ -220,17 +217,18 @@ class Config {
                                     "lit": "ai_meme"
                                 }
                             ],
-                            "select": {},
+                            "parts": [
+                                "ai_meme"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "ai_meme"
-                            ]
+                            "args": {},
+                            "select": {}
                         },
                         {
-                            "args": {},
                             "kind": "http",
                             "method": "POST",
                             "orig": "/automeme",
@@ -239,17 +237,18 @@ class Config {
                                     "lit": "automeme"
                                 }
                             ],
-                            "select": {},
+                            "parts": [
+                                "automeme"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "automeme"
-                            ]
+                            "args": {},
+                            "select": {}
                         },
                         {
-                            "args": {},
                             "kind": "http",
                             "method": "POST",
                             "orig": "/caption_gif",
@@ -258,17 +257,18 @@ class Config {
                                     "lit": "caption_gif"
                                 }
                             ],
-                            "select": {},
+                            "parts": [
+                                "caption_gif"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body`"
                             },
-                            "parts": [
-                                "caption_gif"
-                            ]
+                            "args": {},
+                            "select": {}
                         },
                         {
-                            "args": {},
                             "kind": "http",
                             "method": "POST",
                             "orig": "/get_meme",
@@ -277,17 +277,18 @@ class Config {
                                     "lit": "get_meme"
                                 }
                             ],
-                            "select": {},
+                            "parts": [
+                                "get_meme"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body.data`"
                             },
-                            "parts": [
-                                "get_meme"
-                            ]
+                            "args": {},
+                            "select": {}
                         },
                         {
-                            "args": {},
                             "kind": "http",
                             "method": "POST",
                             "orig": "/search_memes",
@@ -296,14 +297,16 @@ class Config {
                                     "lit": "search_memes"
                                 }
                             ],
-                            "select": {},
+                            "parts": [
+                                "search_memes"
+                            ],
+                            "rename": {},
                             "transform": {
                                 "req": "`reqdata`",
                                 "res": "`body.data`"
                             },
-                            "parts": [
-                                "search_memes"
-                            ]
+                            "args": {},
+                            "select": {}
                         }
                     ]
                 }

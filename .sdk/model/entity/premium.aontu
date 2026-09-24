@@ -1,0 +1,123 @@
+# Entity: premium
+
+main: kit: entity: premium: {
+
+  alias: field: {}
+
+  fields: {
+    meme: {
+      h: "Meme"
+      n: "meme"
+      r: false
+      t: "`$ANY`"
+    }
+    memes: {
+      h: "Memes"
+      n: "memes"
+      r: false
+      t: "`$ARRAY`"
+    }
+  }
+
+  name: "premium"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          co: {
+            id: "POST /ai_meme"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/ai_meme"
+          s: [
+            {
+              lit: "ai_meme"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "POST /automeme"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/automeme"
+          s: [
+            {
+              lit: "automeme"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "POST /caption_gif"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/caption_gif"
+          s: [
+            {
+              lit: "caption_gif"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "POST /get_meme"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/get_meme"
+          s: [
+            {
+              lit: "get_meme"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.data`"
+          }
+        }
+        {
+          co: {
+            id: "POST /search_memes"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/search_memes"
+          s: [
+            {
+              lit: "search_memes"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.data`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

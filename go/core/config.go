@@ -95,6 +95,7 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "memes",
+						"title": "Memes",
 						"type": "`$ARRAY`",
 					},
 				},
@@ -105,7 +106,6 @@ func MakeConfig() map[string]any {
 						"name": "create",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/caption_image",
@@ -114,14 +114,16 @@ func MakeConfig() map[string]any {
 										"lit": "caption_image",
 									},
 								},
-								"select": map[string]any{},
+								"parts": []any{
+									"caption_image",
+								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"caption_image",
-								},
+								"args": map[string]any{},
+								"select": map[string]any{},
 							},
 						},
 					},
@@ -130,17 +132,6 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"query": []any{
-										map[string]any{
-											"example": "image",
-											"kind": "query",
-											"name": "type",
-											"orig": "type",
-											"type": "`$STRING`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/get_memes",
@@ -149,17 +140,29 @@ func MakeConfig() map[string]any {
 										"lit": "get_memes",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"type",
-									},
+								"parts": []any{
+									"get_memes",
 								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body.data`",
 								},
-								"parts": []any{
-									"get_memes",
+								"args": map[string]any{
+									"query": []any{
+										map[string]any{
+											"name": "type",
+											"orig": "type",
+											"type": "`$STRING`",
+											"kind": "query",
+											"example": "image",
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"type",
+									},
 								},
 							},
 						},
@@ -173,10 +176,12 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "meme",
+						"title": "Meme",
 						"type": "`$ANY`",
 					},
 					map[string]any{
 						"name": "memes",
+						"title": "Memes",
 						"type": "`$ARRAY`",
 					},
 				},
@@ -187,7 +192,6 @@ func MakeConfig() map[string]any {
 						"name": "create",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/ai_meme",
@@ -196,17 +200,18 @@ func MakeConfig() map[string]any {
 										"lit": "ai_meme",
 									},
 								},
-								"select": map[string]any{},
+								"parts": []any{
+									"ai_meme",
+								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"ai_meme",
-								},
+								"args": map[string]any{},
+								"select": map[string]any{},
 							},
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/automeme",
@@ -215,17 +220,18 @@ func MakeConfig() map[string]any {
 										"lit": "automeme",
 									},
 								},
-								"select": map[string]any{},
+								"parts": []any{
+									"automeme",
+								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"automeme",
-								},
+								"args": map[string]any{},
+								"select": map[string]any{},
 							},
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/caption_gif",
@@ -234,17 +240,18 @@ func MakeConfig() map[string]any {
 										"lit": "caption_gif",
 									},
 								},
-								"select": map[string]any{},
+								"parts": []any{
+									"caption_gif",
+								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"caption_gif",
-								},
+								"args": map[string]any{},
+								"select": map[string]any{},
 							},
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/get_meme",
@@ -253,17 +260,18 @@ func MakeConfig() map[string]any {
 										"lit": "get_meme",
 									},
 								},
-								"select": map[string]any{},
+								"parts": []any{
+									"get_meme",
+								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body.data`",
 								},
-								"parts": []any{
-									"get_meme",
-								},
+								"args": map[string]any{},
+								"select": map[string]any{},
 							},
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "POST",
 								"orig": "/search_memes",
@@ -272,14 +280,16 @@ func MakeConfig() map[string]any {
 										"lit": "search_memes",
 									},
 								},
-								"select": map[string]any{},
+								"parts": []any{
+									"search_memes",
+								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body.data`",
 								},
-								"parts": []any{
-									"search_memes",
-								},
+								"args": map[string]any{},
+								"select": map[string]any{},
 							},
 						},
 					},

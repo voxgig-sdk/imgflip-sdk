@@ -104,6 +104,7 @@ module ImgflipConfig
           "fields" => [
             {
               "name" => "memes",
+              "title" => "Memes",
               "type" => "`$ARRAY`",
             },
           ],
@@ -114,7 +115,6 @@ module ImgflipConfig
               "name" => "create",
               "points" => [
                 {
-                  "args" => {},
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/caption_image",
@@ -123,14 +123,16 @@ module ImgflipConfig
                       "lit" => "caption_image",
                     },
                   ],
-                  "select" => {},
+                  "parts" => [
+                    "caption_image",
+                  ],
+                  "rename" => {},
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "parts" => [
-                    "caption_image",
-                  ],
+                  "args" => {},
+                  "select" => {},
                 },
               ],
             },
@@ -139,17 +141,6 @@ module ImgflipConfig
               "name" => "load",
               "points" => [
                 {
-                  "args" => {
-                    "query" => [
-                      {
-                        "example" => "image",
-                        "kind" => "query",
-                        "name" => "type",
-                        "orig" => "type",
-                        "type" => "`$STRING`",
-                      },
-                    ],
-                  },
                   "kind" => "http",
                   "method" => "GET",
                   "orig" => "/get_memes",
@@ -158,18 +149,30 @@ module ImgflipConfig
                       "lit" => "get_memes",
                     },
                   ],
+                  "parts" => [
+                    "get_memes",
+                  ],
+                  "rename" => {},
+                  "transform" => {
+                    "req" => "`reqdata`",
+                    "res" => "`body.data`",
+                  },
+                  "args" => {
+                    "query" => [
+                      {
+                        "name" => "type",
+                        "orig" => "type",
+                        "type" => "`$STRING`",
+                        "kind" => "query",
+                        "example" => "image",
+                      },
+                    ],
+                  },
                   "select" => {
                     "exist" => [
                       "type",
                     ],
                   },
-                  "transform" => {
-                    "req" => "`reqdata`",
-                    "res" => "`body.data`",
-                  },
-                  "parts" => [
-                    "get_memes",
-                  ],
                 },
               ],
             },
@@ -182,10 +185,12 @@ module ImgflipConfig
           "fields" => [
             {
               "name" => "meme",
+              "title" => "Meme",
               "type" => "`$ANY`",
             },
             {
               "name" => "memes",
+              "title" => "Memes",
               "type" => "`$ARRAY`",
             },
           ],
@@ -196,7 +201,6 @@ module ImgflipConfig
               "name" => "create",
               "points" => [
                 {
-                  "args" => {},
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/ai_meme",
@@ -205,17 +209,18 @@ module ImgflipConfig
                       "lit" => "ai_meme",
                     },
                   ],
-                  "select" => {},
+                  "parts" => [
+                    "ai_meme",
+                  ],
+                  "rename" => {},
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "parts" => [
-                    "ai_meme",
-                  ],
+                  "args" => {},
+                  "select" => {},
                 },
                 {
-                  "args" => {},
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/automeme",
@@ -224,17 +229,18 @@ module ImgflipConfig
                       "lit" => "automeme",
                     },
                   ],
-                  "select" => {},
+                  "parts" => [
+                    "automeme",
+                  ],
+                  "rename" => {},
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "parts" => [
-                    "automeme",
-                  ],
+                  "args" => {},
+                  "select" => {},
                 },
                 {
-                  "args" => {},
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/caption_gif",
@@ -243,17 +249,18 @@ module ImgflipConfig
                       "lit" => "caption_gif",
                     },
                   ],
-                  "select" => {},
+                  "parts" => [
+                    "caption_gif",
+                  ],
+                  "rename" => {},
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body`",
                   },
-                  "parts" => [
-                    "caption_gif",
-                  ],
+                  "args" => {},
+                  "select" => {},
                 },
                 {
-                  "args" => {},
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/get_meme",
@@ -262,17 +269,18 @@ module ImgflipConfig
                       "lit" => "get_meme",
                     },
                   ],
-                  "select" => {},
+                  "parts" => [
+                    "get_meme",
+                  ],
+                  "rename" => {},
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body.data`",
                   },
-                  "parts" => [
-                    "get_meme",
-                  ],
+                  "args" => {},
+                  "select" => {},
                 },
                 {
-                  "args" => {},
                   "kind" => "http",
                   "method" => "POST",
                   "orig" => "/search_memes",
@@ -281,14 +289,16 @@ module ImgflipConfig
                       "lit" => "search_memes",
                     },
                   ],
-                  "select" => {},
+                  "parts" => [
+                    "search_memes",
+                  ],
+                  "rename" => {},
                   "transform" => {
                     "req" => "`reqdata`",
                     "res" => "`body.data`",
                   },
-                  "parts" => [
-                    "search_memes",
-                  ],
+                  "args" => {},
+                  "select" => {},
                 },
               ],
             },

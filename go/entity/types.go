@@ -1,7 +1,7 @@
 // Typed models for the Imgflip SDK.
 //
-// GENERATED from the API model: main.kit.entity.<e>.fields[] and per-op
-// params (op.<name>.points[].args.params[]). Field/param types come from the
+// GENERATED from the API model: main.kit.entity.<e>.fields{} and per-op
+// params (op.<name>.points[].g.params[]). Field/param types come from the
 // canonical type sentinels via @voxgig/sdkgen canonToType (source of truth:
 // @voxgig/apidef VALID_CANON). Do not edit by hand.
 package entity
@@ -14,7 +14,6 @@ import (
 
 // Free is the typed data model for the free entity.
 type Free struct {
-	Memes *[]any `json:"memes,omitempty"`
 }
 
 // FreeLoadMatch is the typed request payload for Free.LoadTyped.
@@ -29,8 +28,6 @@ type FreeCreateData struct {
 
 // Premium is the typed data model for the premium entity.
 type Premium struct {
-	Meme *any `json:"meme,omitempty"`
-	Memes *[]any `json:"memes,omitempty"`
 }
 
 // PremiumCreateData is the typed request payload for Premium.CreateTyped.

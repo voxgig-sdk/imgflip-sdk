@@ -1,0 +1,41 @@
+# Generated from the API definition and overwritten on every build: do not
+# edit this file. Put customizations in the guide entry file, which includes
+# this one and overrides its defaults:
+#   guide.aontu
+
+guide: {
+  metrics: count: entity: 2
+  metrics: count: path: 7
+  metrics: count: method: 7
+
+  entity: free: {
+    path: "/caption_image": {
+      op: create: method: *POST
+    }
+    path: "/get_memes": {
+      op: load: method: *GET
+      op: load: transform: res: *("`body.data`")|top
+    }
+  }
+
+  entity: premium: {
+    path: "/ai_meme": {
+      op: create: method: *POST
+    }
+    path: "/automeme": {
+      op: create: method: *POST
+    }
+    path: "/caption_gif": {
+      op: create: method: *POST
+    }
+    path: "/get_meme": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.data`")|top
+    }
+    path: "/search_memes": {
+      op: create: method: *POST
+      op: create: transform: res: *("`body.data`")|top
+    }
+  }
+
+}

@@ -1,0 +1,85 @@
+# Entity: free
+
+main: kit: entity: free: {
+
+  alias: field: {}
+
+  fields: {
+    memes: {
+      h: "Memes"
+      n: "memes"
+      r: false
+      t: "`$ARRAY`"
+    }
+  }
+
+  name: "free"
+  op: {
+    create: {
+      name: "create"
+      points: [
+        {
+          co: {
+            id: "POST /caption_image"
+            source: "openapi3"
+            version: 2
+          }
+          m: "POST"
+          o: "/caption_image"
+          s: [
+            {
+              lit: "caption_image"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /get_memes"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            query: [
+              {
+                ex: "image"
+                k: "query"
+                n: "type"
+                or: "type"
+                r: false
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/get_memes"
+          q: {
+            exist: [
+              "type"
+            ]
+          }
+          s: [
+            {
+              lit: "get_memes"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.data`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

@@ -120,6 +120,7 @@ def make_config():
         "fields": [
           {
             "name": "memes",
+            "title": "Memes",
             "type": "`$ARRAY`",
           },
         ],
@@ -130,7 +131,6 @@ def make_config():
             "name": "create",
             "points": [
               {
-                "args": {},
                 "kind": "http",
                 "method": "POST",
                 "orig": "/caption_image",
@@ -139,14 +139,16 @@ def make_config():
                     "lit": "caption_image",
                   },
                 ],
-                "select": {},
+                "parts": [
+                  "caption_image",
+                ],
+                "rename": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
-                "parts": [
-                  "caption_image",
-                ],
+                "args": {},
+                "select": {},
               },
             ],
           },
@@ -155,17 +157,6 @@ def make_config():
             "name": "load",
             "points": [
               {
-                "args": {
-                  "query": [
-                    {
-                      "example": "image",
-                      "kind": "query",
-                      "name": "type",
-                      "orig": "type",
-                      "type": "`$STRING`",
-                    },
-                  ],
-                },
                 "kind": "http",
                 "method": "GET",
                 "orig": "/get_memes",
@@ -174,18 +165,30 @@ def make_config():
                     "lit": "get_memes",
                   },
                 ],
+                "parts": [
+                  "get_memes",
+                ],
+                "rename": {},
+                "transform": {
+                  "req": "`reqdata`",
+                  "res": "`body.data`",
+                },
+                "args": {
+                  "query": [
+                    {
+                      "name": "type",
+                      "orig": "type",
+                      "type": "`$STRING`",
+                      "kind": "query",
+                      "example": "image",
+                    },
+                  ],
+                },
                 "select": {
                   "exist": [
                     "type",
                   ],
                 },
-                "transform": {
-                  "req": "`reqdata`",
-                  "res": "`body.data`",
-                },
-                "parts": [
-                  "get_memes",
-                ],
               },
             ],
           },
@@ -198,10 +201,12 @@ def make_config():
         "fields": [
           {
             "name": "meme",
+            "title": "Meme",
             "type": "`$ANY`",
           },
           {
             "name": "memes",
+            "title": "Memes",
             "type": "`$ARRAY`",
           },
         ],
@@ -212,7 +217,6 @@ def make_config():
             "name": "create",
             "points": [
               {
-                "args": {},
                 "kind": "http",
                 "method": "POST",
                 "orig": "/ai_meme",
@@ -221,17 +225,18 @@ def make_config():
                     "lit": "ai_meme",
                   },
                 ],
-                "select": {},
+                "parts": [
+                  "ai_meme",
+                ],
+                "rename": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
-                "parts": [
-                  "ai_meme",
-                ],
+                "args": {},
+                "select": {},
               },
               {
-                "args": {},
                 "kind": "http",
                 "method": "POST",
                 "orig": "/automeme",
@@ -240,17 +245,18 @@ def make_config():
                     "lit": "automeme",
                   },
                 ],
-                "select": {},
+                "parts": [
+                  "automeme",
+                ],
+                "rename": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
-                "parts": [
-                  "automeme",
-                ],
+                "args": {},
+                "select": {},
               },
               {
-                "args": {},
                 "kind": "http",
                 "method": "POST",
                 "orig": "/caption_gif",
@@ -259,17 +265,18 @@ def make_config():
                     "lit": "caption_gif",
                   },
                 ],
-                "select": {},
+                "parts": [
+                  "caption_gif",
+                ],
+                "rename": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
-                "parts": [
-                  "caption_gif",
-                ],
+                "args": {},
+                "select": {},
               },
               {
-                "args": {},
                 "kind": "http",
                 "method": "POST",
                 "orig": "/get_meme",
@@ -278,17 +285,18 @@ def make_config():
                     "lit": "get_meme",
                   },
                 ],
-                "select": {},
+                "parts": [
+                  "get_meme",
+                ],
+                "rename": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body.data`",
                 },
-                "parts": [
-                  "get_meme",
-                ],
+                "args": {},
+                "select": {},
               },
               {
-                "args": {},
                 "kind": "http",
                 "method": "POST",
                 "orig": "/search_memes",
@@ -297,14 +305,16 @@ def make_config():
                     "lit": "search_memes",
                   },
                 ],
-                "select": {},
+                "parts": [
+                  "search_memes",
+                ],
+                "rename": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body.data`",
                 },
-                "parts": [
-                  "search_memes",
-                ],
+                "args": {},
+                "select": {},
               },
             ],
           },
