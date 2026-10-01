@@ -37,6 +37,8 @@ require_once __DIR__ . '/TransformResponse.php';
 
 ImgflipUtility::setRegistrar(function (ImgflipUtility $u): void {
     $u->clean = [ImgflipClean::class, 'call'];
+    $u->clean_add = [ImgflipClean::class, 'add'];
+    $u->clean_explain = [ImgflipDone::class, 'clean_explain'];
     $u->done = [ImgflipDone::class, 'call'];
     $u->make_error = [ImgflipMakeError::class, 'call'];
     $u->feature_add = [ImgflipFeatureAdd::class, 'call'];

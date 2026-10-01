@@ -33,6 +33,8 @@ require_relative 'transform_response'
 
 ImgflipUtility.registrar = ->(u) {
   u.clean = ImgflipUtilities::Clean
+  u.clean_add = ImgflipUtilities::CleanAdd
+  u.clean_explain = ImgflipUtilities::CleanExplain
   u.done = ImgflipUtilities::Done
   u.make_error = ImgflipUtilities::MakeError
   u.feature_add = ImgflipUtilities::FeatureAdd
