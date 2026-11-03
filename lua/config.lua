@@ -67,6 +67,7 @@ local function make_config()
         },
         ["optspec"] = {
           ["clearTimer"] = "`$FUNCTION`",
+          ["now"] = "`$FUNCTION`",
           ["setTimer"] = "`$FUNCTION`",
         },
         ["strict"] = false,
@@ -77,6 +78,7 @@ local function make_config()
       base = "https://api.imgflip.com",
       auth = {
         prefix = "Basic",
+        basic = true,
       },
       headers = {
         ["content-type"] = "application/json",
@@ -90,9 +92,66 @@ local function make_config()
       ["free"] = {
         ["fields"] = {
           {
+            ["name"] = "boxes",
+            ["title"] = "Boxes",
+            ["type"] = "`$ARRAY`",
+            ["short"] = "For creating memes with more than two text boxes or for further customization.",
+          },
+          {
+            ["name"] = "font",
+            ["title"] = "Font",
+            ["type"] = "`$STRING`",
+            ["short"] = "The font family to use for the text.",
+          },
+          {
+            ["name"] = "max_font_size",
+            ["title"] = "Max Font Size",
+            ["type"] = "`$INTEGER`",
+            ["short"] = "Maximum font size in pixels",
+          },
+          {
             ["name"] = "memes",
             ["title"] = "Memes",
             ["type"] = "`$ARRAY`",
+          },
+          {
+            ["name"] = "no_watermark",
+            ["title"] = "No Watermark",
+            ["type"] = "`$BOOLEAN`",
+            ["short"] = "[Premium only] Remove the imgflip.com watermark",
+          },
+          {
+            ["name"] = "password",
+            ["title"] = "Password",
+            ["type"] = "`$STRING`",
+            ["req"] = true,
+            ["short"] = "Password for the Imgflip account",
+          },
+          {
+            ["name"] = "template_id",
+            ["title"] = "Template Id",
+            ["type"] = "`$STRING`",
+            ["req"] = true,
+            ["short"] = "A template ID as returned by the get_memes response",
+          },
+          {
+            ["name"] = "text0",
+            ["title"] = "Text0",
+            ["type"] = "`$STRING`",
+            ["short"] = "Top text for the meme (do not use if using boxes parameter)",
+          },
+          {
+            ["name"] = "text1",
+            ["title"] = "Text1",
+            ["type"] = "`$STRING`",
+            ["short"] = "Bottom text for the meme (do not use if using boxes parameter)",
+          },
+          {
+            ["name"] = "username",
+            ["title"] = "Username",
+            ["type"] = "`$STRING`",
+            ["req"] = true,
+            ["short"] = "Username of a valid Imgflip account",
           },
         },
         ["name"] = "free",
@@ -120,6 +179,44 @@ local function make_config()
                 },
                 ["args"] = {},
                 ["select"] = {},
+                ["body"] = {
+                  ["fields"] = {
+                    {
+                      ["list"] = true,
+                      ["name"] = "boxes",
+                    },
+                    {
+                      ["name"] = "font",
+                    },
+                    {
+                      ["name"] = "max_font_size",
+                    },
+                    {
+                      ["name"] = "no_watermark",
+                    },
+                    {
+                      ["name"] = "password",
+                    },
+                    {
+                      ["name"] = "template_id",
+                    },
+                    {
+                      ["name"] = "text0",
+                    },
+                    {
+                      ["name"] = "text1",
+                    },
+                    {
+                      ["name"] = "username",
+                    },
+                  },
+                  ["kind"] = "form",
+                  ["media"] = "application/x-www-form-urlencoded",
+                },
+                ["response"] = {
+                  ["kind"] = "json",
+                  ["media"] = "application/json",
+                },
               },
             },
           },
@@ -155,10 +252,10 @@ local function make_config()
                     },
                   },
                 },
-                ["select"] = {
-                  ["exist"] = {
-                    "type",
-                  },
+                ["select"] = {},
+                ["response"] = {
+                  ["kind"] = "json",
+                  ["media"] = "application/json",
                 },
               },
             },
@@ -171,6 +268,31 @@ local function make_config()
       ["premium"] = {
         ["fields"] = {
           {
+            ["name"] = "boxes",
+            ["title"] = "Boxes",
+            ["type"] = "`$ARRAY`",
+            ["req"] = true,
+            ["short"] = "Text boxes for the meme.",
+          },
+          {
+            ["name"] = "font",
+            ["title"] = "Font",
+            ["type"] = "`$STRING`",
+            ["short"] = "The font family to use for the text",
+          },
+          {
+            ["name"] = "include_nsfw",
+            ["title"] = "Include Nsfw",
+            ["type"] = "`$INTEGER`",
+            ["short"] = "Use include_nsfw=1 to allow not-safe-for-work memes to be returned",
+          },
+          {
+            ["name"] = "max_font_size",
+            ["title"] = "Max Font Size",
+            ["type"] = "`$INTEGER`",
+            ["short"] = "Maximum font size in pixels",
+          },
+          {
             ["name"] = "meme",
             ["title"] = "Meme",
             ["type"] = "`$ANY`",
@@ -179,6 +301,70 @@ local function make_config()
             ["name"] = "memes",
             ["title"] = "Memes",
             ["type"] = "`$ARRAY`",
+          },
+          {
+            ["name"] = "model",
+            ["title"] = "Model",
+            ["type"] = "`$STRING`",
+            ["short"] = "Which neural network model to use",
+          },
+          {
+            ["name"] = "no_watermark",
+            ["title"] = "No Watermark",
+            ["type"] = "`$BOOLEAN`",
+            ["short"] = "Remove the imgflip.com watermark",
+          },
+          {
+            ["name"] = "password",
+            ["title"] = "Password",
+            ["type"] = "`$STRING`",
+            ["req"] = true,
+            ["short"] = "Password for the Imgflip account",
+          },
+          {
+            ["name"] = "prefix_text",
+            ["title"] = "Prefix Text",
+            ["type"] = "`$STRING`",
+            ["short"] = "Max 64 chars.",
+          },
+          {
+            ["name"] = "query",
+            ["title"] = "Query",
+            ["type"] = "`$STRING`",
+            ["req"] = true,
+            ["short"] = "A text query to search the meme database for.",
+          },
+          {
+            ["name"] = "template_id",
+            ["title"] = "Template Id",
+            ["type"] = "`$STRING`",
+            ["op"] = {
+              ["create"] = {
+                ["req"] = true,
+                ["type"] = "`$STRING`",
+              },
+            },
+            ["short"] = "Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model).",
+          },
+          {
+            ["name"] = "text",
+            ["title"] = "Text",
+            ["type"] = "`$STRING`",
+            ["req"] = true,
+            ["short"] = "The text to display on the meme.",
+          },
+          {
+            ["name"] = "type",
+            ["title"] = "Type",
+            ["type"] = "`$STRING`",
+            ["short"] = "The type of meme templates to search for.",
+          },
+          {
+            ["name"] = "username",
+            ["title"] = "Username",
+            ["type"] = "`$STRING`",
+            ["req"] = true,
+            ["short"] = "Username of the Imgflip account with the Premium API subscription",
           },
         },
         ["name"] = "premium",
@@ -206,6 +392,34 @@ local function make_config()
                 },
                 ["args"] = {},
                 ["select"] = {},
+                ["body"] = {
+                  ["fields"] = {
+                    {
+                      ["name"] = "model",
+                    },
+                    {
+                      ["name"] = "no_watermark",
+                    },
+                    {
+                      ["name"] = "password",
+                    },
+                    {
+                      ["name"] = "prefix_text",
+                    },
+                    {
+                      ["name"] = "template_id",
+                    },
+                    {
+                      ["name"] = "username",
+                    },
+                  },
+                  ["kind"] = "form",
+                  ["media"] = "application/x-www-form-urlencoded",
+                },
+                ["response"] = {
+                  ["kind"] = "json",
+                  ["media"] = "application/json",
+                },
               },
               {
                 ["kind"] = "http",
@@ -226,6 +440,28 @@ local function make_config()
                 },
                 ["args"] = {},
                 ["select"] = {},
+                ["body"] = {
+                  ["fields"] = {
+                    {
+                      ["name"] = "no_watermark",
+                    },
+                    {
+                      ["name"] = "password",
+                    },
+                    {
+                      ["name"] = "text",
+                    },
+                    {
+                      ["name"] = "username",
+                    },
+                  },
+                  ["kind"] = "form",
+                  ["media"] = "application/x-www-form-urlencoded",
+                },
+                ["response"] = {
+                  ["kind"] = "json",
+                  ["media"] = "application/json",
+                },
               },
               {
                 ["kind"] = "http",
@@ -246,6 +482,38 @@ local function make_config()
                 },
                 ["args"] = {},
                 ["select"] = {},
+                ["body"] = {
+                  ["fields"] = {
+                    {
+                      ["list"] = true,
+                      ["name"] = "boxes",
+                    },
+                    {
+                      ["name"] = "font",
+                    },
+                    {
+                      ["name"] = "max_font_size",
+                    },
+                    {
+                      ["name"] = "no_watermark",
+                    },
+                    {
+                      ["name"] = "password",
+                    },
+                    {
+                      ["name"] = "template_id",
+                    },
+                    {
+                      ["name"] = "username",
+                    },
+                  },
+                  ["kind"] = "form",
+                  ["media"] = "application/x-www-form-urlencoded",
+                },
+                ["response"] = {
+                  ["kind"] = "json",
+                  ["media"] = "application/json",
+                },
               },
               {
                 ["kind"] = "http",
@@ -266,6 +534,25 @@ local function make_config()
                 },
                 ["args"] = {},
                 ["select"] = {},
+                ["body"] = {
+                  ["fields"] = {
+                    {
+                      ["name"] = "password",
+                    },
+                    {
+                      ["name"] = "template_id",
+                    },
+                    {
+                      ["name"] = "username",
+                    },
+                  },
+                  ["kind"] = "form",
+                  ["media"] = "application/x-www-form-urlencoded",
+                },
+                ["response"] = {
+                  ["kind"] = "json",
+                  ["media"] = "application/json",
+                },
               },
               {
                 ["kind"] = "http",
@@ -286,6 +573,31 @@ local function make_config()
                 },
                 ["args"] = {},
                 ["select"] = {},
+                ["body"] = {
+                  ["fields"] = {
+                    {
+                      ["name"] = "include_nsfw",
+                    },
+                    {
+                      ["name"] = "password",
+                    },
+                    {
+                      ["name"] = "query",
+                    },
+                    {
+                      ["name"] = "type",
+                    },
+                    {
+                      ["name"] = "username",
+                    },
+                  },
+                  ["kind"] = "form",
+                  ["media"] = "application/x-www-form-urlencoded",
+                },
+                ["response"] = {
+                  ["kind"] = "json",
+                  ["media"] = "application/json",
+                },
               },
             },
           },

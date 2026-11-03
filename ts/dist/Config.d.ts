@@ -57,6 +57,7 @@ declare class Config {
             };
             optspec: {
                 clearTimer: string;
+                now: string;
                 setTimer: string;
             };
             strict: boolean;
@@ -79,11 +80,25 @@ declare class Config {
     };
     entity: {
         free: {
-            fields: {
+            fields: ({
                 name: string;
                 title: string;
                 type: string;
-            }[];
+                short: string;
+                req?: undefined;
+            } | {
+                name: string;
+                title: string;
+                type: string;
+                short?: undefined;
+                req?: undefined;
+            } | {
+                name: string;
+                title: string;
+                type: string;
+                req: boolean;
+                short: string;
+            })[];
             name: string;
             op: {
                 create: {
@@ -104,6 +119,21 @@ declare class Config {
                         };
                         args: {};
                         select: {};
+                        body: {
+                            fields: ({
+                                list: boolean;
+                                name: string;
+                            } | {
+                                name: string;
+                                list?: undefined;
+                            })[];
+                            kind: string;
+                            media: string;
+                        };
+                        response: {
+                            kind: string;
+                            media: string;
+                        };
                     }[];
                 };
                 load: {
@@ -131,8 +161,10 @@ declare class Config {
                                 example: string;
                             }[];
                         };
-                        select: {
-                            exist: string[];
+                        select: {};
+                        response: {
+                            kind: string;
+                            media: string;
                         };
                     }[];
                 };
@@ -142,11 +174,40 @@ declare class Config {
             };
         };
         premium: {
-            fields: {
+            fields: ({
                 name: string;
                 title: string;
                 type: string;
-            }[];
+                req: boolean;
+                short: string;
+                op?: undefined;
+            } | {
+                name: string;
+                title: string;
+                type: string;
+                short: string;
+                req?: undefined;
+                op?: undefined;
+            } | {
+                name: string;
+                title: string;
+                type: string;
+                req?: undefined;
+                short?: undefined;
+                op?: undefined;
+            } | {
+                name: string;
+                title: string;
+                type: string;
+                op: {
+                    create: {
+                        req: boolean;
+                        type: string;
+                    };
+                };
+                short: string;
+                req?: undefined;
+            })[];
             name: string;
             op: {
                 create: {
@@ -167,6 +228,21 @@ declare class Config {
                         };
                         args: {};
                         select: {};
+                        body: {
+                            fields: ({
+                                list: boolean;
+                                name: string;
+                            } | {
+                                name: string;
+                                list?: undefined;
+                            })[];
+                            kind: string;
+                            media: string;
+                        };
+                        response: {
+                            kind: string;
+                            media: string;
+                        };
                     }[];
                 };
             };

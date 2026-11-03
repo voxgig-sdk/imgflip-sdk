@@ -12,7 +12,7 @@ It exposes the API as capitalised, semantic **Entities** — e.g. `client:Free()
 
 ## Install
 This package is not yet published to LuaRocks. Install it from the
-GitHub release tag (`lua/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/imgflip-sdk/releases)),
+GitHub release tag (`lua/vX.Y.Z`, see [Tags](https://github.com/voxgig-sdk/imgflip-sdk/tags)),
 or add the source directory to your `LUA_PATH`:
 
 ```bash
@@ -37,17 +37,19 @@ local client = sdk.new({
 
 ### 3. Load a free
 
+`load` returns the entity; `data_get()` reads its record.
+
 ```lua
 local free, err = client:Free():load()
 if err then error(err) end
-print(free)
+for k, val in pairs(free:data_get()) do print(k, val) end
 ```
 
 ### 4. Create, update, and remove
 
 ```lua
 -- Create
-local created, err = client:Free():create({ memes = {} })
+local created, err = client:Free():create({ password = "example_password", template_id = "example_template_id", username = "example_username" })
 if err then error(err) end
 
 ```
@@ -118,7 +120,7 @@ Create a mock client for unit testing — no server required:
 local client = sdk.test()
 
 local result, err = client:Free():load()
--- result is the returned data; err is set on failure
+-- result is the entity; data_get() reads its mock record; err is set on failure
 ```
 
 ### Use a custom fetch function
@@ -207,8 +209,8 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `(reqmatch, ctrl) -> any, err` | Load a single entity by match criteria. |
-| `create` | `(reqdata, ctrl) -> any, err` | Create a new entity. |
+| `load` | `(reqmatch, ctrl) -> any, err` | Load a single entity by match criteria, and return it. |
+| `create` | `(reqdata, ctrl) -> any, err` | Create a new entity, and return it. |
 | `data_get` | `() -> table` | Get entity data. |
 | `data_set` | `(data)` | Set entity data. |
 | `match_get` | `() -> table` | Get entity match criteria. |
@@ -218,18 +220,18 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return `(value, err)`. The `value` is the operation's
-data **directly** — there is no wrapper:
+Entity operations return `(value, err)`. The `value` is the entity
+itself — there is no wrapper:
 
 | Operation | `value` |
 | --- | --- |
-| `load` / `create` | the entity record (a `table`) |
+| `load` / `create` | the entity, whose `data_get()` reads its record (a `table`) |
 
 Check `err` first (it is non-`nil` on failure), then use `value`:
 
     local free, err = client:Free():load()
     if err then error(err) end
-    -- free is the loaded record
+    -- free is the loaded entity
 
 Only `direct()` returns a response envelope — a `table` with `ok`,
 `status`, `headers`, and `data` keys.
@@ -240,7 +242,16 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 
 | Field | Description |
 | --- | --- |
+| `boxes` | For creating memes with more than two text boxes or for further customization. |
+| `font` | The font family to use for the text. |
+| `max_font_size` | Maximum font size in pixels |
 | `memes` |  |
+| `no_watermark` | [Premium only] Remove the imgflip.com watermark |
+| `password` | Password for the Imgflip account |
+| `template_id` | A template ID as returned by the get_memes response |
+| `text0` | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | Username of a valid Imgflip account |
 
 Operations: Create, Load.
 
@@ -250,8 +261,21 @@ API path: `/caption_image`
 
 | Field | Description |
 | --- | --- |
+| `boxes` | Text boxes for the meme. |
+| `font` | The font family to use for the text |
+| `include_nsfw` | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | Maximum font size in pixels |
 | `meme` |  |
 | `memes` |  |
+| `model` | Which neural network model to use |
+| `no_watermark` | Remove the imgflip.com watermark |
+| `password` | Password for the Imgflip account |
+| `prefix_text` | Max 64 chars. |
+| `query` | A text query to search the meme database for. |
+| `template_id` | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | The text to display on the meme. |
+| `type` | The type of meme templates to search for. |
+| `username` | Username of the Imgflip account with the Premium API subscription |
 
 Operations: Create.
 
@@ -277,7 +301,16 @@ Create an instance: `local free = client:Free(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `boxes` | `table` | For creating memes with more than two text boxes or for further customization. |
+| `font` | `string` | The font family to use for the text. |
+| `max_font_size` | `number` | Maximum font size in pixels |
 | `memes` | `table` |  |
+| `no_watermark` | `boolean` | [Premium only] Remove the imgflip.com watermark |
+| `password` | `string` | Password for the Imgflip account |
+| `template_id` | `string` | A template ID as returned by the get_memes response |
+| `text0` | `string` | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | `string` | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | `string` | Username of a valid Imgflip account |
 
 #### Example: Load
 
@@ -289,6 +322,9 @@ local free, err = client:Free():load()
 
 ```lua
 local free, err = client:Free():create({
+  password = "example_password", -- string
+  template_id = "example_template_id", -- string
+  username = "example_username", -- string
 })
 ```
 
@@ -307,13 +343,32 @@ Create an instance: `local premium = client:Premium(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `boxes` | `table` | Text boxes for the meme. |
+| `font` | `string` | The font family to use for the text |
+| `include_nsfw` | `number` | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | `number` | Maximum font size in pixels |
 | `meme` | `any` |  |
 | `memes` | `table` |  |
+| `model` | `string` | Which neural network model to use |
+| `no_watermark` | `boolean` | Remove the imgflip.com watermark |
+| `password` | `string` | Password for the Imgflip account |
+| `prefix_text` | `string` | Max 64 chars. |
+| `query` | `string` | A text query to search the meme database for. |
+| `template_id` | `string` | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | `string` | The text to display on the meme. |
+| `type` | `string` | The type of meme templates to search for. |
+| `username` | `string` | Username of the Imgflip account with the Premium API subscription |
 
 #### Example: Create
 
 ```lua
 local premium, err = client:Premium():create({
+  boxes = {}, -- table
+  password = "example_password", -- string
+  query = "example_query", -- string
+  template_id = "example_template_id", -- string
+  text = "example_text", -- string
+  username = "example_username", -- string
 })
 ```
 

@@ -92,22 +92,36 @@ free = client.Free()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `boxes` | `list` | No | For creating memes with more than two text boxes or for further customization. |
+| `font` | `str` | No | The font family to use for the text. |
+| `max_font_size` | `int` | No | Maximum font size in pixels |
 | `memes` | `list` | No |  |
+| `no_watermark` | `bool` | No | [Premium only] Remove the imgflip.com watermark |
+| `password` | `str` | Yes | Password for the Imgflip account |
+| `template_id` | `str` | Yes | A template ID as returned by the get_memes response |
+| `text0` | `str` | No | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | `str` | No | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | `str` | Yes | Username of a valid Imgflip account |
 
 ### Operations
 
-#### `create(reqdata, ctrl=None) -> dict`
+#### `create(reqdata, ctrl=None) -> FreeEntity`
 
-Create a new entity with the given data. Returns the created entity data and raises on error.
+Create a new entity with the given data. Returns the created entity and raises on error.
 
 ```python
 result = client.Free().create({
+    "password": "example_password",  # str
+    "template_id": "example_template_id",  # str
+    "username": "example_username",  # str
 })
 ```
 
-#### `load(reqmatch, ctrl=None) -> dict`
+Declares a `application/x-www-form-urlencoded` body, which this SDK does not encode yet: it sends the data as JSON.
 
-Load a single entity matching the given criteria. Returns the entity data and raises on error.
+#### `load(reqmatch, ctrl=None) -> FreeEntity`
+
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
 
 ```python
 result = client.Free().load()
@@ -152,19 +166,60 @@ premium = client.Premium()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `boxes` | `list` | Yes | Text boxes for the meme. |
+| `font` | `str` | No | The font family to use for the text |
+| `include_nsfw` | `int` | No | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | `int` | No | Maximum font size in pixels |
 | `meme` | `Any` | No |  |
 | `memes` | `list` | No |  |
+| `model` | `str` | No | Which neural network model to use |
+| `no_watermark` | `bool` | No | Remove the imgflip.com watermark |
+| `password` | `str` | Yes | Password for the Imgflip account |
+| `prefix_text` | `str` | No | Max 64 chars. |
+| `query` | `str` | Yes | A text query to search the meme database for. |
+| `template_id` | `str` | No | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | `str` | Yes | The text to display on the meme. |
+| `type` | `str` | No | The type of meme templates to search for. |
+| `username` | `str` | Yes | Username of the Imgflip account with the Premium API subscription |
+
+### Field Usage by Operation
+
+| Field | create |
+| --- | --- |
+| `boxes` | - |
+| `font` | - |
+| `include_nsfw` | - |
+| `max_font_size` | - |
+| `meme` | - |
+| `memes` | - |
+| `model` | - |
+| `no_watermark` | - |
+| `password` | - |
+| `prefix_text` | - |
+| `query` | - |
+| `template_id` | Yes |
+| `text` | - |
+| `type` | - |
+| `username` | - |
 
 ### Operations
 
-#### `create(reqdata, ctrl=None) -> dict`
+#### `create(reqdata, ctrl=None) -> PremiumEntity`
 
-Create a new entity with the given data. Returns the created entity data and raises on error.
+Create a new entity with the given data. Returns the created entity and raises on error.
 
 ```python
 result = client.Premium().create({
+    "boxes": [],  # list
+    "password": "example_password",  # str
+    "query": "example_query",  # str
+    "template_id": "example_template_id",  # str
+    "text": "example_text",  # str
+    "username": "example_username",  # str
 })
 ```
+
+Declares a `application/x-www-form-urlencoded` body, which this SDK does not encode yet: it sends the data as JSON.
 
 ### Common Methods
 
@@ -352,6 +407,7 @@ Timeout.
 | Option | Type |
 |---|---|
 | `clearTimer` | function |
+| `now` | function |
 | `setTimer` | function |
 
 These take no default: the feature behaves one way when you supply them and

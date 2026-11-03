@@ -71,6 +71,7 @@ func MakeConfig() map[string]any {
 				},
 				"optspec": map[string]any{
 					"clearTimer": "`$FUNCTION`",
+					"now": "`$FUNCTION`",
 					"setTimer": "`$FUNCTION`",
 				},
 				"strict": false,
@@ -81,6 +82,7 @@ func MakeConfig() map[string]any {
 			"base": "https://api.imgflip.com",
 			"auth": map[string]any{
 				"prefix": "Basic",
+				"basic": true,
 			},
 			"headers": map[string]any{
 				"content-type": "application/json",
@@ -94,9 +96,66 @@ func MakeConfig() map[string]any {
 			"free": map[string]any{
 				"fields": []any{
 					map[string]any{
+						"name": "boxes",
+						"title": "Boxes",
+						"type": "`$ARRAY`",
+						"short": "For creating memes with more than two text boxes or for further customization.",
+					},
+					map[string]any{
+						"name": "font",
+						"title": "Font",
+						"type": "`$STRING`",
+						"short": "The font family to use for the text.",
+					},
+					map[string]any{
+						"name": "max_font_size",
+						"title": "Max Font Size",
+						"type": "`$INTEGER`",
+						"short": "Maximum font size in pixels",
+					},
+					map[string]any{
 						"name": "memes",
 						"title": "Memes",
 						"type": "`$ARRAY`",
+					},
+					map[string]any{
+						"name": "no_watermark",
+						"title": "No Watermark",
+						"type": "`$BOOLEAN`",
+						"short": "[Premium only] Remove the imgflip.com watermark",
+					},
+					map[string]any{
+						"name": "password",
+						"title": "Password",
+						"type": "`$STRING`",
+						"req": true,
+						"short": "Password for the Imgflip account",
+					},
+					map[string]any{
+						"name": "template_id",
+						"title": "Template Id",
+						"type": "`$STRING`",
+						"req": true,
+						"short": "A template ID as returned by the get_memes response",
+					},
+					map[string]any{
+						"name": "text0",
+						"title": "Text0",
+						"type": "`$STRING`",
+						"short": "Top text for the meme (do not use if using boxes parameter)",
+					},
+					map[string]any{
+						"name": "text1",
+						"title": "Text1",
+						"type": "`$STRING`",
+						"short": "Bottom text for the meme (do not use if using boxes parameter)",
+					},
+					map[string]any{
+						"name": "username",
+						"title": "Username",
+						"type": "`$STRING`",
+						"req": true,
+						"short": "Username of a valid Imgflip account",
 					},
 				},
 				"name": "free",
@@ -124,6 +183,44 @@ func MakeConfig() map[string]any {
 								},
 								"args": map[string]any{},
 								"select": map[string]any{},
+								"body": map[string]any{
+									"fields": []any{
+										map[string]any{
+											"list": true,
+											"name": "boxes",
+										},
+										map[string]any{
+											"name": "font",
+										},
+										map[string]any{
+											"name": "max_font_size",
+										},
+										map[string]any{
+											"name": "no_watermark",
+										},
+										map[string]any{
+											"name": "password",
+										},
+										map[string]any{
+											"name": "template_id",
+										},
+										map[string]any{
+											"name": "text0",
+										},
+										map[string]any{
+											"name": "text1",
+										},
+										map[string]any{
+											"name": "username",
+										},
+									},
+									"kind": "form",
+									"media": "application/x-www-form-urlencoded",
+								},
+								"response": map[string]any{
+									"kind": "json",
+									"media": "application/json",
+								},
 							},
 						},
 					},
@@ -159,10 +256,10 @@ func MakeConfig() map[string]any {
 										},
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"type",
-									},
+								"select": map[string]any{},
+								"response": map[string]any{
+									"kind": "json",
+									"media": "application/json",
 								},
 							},
 						},
@@ -175,6 +272,31 @@ func MakeConfig() map[string]any {
 			"premium": map[string]any{
 				"fields": []any{
 					map[string]any{
+						"name": "boxes",
+						"title": "Boxes",
+						"type": "`$ARRAY`",
+						"req": true,
+						"short": "Text boxes for the meme.",
+					},
+					map[string]any{
+						"name": "font",
+						"title": "Font",
+						"type": "`$STRING`",
+						"short": "The font family to use for the text",
+					},
+					map[string]any{
+						"name": "include_nsfw",
+						"title": "Include Nsfw",
+						"type": "`$INTEGER`",
+						"short": "Use include_nsfw=1 to allow not-safe-for-work memes to be returned",
+					},
+					map[string]any{
+						"name": "max_font_size",
+						"title": "Max Font Size",
+						"type": "`$INTEGER`",
+						"short": "Maximum font size in pixels",
+					},
+					map[string]any{
 						"name": "meme",
 						"title": "Meme",
 						"type": "`$ANY`",
@@ -183,6 +305,70 @@ func MakeConfig() map[string]any {
 						"name": "memes",
 						"title": "Memes",
 						"type": "`$ARRAY`",
+					},
+					map[string]any{
+						"name": "model",
+						"title": "Model",
+						"type": "`$STRING`",
+						"short": "Which neural network model to use",
+					},
+					map[string]any{
+						"name": "no_watermark",
+						"title": "No Watermark",
+						"type": "`$BOOLEAN`",
+						"short": "Remove the imgflip.com watermark",
+					},
+					map[string]any{
+						"name": "password",
+						"title": "Password",
+						"type": "`$STRING`",
+						"req": true,
+						"short": "Password for the Imgflip account",
+					},
+					map[string]any{
+						"name": "prefix_text",
+						"title": "Prefix Text",
+						"type": "`$STRING`",
+						"short": "Max 64 chars.",
+					},
+					map[string]any{
+						"name": "query",
+						"title": "Query",
+						"type": "`$STRING`",
+						"req": true,
+						"short": "A text query to search the meme database for.",
+					},
+					map[string]any{
+						"name": "template_id",
+						"title": "Template Id",
+						"type": "`$STRING`",
+						"op": map[string]any{
+							"create": map[string]any{
+								"req": true,
+								"type": "`$STRING`",
+							},
+						},
+						"short": "Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model).",
+					},
+					map[string]any{
+						"name": "text",
+						"title": "Text",
+						"type": "`$STRING`",
+						"req": true,
+						"short": "The text to display on the meme.",
+					},
+					map[string]any{
+						"name": "type",
+						"title": "Type",
+						"type": "`$STRING`",
+						"short": "The type of meme templates to search for.",
+					},
+					map[string]any{
+						"name": "username",
+						"title": "Username",
+						"type": "`$STRING`",
+						"req": true,
+						"short": "Username of the Imgflip account with the Premium API subscription",
 					},
 				},
 				"name": "premium",
@@ -210,6 +396,34 @@ func MakeConfig() map[string]any {
 								},
 								"args": map[string]any{},
 								"select": map[string]any{},
+								"body": map[string]any{
+									"fields": []any{
+										map[string]any{
+											"name": "model",
+										},
+										map[string]any{
+											"name": "no_watermark",
+										},
+										map[string]any{
+											"name": "password",
+										},
+										map[string]any{
+											"name": "prefix_text",
+										},
+										map[string]any{
+											"name": "template_id",
+										},
+										map[string]any{
+											"name": "username",
+										},
+									},
+									"kind": "form",
+									"media": "application/x-www-form-urlencoded",
+								},
+								"response": map[string]any{
+									"kind": "json",
+									"media": "application/json",
+								},
 							},
 							map[string]any{
 								"kind": "http",
@@ -230,6 +444,28 @@ func MakeConfig() map[string]any {
 								},
 								"args": map[string]any{},
 								"select": map[string]any{},
+								"body": map[string]any{
+									"fields": []any{
+										map[string]any{
+											"name": "no_watermark",
+										},
+										map[string]any{
+											"name": "password",
+										},
+										map[string]any{
+											"name": "text",
+										},
+										map[string]any{
+											"name": "username",
+										},
+									},
+									"kind": "form",
+									"media": "application/x-www-form-urlencoded",
+								},
+								"response": map[string]any{
+									"kind": "json",
+									"media": "application/json",
+								},
 							},
 							map[string]any{
 								"kind": "http",
@@ -250,6 +486,38 @@ func MakeConfig() map[string]any {
 								},
 								"args": map[string]any{},
 								"select": map[string]any{},
+								"body": map[string]any{
+									"fields": []any{
+										map[string]any{
+											"list": true,
+											"name": "boxes",
+										},
+										map[string]any{
+											"name": "font",
+										},
+										map[string]any{
+											"name": "max_font_size",
+										},
+										map[string]any{
+											"name": "no_watermark",
+										},
+										map[string]any{
+											"name": "password",
+										},
+										map[string]any{
+											"name": "template_id",
+										},
+										map[string]any{
+											"name": "username",
+										},
+									},
+									"kind": "form",
+									"media": "application/x-www-form-urlencoded",
+								},
+								"response": map[string]any{
+									"kind": "json",
+									"media": "application/json",
+								},
 							},
 							map[string]any{
 								"kind": "http",
@@ -270,6 +538,25 @@ func MakeConfig() map[string]any {
 								},
 								"args": map[string]any{},
 								"select": map[string]any{},
+								"body": map[string]any{
+									"fields": []any{
+										map[string]any{
+											"name": "password",
+										},
+										map[string]any{
+											"name": "template_id",
+										},
+										map[string]any{
+											"name": "username",
+										},
+									},
+									"kind": "form",
+									"media": "application/x-www-form-urlencoded",
+								},
+								"response": map[string]any{
+									"kind": "json",
+									"media": "application/json",
+								},
 							},
 							map[string]any{
 								"kind": "http",
@@ -290,6 +577,31 @@ func MakeConfig() map[string]any {
 								},
 								"args": map[string]any{},
 								"select": map[string]any{},
+								"body": map[string]any{
+									"fields": []any{
+										map[string]any{
+											"name": "include_nsfw",
+										},
+										map[string]any{
+											"name": "password",
+										},
+										map[string]any{
+											"name": "query",
+										},
+										map[string]any{
+											"name": "type",
+										},
+										map[string]any{
+											"name": "username",
+										},
+									},
+									"kind": "form",
+									"media": "application/x-www-form-urlencoded",
+								},
+								"response": map[string]any{
+									"kind": "json",
+									"media": "application/json",
+								},
 							},
 						},
 					},

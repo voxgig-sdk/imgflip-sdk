@@ -16,7 +16,7 @@ go get github.com/voxgig-sdk/imgflip-sdk/go@latest
 ```
 
 The Go module proxy resolves the version from the `go/vX.Y.Z` GitHub
-release tag — see [Releases](https://github.com/voxgig-sdk/imgflip-sdk/releases) for the available versions.
+release tag — see [Tags](https://github.com/voxgig-sdk/imgflip-sdk/tags) for the available versions.
 
 To vendor from a local checkout instead, clone this repo alongside your
 project and add a `replace` directive pointing at the checked-out
@@ -35,9 +35,10 @@ loading a specific record.
 ### Quickstart
 
 A complete program: create a client, then call the entity operations.
-Each operation returns `(value, error)` — the value is the data itself
-(there is no `{ok, data}` wrapper), so check `err` and use the value
-directly.
+Each operation returns `(value, error)` — the value is the entity, and for
+`List` a `[]any` of entities, one per record (there is no `{ok, data}`
+wrapper), so check `err` and read a record through the entity's
+`Data()`.
 
 ```go
 package main
@@ -53,19 +54,19 @@ func main() {
         "apikey": os.Getenv("IMGFLIP_APIKEY"),
     })
 
-    // Load a single free — the value is the loaded record.
+    // Load a single free — the value is the entity; Data() reads its record.
     free, err := client.Free(nil).Load(nil, nil)
     if err != nil {
         panic(err)
     }
-    fmt.Println(free)
+    fmt.Println(free.(sdk.Entity).Data())
 
     // Create a free.
-    created, err := client.Free(nil).Create(map[string]any{"memes": []any{}}, nil)
+    created, err := client.Free(nil).Create(map[string]any{"password": "example_password", "template_id": "example_template_id", "username": "example_username"}, nil)
     if err != nil {
         panic(err)
     }
-    fmt.Println(created)
+    fmt.Println(created.(sdk.Entity).Data())
 }
 ```
 
@@ -151,7 +152,7 @@ free, err := client.Free(nil).Load(
 if err != nil {
     panic(err)
 }
-fmt.Println(free) // the returned mock data
+fmt.Println(free.(sdk.Entity).Data()) // the entity's mock record
 ```
 
 ### Use a custom fetch function
@@ -230,17 +231,17 @@ Creates a test-mode client with mock transport. Both arguments may be `nil`.
 | `GetUtility` | `() *Utility` | Copy of the SDK utility object. |
 | `Prepare` | `(fetchargs map[string]any) (map[string]any, error)` | Build an HTTP request definition without sending. |
 | `Direct` | `(fetchargs map[string]any) (map[string]any, error)` | Build and send an HTTP request. |
-| `Free` | `(data map[string]any) ImgflipEntity` | Create a Free entity instance. |
-| `Premium` | `(data map[string]any) ImgflipEntity` | Create a Premium entity instance. |
+| `Free` | `(data map[string]any) ImgflipEntityBase` | Create a Free entity instance. |
+| `Premium` | `(data map[string]any) ImgflipEntityBase` | Create a Premium entity instance. |
 
-### Entity interface (ImgflipEntity)
+### Entity interface (ImgflipEntityBase)
 
-All entities implement the `ImgflipEntity` interface.
+All entities implement the `ImgflipEntityBase` interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `Load` | `(reqmatch, ctrl map[string]any) (any, error)` | Load a single entity by match criteria. |
-| `Create` | `(reqdata, ctrl map[string]any) (any, error)` | Create a new entity. |
+| `Load` | `(reqmatch, ctrl map[string]any) (any, error)` | Load a single entity by match criteria, and return it. |
+| `Create` | `(reqdata, ctrl map[string]any) (any, error)` | Create a new entity, and return it. |
 | `Data` | `(args ...any) any` | Get or set entity data. |
 | `Match` | `(args ...any) any` | Get or set entity match criteria. |
 | `Make` | `() Entity` | Create a new instance with the same options. |
@@ -248,12 +249,12 @@ All entities implement the `ImgflipEntity` interface.
 
 ### Result shape
 
-Entity operations return `(value, error)`. The `value` is the
-operation's data **directly** — there is no wrapper:
+Entity operations return `(value, error)`. The `value` is the entity
+itself — there is no wrapper:
 
 | Operation | `value` |
 | --- | --- |
-| `Load` / `Create` | the entity record (`map[string]any`) |
+| `Load` / `Create` | the entity, whose `Data()` reads its record (`map[string]any`) |
 
 Check `err` first, then use the value directly (or the typed
 `...Typed` variants, which return the entity's model struct and a typed
@@ -261,7 +262,7 @@ slice):
 
     free, err := client.Free(nil).Load(nil, nil)
     if err != nil { /* handle */ }
-    // free is the returned record
+    // free is the entity; free.(sdk.Entity).Data() reads its record
 
 Only `Direct()` returns a response envelope — a `map[string]any` with
 `"ok"`, `"status"`, `"headers"`, and `"data"` keys.
@@ -272,7 +273,16 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 
 | Field | Description |
 | --- | --- |
+| `"boxes"` | For creating memes with more than two text boxes or for further customization. |
+| `"font"` | The font family to use for the text. |
+| `"max_font_size"` | Maximum font size in pixels |
 | `"memes"` |  |
+| `"no_watermark"` | [Premium only] Remove the imgflip.com watermark |
+| `"password"` | Password for the Imgflip account |
+| `"template_id"` | A template ID as returned by the get_memes response |
+| `"text0"` | Top text for the meme (do not use if using boxes parameter) |
+| `"text1"` | Bottom text for the meme (do not use if using boxes parameter) |
+| `"username"` | Username of a valid Imgflip account |
 
 Operations: Create, Load.
 
@@ -282,8 +292,21 @@ API path: `/caption_image`
 
 | Field | Description |
 | --- | --- |
+| `"boxes"` | Text boxes for the meme. |
+| `"font"` | The font family to use for the text |
+| `"include_nsfw"` | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `"max_font_size"` | Maximum font size in pixels |
 | `"meme"` |  |
 | `"memes"` |  |
+| `"model"` | Which neural network model to use |
+| `"no_watermark"` | Remove the imgflip.com watermark |
+| `"password"` | Password for the Imgflip account |
+| `"prefix_text"` | Max 64 chars. |
+| `"query"` | A text query to search the meme database for. |
+| `"template_id"` | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `"text"` | The text to display on the meme. |
+| `"type"` | The type of meme templates to search for. |
+| `"username"` | Username of the Imgflip account with the Premium API subscription |
 
 Operations: Create.
 
@@ -309,7 +332,16 @@ Create an instance: `free := client.Free(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `boxes` | `[]any` | For creating memes with more than two text boxes or for further customization. |
+| `font` | `string` | The font family to use for the text. |
+| `max_font_size` | `int` | Maximum font size in pixels |
 | `memes` | `[]any` |  |
+| `no_watermark` | `bool` | [Premium only] Remove the imgflip.com watermark |
+| `password` | `string` | Password for the Imgflip account |
+| `template_id` | `string` | A template ID as returned by the get_memes response |
+| `text0` | `string` | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | `string` | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | `string` | Username of a valid Imgflip account |
 
 #### Example: Load
 
@@ -318,18 +350,21 @@ free, err := client.Free(nil).Load(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(free) // the loaded record
+fmt.Println(free.(sdk.Entity).Data()) // the loaded entity's record
 ```
 
 #### Example: Create
 
 ```go
 result, err := client.Free(nil).Create(map[string]any{
+    "password": "example_password",
+    "template_id": "example_template_id",
+    "username": "example_username",
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 
@@ -347,18 +382,37 @@ Create an instance: `premium := client.Premium(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `boxes` | `[]any` | Text boxes for the meme. |
+| `font` | `string` | The font family to use for the text |
+| `include_nsfw` | `int` | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | `int` | Maximum font size in pixels |
 | `meme` | `any` |  |
 | `memes` | `[]any` |  |
+| `model` | `string` | Which neural network model to use |
+| `no_watermark` | `bool` | Remove the imgflip.com watermark |
+| `password` | `string` | Password for the Imgflip account |
+| `prefix_text` | `string` | Max 64 chars. |
+| `query` | `string` | A text query to search the meme database for. |
+| `template_id` | `string` | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | `string` | The text to display on the meme. |
+| `type` | `string` | The type of meme templates to search for. |
+| `username` | `string` | Username of the Imgflip account with the Premium API subscription |
 
 #### Example: Create
 
 ```go
 result, err := client.Premium(nil).Create(map[string]any{
+    "boxes": []any{},
+    "password": "example_password",
+    "query": "example_query",
+    "template_id": "example_template_id",
+    "text": "example_text",
+    "username": "example_username",
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data()) // the created entity's record
 ```
 
 ## Features
@@ -495,7 +549,9 @@ The Go SDK uses `map[string]any` throughout rather than typed structs.
 This mirrors the dynamic nature of the API and keeps the SDK
 flexible — no code generation is needed when the API schema changes.
 
-Use `core.ToMapAny()` to safely cast results and nested data.
+An operation returns the entity, and its `Data()` returns the record. Use
+`core.ToMapAny()` to safely cast that record, or data nested in it, to
+`map[string]any`: it returns `nil` for anything else, an entity included.
 
 ### Package structure
 

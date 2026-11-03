@@ -97,12 +97,84 @@
             "field": {}
           },
           "fields": {
+            "boxes": {
+              "a": true,
+              "h": "Boxes",
+              "n": "boxes",
+              "r": false,
+              "sh": "For creating memes with more than two text boxes or for further customization.",
+              "t": "`$ARRAY`"
+            },
+            "font": {
+              "a": true,
+              "h": "Font",
+              "n": "font",
+              "r": false,
+              "sh": "The font family to use for the text.",
+              "t": "`$STRING`"
+            },
+            "max_font_size": {
+              "a": true,
+              "h": "Max Font Size",
+              "n": "max_font_size",
+              "r": false,
+              "sh": "Maximum font size in pixels",
+              "t": "`$INTEGER`"
+            },
             "memes": {
               "a": true,
               "h": "Memes",
               "n": "memes",
               "r": false,
               "t": "`$ARRAY`"
+            },
+            "no_watermark": {
+              "a": true,
+              "h": "No Watermark",
+              "n": "no_watermark",
+              "r": false,
+              "sh": "[Premium only] Remove the imgflip.com watermark",
+              "t": "`$BOOLEAN`"
+            },
+            "password": {
+              "a": true,
+              "h": "Password",
+              "n": "password",
+              "r": true,
+              "sh": "Password for the Imgflip account",
+              "t": "`$STRING`"
+            },
+            "template_id": {
+              "a": true,
+              "h": "Template Id",
+              "n": "template_id",
+              "r": true,
+              "sh": "A template ID as returned by the get_memes response",
+              "t": "`$STRING`"
+            },
+            "text0": {
+              "a": true,
+              "h": "Text0",
+              "n": "text0",
+              "r": false,
+              "sh": "Top text for the meme (do not use if using boxes parameter)",
+              "t": "`$STRING`"
+            },
+            "text1": {
+              "a": true,
+              "h": "Text1",
+              "n": "text1",
+              "r": false,
+              "sh": "Bottom text for the meme (do not use if using boxes parameter)",
+              "t": "`$STRING`"
+            },
+            "username": {
+              "a": true,
+              "h": "Username",
+              "n": "username",
+              "r": true,
+              "sh": "Username of a valid Imgflip account",
+              "t": "`$STRING`"
             }
           },
           "name": "free",
@@ -124,6 +196,44 @@
                   "o": "/caption_image",
                   "q": {},
                   "r": {},
+                  "rb": {
+                    "fields": [
+                      {
+                        "list": true,
+                        "name": "boxes"
+                      },
+                      {
+                        "name": "font"
+                      },
+                      {
+                        "name": "max_font_size"
+                      },
+                      {
+                        "name": "no_watermark"
+                      },
+                      {
+                        "name": "password"
+                      },
+                      {
+                        "name": "template_id"
+                      },
+                      {
+                        "name": "text0"
+                      },
+                      {
+                        "name": "text1"
+                      },
+                      {
+                        "name": "username"
+                      }
+                    ],
+                    "kind": "form",
+                    "media": "application/x-www-form-urlencoded"
+                  },
+                  "rs": {
+                    "kind": "json",
+                    "media": "application/json"
+                  },
                   "s": [
                     {
                       "lit": "caption_image"
@@ -163,12 +273,12 @@
                   "k": "http",
                   "m": "GET",
                   "o": "/get_memes",
-                  "q": {
-                    "exist": [
-                      "type"
-                    ]
-                  },
+                  "q": {},
                   "r": {},
+                  "rs": {
+                    "kind": "json",
+                    "media": "application/json"
+                  },
                   "s": [
                     {
                       "lit": "get_memes"
@@ -192,6 +302,38 @@
             "field": {}
           },
           "fields": {
+            "boxes": {
+              "a": true,
+              "h": "Boxes",
+              "n": "boxes",
+              "r": true,
+              "sh": "Text boxes for the meme.",
+              "t": "`$ARRAY`"
+            },
+            "font": {
+              "a": true,
+              "h": "Font",
+              "n": "font",
+              "r": false,
+              "sh": "The font family to use for the text",
+              "t": "`$STRING`"
+            },
+            "include_nsfw": {
+              "a": true,
+              "h": "Include Nsfw",
+              "n": "include_nsfw",
+              "r": false,
+              "sh": "Use include_nsfw=1 to allow not-safe-for-work memes to be returned",
+              "t": "`$INTEGER`"
+            },
+            "max_font_size": {
+              "a": true,
+              "h": "Max Font Size",
+              "n": "max_font_size",
+              "r": false,
+              "sh": "Maximum font size in pixels",
+              "t": "`$INTEGER`"
+            },
             "meme": {
               "a": true,
               "h": "Meme",
@@ -205,6 +347,84 @@
               "n": "memes",
               "r": false,
               "t": "`$ARRAY`"
+            },
+            "model": {
+              "a": true,
+              "h": "Model",
+              "n": "model",
+              "r": false,
+              "sh": "Which neural network model to use",
+              "t": "`$STRING`"
+            },
+            "no_watermark": {
+              "a": true,
+              "h": "No Watermark",
+              "n": "no_watermark",
+              "r": false,
+              "sh": "Remove the imgflip.com watermark",
+              "t": "`$BOOLEAN`"
+            },
+            "password": {
+              "a": true,
+              "h": "Password",
+              "n": "password",
+              "r": true,
+              "sh": "Password for the Imgflip account",
+              "t": "`$STRING`"
+            },
+            "prefix_text": {
+              "a": true,
+              "h": "Prefix Text",
+              "n": "prefix_text",
+              "r": false,
+              "sh": "Max 64 chars.",
+              "t": "`$STRING`"
+            },
+            "query": {
+              "a": true,
+              "h": "Query",
+              "n": "query",
+              "r": true,
+              "sh": "A text query to search the meme database for.",
+              "t": "`$STRING`"
+            },
+            "template_id": {
+              "a": true,
+              "h": "Template Id",
+              "n": "template_id",
+              "op": {
+                "create": {
+                  "req": true,
+                  "type": "`$STRING`"
+                }
+              },
+              "r": false,
+              "sh": "Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model).",
+              "t": "`$STRING`"
+            },
+            "text": {
+              "a": true,
+              "h": "Text",
+              "n": "text",
+              "r": true,
+              "sh": "The text to display on the meme.",
+              "t": "`$STRING`"
+            },
+            "type": {
+              "a": true,
+              "h": "Type",
+              "n": "type",
+              "r": false,
+              "sh": "The type of meme templates to search for.",
+              "t": "`$STRING`"
+            },
+            "username": {
+              "a": true,
+              "h": "Username",
+              "n": "username",
+              "r": true,
+              "sh": "Username of the Imgflip account with the Premium API subscription",
+              "t": "`$STRING`"
             }
           },
           "name": "premium",
@@ -226,6 +446,34 @@
                   "o": "/ai_meme",
                   "q": {},
                   "r": {},
+                  "rb": {
+                    "fields": [
+                      {
+                        "name": "model"
+                      },
+                      {
+                        "name": "no_watermark"
+                      },
+                      {
+                        "name": "password"
+                      },
+                      {
+                        "name": "prefix_text"
+                      },
+                      {
+                        "name": "template_id"
+                      },
+                      {
+                        "name": "username"
+                      }
+                    ],
+                    "kind": "form",
+                    "media": "application/x-www-form-urlencoded"
+                  },
+                  "rs": {
+                    "kind": "json",
+                    "media": "application/json"
+                  },
                   "s": [
                     {
                       "lit": "ai_meme"
@@ -249,6 +497,28 @@
                   "o": "/automeme",
                   "q": {},
                   "r": {},
+                  "rb": {
+                    "fields": [
+                      {
+                        "name": "no_watermark"
+                      },
+                      {
+                        "name": "password"
+                      },
+                      {
+                        "name": "text"
+                      },
+                      {
+                        "name": "username"
+                      }
+                    ],
+                    "kind": "form",
+                    "media": "application/x-www-form-urlencoded"
+                  },
+                  "rs": {
+                    "kind": "json",
+                    "media": "application/json"
+                  },
                   "s": [
                     {
                       "lit": "automeme"
@@ -272,6 +542,38 @@
                   "o": "/caption_gif",
                   "q": {},
                   "r": {},
+                  "rb": {
+                    "fields": [
+                      {
+                        "list": true,
+                        "name": "boxes"
+                      },
+                      {
+                        "name": "font"
+                      },
+                      {
+                        "name": "max_font_size"
+                      },
+                      {
+                        "name": "no_watermark"
+                      },
+                      {
+                        "name": "password"
+                      },
+                      {
+                        "name": "template_id"
+                      },
+                      {
+                        "name": "username"
+                      }
+                    ],
+                    "kind": "form",
+                    "media": "application/x-www-form-urlencoded"
+                  },
+                  "rs": {
+                    "kind": "json",
+                    "media": "application/json"
+                  },
                   "s": [
                     {
                       "lit": "caption_gif"
@@ -295,6 +597,25 @@
                   "o": "/get_meme",
                   "q": {},
                   "r": {},
+                  "rb": {
+                    "fields": [
+                      {
+                        "name": "password"
+                      },
+                      {
+                        "name": "template_id"
+                      },
+                      {
+                        "name": "username"
+                      }
+                    ],
+                    "kind": "form",
+                    "media": "application/x-www-form-urlencoded"
+                  },
+                  "rs": {
+                    "kind": "json",
+                    "media": "application/json"
+                  },
                   "s": [
                     {
                       "lit": "get_meme"
@@ -318,6 +639,31 @@
                   "o": "/search_memes",
                   "q": {},
                   "r": {},
+                  "rb": {
+                    "fields": [
+                      {
+                        "name": "include_nsfw"
+                      },
+                      {
+                        "name": "password"
+                      },
+                      {
+                        "name": "query"
+                      },
+                      {
+                        "name": "type"
+                      },
+                      {
+                        "name": "username"
+                      }
+                    ],
+                    "kind": "form",
+                    "media": "application/x-www-form-urlencoded"
+                  },
+                  "rs": {
+                    "kind": "json",
+                    "media": "application/json"
+                  },
                   "s": [
                     {
                       "lit": "search_memes"
@@ -658,6 +1004,7 @@
             },
             "optspec": {
               "clearTimer": "`$FUNCTION`",
+              "now": "`$FUNCTION`",
               "setTimer": "`$FUNCTION`"
             },
             "strict": false
@@ -838,7 +1185,7 @@
       "optspec": {
         "allow": {
           "method": "GET,PUT,POST,PATCH,DELETE,OPTIONS",
-          "op": "create,update,load,list,remove,command,direct,graphql"
+          "op": "create,update,patch,load,list,remove,command,direct,graphql"
         },
         "apikey": "",
         "auth": {
@@ -891,6 +1238,11 @@
         "top": {
           "active": true
         }
+      },
+      "publisher": {
+        "name": "",
+        "security": "",
+        "url": ""
       },
       "repo": {
         "host": "github.com",
@@ -1121,7 +1473,10 @@
             "version": "0.0.1"
           },
           "superseded": [],
-          "title": "Go MCP server"
+          "title": "Go MCP server",
+          "tool": {
+            "write": false
+          }
         },
         "lua": {
           "active": true,
@@ -1498,6 +1853,17 @@
           "base": "",
           "strict": true
         }
+      },
+      "text": {
+        "about_md": "",
+        "docs_url": "",
+        "entity_desc": {},
+        "homepage": "",
+        "meta_source": "",
+        "summary": "",
+        "tagline": "",
+        "title": "",
+        "website": ""
       }
     }
   },

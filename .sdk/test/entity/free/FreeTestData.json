@@ -2,15 +2,42 @@
   "existing": {
     "free": {
       "FREE00": {
+        "boxes": [],
+        "font": "s65",
+        "max_font_size": 102,
         "memes": [],
+        "no_watermark": true,
+        "password": "s69",
+        "template_id": "TEMPLATE01",
+        "text0": "s6b",
+        "text1": "s6c",
+        "username": "s6d",
         "id": "FREE00"
       },
       "FREE01": {
+        "boxes": [],
+        "font": "sc9",
+        "max_font_size": 202,
         "memes": [],
+        "no_watermark": true,
+        "password": "scd",
+        "template_id": "TEMPLATE01",
+        "text0": "scf",
+        "text1": "sd0",
+        "username": "sd1",
         "id": "FREE01"
       },
       "FREE02": {
+        "boxes": [],
+        "font": "s12d",
+        "max_font_size": 302,
         "memes": [],
+        "no_watermark": true,
+        "password": "s131",
+        "template_id": "TEMPLATE01",
+        "text0": "s133",
+        "text1": "s134",
+        "username": "s135",
         "id": "FREE02"
       }
     }
@@ -18,7 +45,16 @@
   "new": {
     "free": {
       "free_ref01": {
-        "memes": []
+        "boxes": [],
+        "font": "s191",
+        "max_font_size": 402,
+        "memes": [],
+        "no_watermark": true,
+        "password": "s195",
+        "template_id": "TEMPLATE01",
+        "text0": "s197",
+        "text1": "s198",
+        "username": "s199"
       }
     }
   },

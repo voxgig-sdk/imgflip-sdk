@@ -23,7 +23,16 @@ type FreeLoadMatch struct {
 
 // FreeCreateData is the typed request payload for Free.CreateTyped.
 type FreeCreateData struct {
+	Boxes *[]any `json:"boxes,omitempty"`
+	Font *string `json:"font,omitempty"`
+	MaxFontSize *int `json:"max_font_size,omitempty"`
 	Memes *[]any `json:"memes,omitempty"`
+	NoWatermark *bool `json:"no_watermark,omitempty"`
+	Password string `json:"password"`
+	TemplateId string `json:"template_id"`
+	Text0 *string `json:"text0,omitempty"`
+	Text1 *string `json:"text1,omitempty"`
+	Username string `json:"username"`
 }
 
 // Premium is the typed data model for the premium entity.
@@ -32,8 +41,21 @@ type Premium struct {
 
 // PremiumCreateData is the typed request payload for Premium.CreateTyped.
 type PremiumCreateData struct {
+	Boxes []any `json:"boxes"`
+	Font *string `json:"font,omitempty"`
+	IncludeNsfw *int `json:"include_nsfw,omitempty"`
+	MaxFontSize *int `json:"max_font_size,omitempty"`
 	Meme *any `json:"meme,omitempty"`
 	Memes *[]any `json:"memes,omitempty"`
+	Model *string `json:"model,omitempty"`
+	NoWatermark *bool `json:"no_watermark,omitempty"`
+	Password string `json:"password"`
+	PrefixText *string `json:"prefix_text,omitempty"`
+	Query string `json:"query"`
+	TemplateId string `json:"template_id"`
+	Text string `json:"text"`
+	Type *string `json:"type,omitempty"`
+	Username string `json:"username"`
 }
 
 // asMap turns a typed request/data struct into the map[string]any the

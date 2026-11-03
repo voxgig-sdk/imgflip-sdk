@@ -95,22 +95,36 @@ local free = client:Free(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `boxes` | `table` | No | For creating memes with more than two text boxes or for further customization. |
+| `font` | `string` | No | The font family to use for the text. |
+| `max_font_size` | `number` | No | Maximum font size in pixels |
 | `memes` | `table` | No |  |
+| `no_watermark` | `boolean` | No | [Premium only] Remove the imgflip.com watermark |
+| `password` | `string` | Yes | Password for the Imgflip account |
+| `template_id` | `string` | Yes | A template ID as returned by the get_memes response |
+| `text0` | `string` | No | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | `string` | No | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | `string` | Yes | Username of a valid Imgflip account |
 
 ### Operations
 
 #### `create(reqdata, ctrl) -> any, err`
 
-Create a new entity with the given data.
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
 
 ```lua
 local result, err = client:Free():create({
+  password = --[[ string ]],
+  template_id = --[[ string ]],
+  username = --[[ string ]],
 })
 ```
 
+Declares a `application/x-www-form-urlencoded` body, which this SDK does not encode yet: it sends the data as JSON.
+
 #### `load(reqmatch, ctrl) -> any, err`
 
-Load a single entity matching the given criteria.
+Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
 
 ```lua
 local result, err = client:Free():load()
@@ -156,19 +170,60 @@ local premium = client:Premium(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `boxes` | `table` | Yes | Text boxes for the meme. |
+| `font` | `string` | No | The font family to use for the text |
+| `include_nsfw` | `number` | No | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | `number` | No | Maximum font size in pixels |
 | `meme` | `any` | No |  |
 | `memes` | `table` | No |  |
+| `model` | `string` | No | Which neural network model to use |
+| `no_watermark` | `boolean` | No | Remove the imgflip.com watermark |
+| `password` | `string` | Yes | Password for the Imgflip account |
+| `prefix_text` | `string` | No | Max 64 chars. |
+| `query` | `string` | Yes | A text query to search the meme database for. |
+| `template_id` | `string` | No | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | `string` | Yes | The text to display on the meme. |
+| `type` | `string` | No | The type of meme templates to search for. |
+| `username` | `string` | Yes | Username of the Imgflip account with the Premium API subscription |
+
+### Field Usage by Operation
+
+| Field | create |
+| --- | --- |
+| `boxes` | - |
+| `font` | - |
+| `include_nsfw` | - |
+| `max_font_size` | - |
+| `meme` | - |
+| `memes` | - |
+| `model` | - |
+| `no_watermark` | - |
+| `password` | - |
+| `prefix_text` | - |
+| `query` | - |
+| `template_id` | Yes |
+| `text` | - |
+| `type` | - |
+| `username` | - |
 
 ### Operations
 
 #### `create(reqdata, ctrl) -> any, err`
 
-Create a new entity with the given data.
+Create a new entity with the given data. Returns the created entity, or `nil` and an error on failure.
 
 ```lua
 local result, err = client:Premium():create({
+  boxes = --[[ table ]],
+  password = --[[ string ]],
+  query = --[[ string ]],
+  template_id = --[[ string ]],
+  text = --[[ string ]],
+  username = --[[ string ]],
 })
 ```
+
+Declares a `application/x-www-form-urlencoded` body, which this SDK does not encode yet: it sends the data as JSON.
 
 ### Common Methods
 
@@ -357,6 +412,7 @@ Timeout.
 | Option | Type |
 |---|---|
 | `clearTimer` | function |
+| `now` | function |
 | `setTimer` | function |
 
 These take no default: the feature behaves one way when you supply them and

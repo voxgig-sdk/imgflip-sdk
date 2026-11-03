@@ -18,11 +18,27 @@ Results: Successful or failed meme creation; Successful response with meme templ
 
 SDK operations: `create`, `load`.
 
+Key fields to recognise:
+
+- `boxes`: For creating memes with more than two text boxes or for further customization.
+- `font`: The font family to use for the text.
+- `max_font_size`: Maximum font size in pixels
+- `no_watermark`: [Premium only] Remove the imgflip.com watermark
+- `password`: Password for the Imgflip account
+
 ### Premium
 
 Results: Successful AI meme generation; Successful or failed automeme creation; Successful or failed GIF creation; Successful response with meme details; Successful search response.
 
 SDK operations: `create`.
+
+Key fields to recognise:
+
+- `boxes`: Text boxes for the meme.
+- `font`: The font family to use for the text
+- `include_nsfw`: Use `include_nsfw`=1 to allow not-safe-for-work memes to be returned
+- `max_font_size`: Maximum font size in pixels
+- `model`: Which neural network model to use
 
 ### Route map
 

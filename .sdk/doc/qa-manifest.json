@@ -3,5 +3,28 @@
     "SUMMARY.md"
   ],
   "config": ".sdk/doc/qa/vale.ini",
-  "routes": {}
+  "routes": {},
+  "quoted": {
+    "SUMMARY.md": [
+      "For creating memes with more than two text boxes or for further customization.",
+      "Imgflip API Server",
+      "Maximum font size in pixels",
+      "Password for the Imgflip account",
+      "RESTful JSON API for making memes with Imgflip&#39;s meme generator. Supports getting popular meme templates, captioning images and GIFs, searching memes, and AI-powered meme generation.",
+      "Successful AI meme generation",
+      "Successful or failed GIF creation",
+      "Successful or failed automeme creation",
+      "Successful or failed meme creation",
+      "Successful response with meme details",
+      "Successful response with meme templates",
+      "Successful search response",
+      "Text boxes for the meme.",
+      "The font family to use for the text",
+      "The font family to use for the text.",
+      "Use `include_nsfw`=1 to allow not-safe-for-work memes to be returned",
+      "Username and password are sent as form parameters in the request body, not as HTTP Basic Auth headers",
+      "Which neural network model to use",
+      "[Premium only] Remove the imgflip.com watermark"
+    ]
+  }
 }

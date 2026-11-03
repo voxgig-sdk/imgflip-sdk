@@ -75,7 +75,7 @@ func runOp(client *sdk.ImgflipSDK, op string, query *eng.Value, entityAtom eng.V
 
 // entityFor dispatches on the lowercase entity name. The generator
 // emits one `case "<name>":` per entity defined in the SDK model.
-func entityFor(client *sdk.ImgflipSDK, name string) (sdk.ImgflipEntity, error) {
+func entityFor(client *sdk.ImgflipSDK, name string) (sdk.ImgflipEntityBase, error) {
 	switch strings.ToLower(name) {
 	case "free":
 		return client.Free(nil), nil

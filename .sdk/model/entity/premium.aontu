@@ -5,6 +5,34 @@ main: kit: entity: premium: {
   alias: field: {}
 
   fields: {
+    boxes: {
+      h: "Boxes"
+      n: "boxes"
+      r: true
+      sh: "Text boxes for the meme."
+      t: "`$ARRAY`"
+    }
+    font: {
+      h: "Font"
+      n: "font"
+      r: false
+      sh: "The font family to use for the text"
+      t: "`$STRING`"
+    }
+    include_nsfw: {
+      h: "Include Nsfw"
+      n: "include_nsfw"
+      r: false
+      sh: "Use include_nsfw=1 to allow not-safe-for-work memes to be returned"
+      t: "`$INTEGER`"
+    }
+    max_font_size: {
+      h: "Max Font Size"
+      n: "max_font_size"
+      r: false
+      sh: "Maximum font size in pixels"
+      t: "`$INTEGER`"
+    }
     meme: {
       h: "Meme"
       n: "meme"
@@ -16,6 +44,75 @@ main: kit: entity: premium: {
       n: "memes"
       r: false
       t: "`$ARRAY`"
+    }
+    model: {
+      h: "Model"
+      n: "model"
+      r: false
+      sh: "Which neural network model to use"
+      t: "`$STRING`"
+    }
+    no_watermark: {
+      h: "No Watermark"
+      n: "no_watermark"
+      r: false
+      sh: "Remove the imgflip.com watermark"
+      t: "`$BOOLEAN`"
+    }
+    password: {
+      h: "Password"
+      n: "password"
+      r: true
+      sh: "Password for the Imgflip account"
+      t: "`$STRING`"
+    }
+    prefix_text: {
+      h: "Prefix Text"
+      n: "prefix_text"
+      r: false
+      sh: "Max 64 chars."
+      t: "`$STRING`"
+    }
+    query: {
+      h: "Query"
+      n: "query"
+      r: true
+      sh: "A text query to search the meme database for."
+      t: "`$STRING`"
+    }
+    template_id: {
+      h: "Template Id"
+      n: "template_id"
+      op: {
+        create: {
+          req: true
+          type: "`$STRING`"
+        }
+      }
+      r: false
+      sh: "Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model)."
+      t: "`$STRING`"
+    }
+    text: {
+      h: "Text"
+      n: "text"
+      r: true
+      sh: "The text to display on the meme."
+      t: "`$STRING`"
+    }
+    type: {
+      h: "Type"
+      n: "type"
+      r: false
+      sh: "The type of meme templates to search for."
+      t: "`$STRING`"
+    }
+    username: {
+      h: "Username"
+      n: "username"
+      r: true
+      sh: "Username of the Imgflip account with the Premium API subscription"
+      t: "`$STRING`"
     }
   }
 
@@ -32,6 +129,34 @@ main: kit: entity: premium: {
           }
           m: "POST"
           o: "/ai_meme"
+          rb: {
+            fields: [
+              {
+                name: "model"
+              }
+              {
+                name: "no_watermark"
+              }
+              {
+                name: "password"
+              }
+              {
+                name: "prefix_text"
+              }
+              {
+                name: "template_id"
+              }
+              {
+                name: "username"
+              }
+            ]
+            kind: "form"
+            media: "application/x-www-form-urlencoded"
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           s: [
             {
               lit: "ai_meme"
@@ -50,6 +175,28 @@ main: kit: entity: premium: {
           }
           m: "POST"
           o: "/automeme"
+          rb: {
+            fields: [
+              {
+                name: "no_watermark"
+              }
+              {
+                name: "password"
+              }
+              {
+                name: "text"
+              }
+              {
+                name: "username"
+              }
+            ]
+            kind: "form"
+            media: "application/x-www-form-urlencoded"
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           s: [
             {
               lit: "automeme"
@@ -68,6 +215,38 @@ main: kit: entity: premium: {
           }
           m: "POST"
           o: "/caption_gif"
+          rb: {
+            fields: [
+              {
+                list: true
+                name: "boxes"
+              }
+              {
+                name: "font"
+              }
+              {
+                name: "max_font_size"
+              }
+              {
+                name: "no_watermark"
+              }
+              {
+                name: "password"
+              }
+              {
+                name: "template_id"
+              }
+              {
+                name: "username"
+              }
+            ]
+            kind: "form"
+            media: "application/x-www-form-urlencoded"
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           s: [
             {
               lit: "caption_gif"
@@ -86,6 +265,25 @@ main: kit: entity: premium: {
           }
           m: "POST"
           o: "/get_meme"
+          rb: {
+            fields: [
+              {
+                name: "password"
+              }
+              {
+                name: "template_id"
+              }
+              {
+                name: "username"
+              }
+            ]
+            kind: "form"
+            media: "application/x-www-form-urlencoded"
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           s: [
             {
               lit: "get_meme"
@@ -104,6 +302,31 @@ main: kit: entity: premium: {
           }
           m: "POST"
           o: "/search_memes"
+          rb: {
+            fields: [
+              {
+                name: "include_nsfw"
+              }
+              {
+                name: "password"
+              }
+              {
+                name: "query"
+              }
+              {
+                name: "type"
+              }
+              {
+                name: "username"
+              }
+            ]
+            kind: "form"
+            media: "application/x-www-form-urlencoded"
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           s: [
             {
               lit: "search_memes"

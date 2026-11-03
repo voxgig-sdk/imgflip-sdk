@@ -12,7 +12,7 @@ var NewTestFeatureFunc func() Feature
 
 var NewTimeoutFeatureFunc func() Feature
 
-var NewFreeEntityFunc func(client *ImgflipSDK, entopts map[string]any) ImgflipEntity
+var NewFreeEntityFunc func(client *ImgflipSDK, entopts map[string]any) ImgflipEntityBase
 
-var NewPremiumEntityFunc func(client *ImgflipSDK, entopts map[string]any) ImgflipEntity
+var NewPremiumEntityFunc func(client *ImgflipSDK, entopts map[string]any) ImgflipEntityBase
 

@@ -12,7 +12,7 @@ The SDK exposes the API as capitalised, semantic **Entities** — for example `c
 
 ## Install
 This package is not yet published to RubyGems. Install it from the
-GitHub release tag (`rb/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/imgflip-sdk/releases)), or
+GitHub release tag (`rb/vX.Y.Z`, see [Tags](https://github.com/voxgig-sdk/imgflip-sdk/tags)), or
 from a clone:
 
 ```bash
@@ -47,7 +47,7 @@ client = ImgflipSDK.new({
 begin
   # load returns the ENTITY — call data_get for the Free record (raises on error).
   free = client.Free.load()
-  puts free
+  puts free.data_get
 rescue => err
   warn "load failed: #{err}"
 end
@@ -57,7 +57,7 @@ end
 
 ```ruby
 # create returns the ENTITY — call data_get for the created Free record.
-created = client.Free.create({ "memes" => [] })
+created = client.Free.create({ "password" => "example_password", "template_id" => "example_template_id", "username" => "example_username" })
 
 ```
 
@@ -137,9 +137,9 @@ Create a mock client for unit testing — no server required:
 client = ImgflipSDK.test
 
 # Entity ops return the ENTITY (raises on error);
-# call data_get for the mock record.
+# data_get reads its mock record.
 free = client.Free.load()
-puts free
+puts free.data_get
 ```
 
 ### Use a custom fetch function
@@ -226,8 +226,8 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `(reqmatch, ctrl) -> any` | Load a single entity by match criteria. Raises on error. |
-| `create` | `(reqdata, ctrl) -> any` | Create a new entity. Raises on error. |
+| `load` | `(reqmatch, ctrl) -> any` | Load a single entity by match criteria, and return it. Raises on error. |
+| `create` | `(reqdata, ctrl) -> any` | Create a new entity, and return it. Raises on error. |
 | `data_get` | `() -> Hash` | Get entity data. |
 | `data_set` | `(data)` | Set entity data. |
 | `match_get` | `() -> Hash` | Get entity match criteria. |
@@ -237,9 +237,10 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the result data directly. On failure they
-raise a `ImgflipError` (a `StandardError` subclass), so wrap
-calls in `begin`/`rescue` where you need to handle errors.
+Entity operations return the entity, and `list` an `Array` of entities, one
+per record; an entity's `data_get` reads its record. On failure they raise a
+`ImgflipError` (a `StandardError` subclass), so wrap calls in
+`begin`/`rescue` where you need to handle errors.
 
 The `direct` escape hatch is the exception: it never raises and instead
 returns a result `Hash` with these keys:
@@ -258,7 +259,16 @@ returns a result `Hash` with these keys:
 
 | Field | Description |
 | --- | --- |
+| `boxes` | For creating memes with more than two text boxes or for further customization. |
+| `font` | The font family to use for the text. |
+| `max_font_size` | Maximum font size in pixels |
 | `memes` |  |
+| `no_watermark` | [Premium only] Remove the imgflip.com watermark |
+| `password` | Password for the Imgflip account |
+| `template_id` | A template ID as returned by the get_memes response |
+| `text0` | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | Username of a valid Imgflip account |
 
 Operations: Create, Load.
 
@@ -268,8 +278,21 @@ API path: `/caption_image`
 
 | Field | Description |
 | --- | --- |
+| `boxes` | Text boxes for the meme. |
+| `font` | The font family to use for the text |
+| `include_nsfw` | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | Maximum font size in pixels |
 | `meme` |  |
 | `memes` |  |
+| `model` | Which neural network model to use |
+| `no_watermark` | Remove the imgflip.com watermark |
+| `password` | Password for the Imgflip account |
+| `prefix_text` | Max 64 chars. |
+| `query` | A text query to search the meme database for. |
+| `template_id` | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | The text to display on the meme. |
+| `type` | The type of meme templates to search for. |
+| `username` | Username of the Imgflip account with the Premium API subscription |
 
 Operations: Create.
 
@@ -295,7 +318,16 @@ Create an instance: `free = client.Free`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `boxes` | `Array` | For creating memes with more than two text boxes or for further customization. |
+| `font` | `String` | The font family to use for the text. |
+| `max_font_size` | `Integer` | Maximum font size in pixels |
 | `memes` | `Array` |  |
+| `no_watermark` | `Boolean` | [Premium only] Remove the imgflip.com watermark |
+| `password` | `String` | Password for the Imgflip account |
+| `template_id` | `String` | A template ID as returned by the get_memes response |
+| `text0` | `String` | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | `String` | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | `String` | Username of a valid Imgflip account |
 
 #### Example: Load
 
@@ -308,6 +340,9 @@ free = client.Free.load()
 
 ```ruby
 free = client.Free.create({
+  "password" => "example_password", # String
+  "template_id" => "example_template_id", # String
+  "username" => "example_username", # String
 })
 ```
 
@@ -326,13 +361,32 @@ Create an instance: `premium = client.Premium`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `boxes` | `Array` | Text boxes for the meme. |
+| `font` | `String` | The font family to use for the text |
+| `include_nsfw` | `Integer` | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | `Integer` | Maximum font size in pixels |
 | `meme` | `Object` |  |
 | `memes` | `Array` |  |
+| `model` | `String` | Which neural network model to use |
+| `no_watermark` | `Boolean` | Remove the imgflip.com watermark |
+| `password` | `String` | Password for the Imgflip account |
+| `prefix_text` | `String` | Max 64 chars. |
+| `query` | `String` | A text query to search the meme database for. |
+| `template_id` | `String` | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | `String` | The text to display on the meme. |
+| `type` | `String` | The type of meme templates to search for. |
+| `username` | `String` | Username of the Imgflip account with the Premium API subscription |
 
 #### Example: Create
 
 ```ruby
 premium = client.Premium.create({
+  "boxes" => [], # Array
+  "password" => "example_password", # String
+  "query" => "example_query", # String
+  "template_id" => "example_template_id", # String
+  "text" => "example_text", # String
+  "username" => "example_username", # String
 })
 ```
 

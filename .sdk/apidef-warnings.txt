@@ -1,0 +1,14 @@
+{
+  point: "warning"
+  note: "Points POST /ai_meme, POST /automeme, POST /caption_gif, POST /get_meme and POST /search_memes on entity=premium op=create have the same selector (exist: none), so only POST /ai_meme is ever chosen. An action or another entity in guide.aontu tells them apart."
+  entity: "premium"
+  op: "create"
+  points: [
+    "POST /ai_meme"
+    "POST /automeme"
+    "POST /caption_gif"
+    "POST /get_meme"
+    "POST /search_memes"
+  ]
+
+}

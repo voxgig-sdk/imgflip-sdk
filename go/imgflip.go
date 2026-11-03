@@ -13,7 +13,12 @@ type Context = core.Context
 type Utility = core.Utility
 type Feature = core.Feature
 type Entity = core.Entity
-type ImgflipEntity = core.ImgflipEntity
+type ImgflipEntityBase = core.ImgflipEntityBase
+
+// Deprecated: use ImgflipEntityBase.
+type ImgflipEntity = core.ImgflipEntityBase
+
+type StreamItem = core.StreamItem
 type FetcherFunc = core.FetcherFunc
 type Spec = core.Spec
 type Result = core.Result
@@ -41,10 +46,10 @@ func init() {
 	core.NewTimeoutFeatureFunc = func() core.Feature {
 		return feature.NewTimeoutFeature()
 	}
-	core.NewFreeEntityFunc = func(client *core.ImgflipSDK, entopts map[string]any) core.ImgflipEntity {
+	core.NewFreeEntityFunc = func(client *core.ImgflipSDK, entopts map[string]any) core.ImgflipEntityBase {
 		return entity.NewFreeEntity(client, entopts)
 	}
-	core.NewPremiumEntityFunc = func(client *core.ImgflipSDK, entopts map[string]any) core.ImgflipEntity {
+	core.NewPremiumEntityFunc = func(client *core.ImgflipSDK, entopts map[string]any) core.ImgflipEntityBase {
 		return entity.NewPremiumEntity(client, entopts)
 	}
 }

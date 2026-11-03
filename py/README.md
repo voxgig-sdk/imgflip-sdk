@@ -15,7 +15,7 @@ keeps the cognitive load low.
 
 ## Install
 This package is not yet published to PyPI. Install it from the GitHub
-release tag (`py/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/imgflip-sdk/releases)) or
+release tag (`py/vX.Y.Z`, see [Tags](https://github.com/voxgig-sdk/imgflip-sdk/tags)) or
 from a source checkout:
 
 ```bash
@@ -46,7 +46,7 @@ client = ImgflipSDK({
 ```python
 try:
     free = client.Free().load()
-    print(free)
+    print(free.data_get())
 except Exception as err:
     print(f"load failed: {err}")
 ```
@@ -55,7 +55,7 @@ except Exception as err:
 
 ```python
 # Create — returns the ENTITY (call data_get() for the record)
-created = client.Free().create({"memes": []})
+created = client.Free().create({"password": "example_password", "template_id": "example_template_id", "username": "example_username"})
 
 ```
 
@@ -67,7 +67,7 @@ Entity operations raise on failure, so wrap them in `try` / `except`:
 ```python
 try:
     free = client.Free().load()
-    print(free)
+    print(free.data_get())
 except Exception as err:
     print(f"load failed: {err}")
 ```
@@ -133,10 +133,9 @@ Create a mock client for unit testing — no server required:
 ```python
 client = ImgflipSDK.test()
 
-# Entity ops return the ENTITY and raises on error;
-# call data_get() for the record.
+# Entity ops return the entity, and list one per record; they raise on error.
 free = client.Free().load()
-# free contains the mock response record
+# data_get() on an entity reads its mock response record
 ```
 
 ### Use a custom fetch function
@@ -223,8 +222,8 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `(reqmatch, ctrl) -> any` | Load a single entity by match criteria. Raises on error. |
-| `create` | `(reqdata, ctrl) -> any` | Create a new entity. Raises on error. |
+| `load` | `(reqmatch, ctrl) -> any` | Load a single entity by match criteria, and return it. Raises on error. |
+| `create` | `(reqdata, ctrl) -> any` | Create a new entity, and return it. Raises on error. |
 | `data_get` | `() -> dict` | Get entity data. |
 | `data_set` | `(data)` | Set entity data. |
 | `match_get` | `() -> dict` | Get entity match criteria. |
@@ -234,9 +233,9 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the ENTITY (call data_get() for the record) (a `dict` for single-entity
-ops, a `list` for `list`) and raise on error. Wrap calls in
-`try`/`except` to handle failures.
+Entity operations return the entity, and `list` a `list` of entities, one
+per record; an entity's `data_get()` reads its record (a `dict`). They raise
+on error, so wrap calls in `try`/`except` to handle failures.
 
 The `direct()` escape hatch never raises — it returns a result `dict`
 you branch on via `result["ok"]`:
@@ -256,7 +255,16 @@ On error, `ok` is `False` and `err` contains the error value.
 
 | Field | Description |
 | --- | --- |
+| `boxes` | For creating memes with more than two text boxes or for further customization. |
+| `font` | The font family to use for the text. |
+| `max_font_size` | Maximum font size in pixels |
 | `memes` |  |
+| `no_watermark` | [Premium only] Remove the imgflip.com watermark |
+| `password` | Password for the Imgflip account |
+| `template_id` | A template ID as returned by the get_memes response |
+| `text0` | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | Username of a valid Imgflip account |
 
 Operations: Create, Load.
 
@@ -266,8 +274,21 @@ API path: `/caption_image`
 
 | Field | Description |
 | --- | --- |
+| `boxes` | Text boxes for the meme. |
+| `font` | The font family to use for the text |
+| `include_nsfw` | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | Maximum font size in pixels |
 | `meme` |  |
 | `memes` |  |
+| `model` | Which neural network model to use |
+| `no_watermark` | Remove the imgflip.com watermark |
+| `password` | Password for the Imgflip account |
+| `prefix_text` | Max 64 chars. |
+| `query` | A text query to search the meme database for. |
+| `template_id` | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | The text to display on the meme. |
+| `type` | The type of meme templates to search for. |
+| `username` | Username of the Imgflip account with the Premium API subscription |
 
 Operations: Create.
 
@@ -293,7 +314,16 @@ Create an instance: `free = client.Free()`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `boxes` | `list` | For creating memes with more than two text boxes or for further customization. |
+| `font` | `str` | The font family to use for the text. |
+| `max_font_size` | `int` | Maximum font size in pixels |
 | `memes` | `list` |  |
+| `no_watermark` | `bool` | [Premium only] Remove the imgflip.com watermark |
+| `password` | `str` | Password for the Imgflip account |
+| `template_id` | `str` | A template ID as returned by the get_memes response |
+| `text0` | `str` | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | `str` | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | `str` | Username of a valid Imgflip account |
 
 #### Example: Load
 
@@ -305,6 +335,9 @@ free = client.Free().load()
 
 ```python
 free = client.Free().create({
+    "password": "example_password",  # str
+    "template_id": "example_template_id",  # str
+    "username": "example_username",  # str
 })
 ```
 
@@ -323,13 +356,32 @@ Create an instance: `premium = client.Premium()`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `boxes` | `list` | Text boxes for the meme. |
+| `font` | `str` | The font family to use for the text |
+| `include_nsfw` | `int` | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | `int` | Maximum font size in pixels |
 | `meme` | `Any` |  |
 | `memes` | `list` |  |
+| `model` | `str` | Which neural network model to use |
+| `no_watermark` | `bool` | Remove the imgflip.com watermark |
+| `password` | `str` | Password for the Imgflip account |
+| `prefix_text` | `str` | Max 64 chars. |
+| `query` | `str` | A text query to search the meme database for. |
+| `template_id` | `str` | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | `str` | The text to display on the meme. |
+| `type` | `str` | The type of meme templates to search for. |
+| `username` | `str` | Username of the Imgflip account with the Premium API subscription |
 
 #### Example: Create
 
 ```python
 premium = client.Premium().create({
+    "boxes": [],  # list
+    "password": "example_password",  # str
+    "query": "example_query",  # str
+    "template_id": "example_template_id",  # str
+    "text": "example_text",  # str
+    "username": "example_username",  # str
 })
 ```
 

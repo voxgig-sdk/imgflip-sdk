@@ -10,10 +10,46 @@
 
 # Free entity data model.
 #
+# @!attribute [rw] boxes
+#   @return [Array, nil]
+#
+# @!attribute [rw] font
+#   @return [String, nil]
+#
+# @!attribute [rw] max_font_size
+#   @return [Integer, nil]
+#
 # @!attribute [rw] memes
 #   @return [Array, nil]
+#
+# @!attribute [rw] no_watermark
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] password
+#   @return [String]
+#
+# @!attribute [rw] template_id
+#   @return [String]
+#
+# @!attribute [rw] text0
+#   @return [String, nil]
+#
+# @!attribute [rw] text1
+#   @return [String, nil]
+#
+# @!attribute [rw] username
+#   @return [String]
 Free = Struct.new(
+  :boxes,
+  :font,
+  :max_font_size,
   :memes,
+  :no_watermark,
+  :password,
+  :template_id,
+  :text0,
+  :text1,
+  :username,
   keyword_init: true
 )
 
@@ -28,36 +64,176 @@ FreeLoadMatch = Struct.new(
 
 # Request payload for Free#create.
 #
+# @!attribute [rw] boxes
+#   @return [Array, nil]
+#
+# @!attribute [rw] font
+#   @return [String, nil]
+#
+# @!attribute [rw] max_font_size
+#   @return [Integer, nil]
+#
 # @!attribute [rw] memes
 #   @return [Array, nil]
+#
+# @!attribute [rw] no_watermark
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] password
+#   @return [String]
+#
+# @!attribute [rw] template_id
+#   @return [String]
+#
+# @!attribute [rw] text0
+#   @return [String, nil]
+#
+# @!attribute [rw] text1
+#   @return [String, nil]
+#
+# @!attribute [rw] username
+#   @return [String]
 FreeCreateData = Struct.new(
+  :boxes,
+  :font,
+  :max_font_size,
   :memes,
+  :no_watermark,
+  :password,
+  :template_id,
+  :text0,
+  :text1,
+  :username,
   keyword_init: true
 )
 
 # Premium entity data model.
 #
+# @!attribute [rw] boxes
+#   @return [Array]
+#
+# @!attribute [rw] font
+#   @return [String, nil]
+#
+# @!attribute [rw] include_nsfw
+#   @return [Integer, nil]
+#
+# @!attribute [rw] max_font_size
+#   @return [Integer, nil]
+#
 # @!attribute [rw] meme
 #   @return [Object, nil]
 #
 # @!attribute [rw] memes
 #   @return [Array, nil]
+#
+# @!attribute [rw] model
+#   @return [String, nil]
+#
+# @!attribute [rw] no_watermark
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] password
+#   @return [String]
+#
+# @!attribute [rw] prefix_text
+#   @return [String, nil]
+#
+# @!attribute [rw] query
+#   @return [String]
+#
+# @!attribute [rw] template_id
+#   @return [String, nil]
+#
+# @!attribute [rw] text
+#   @return [String]
+#
+# @!attribute [rw] type
+#   @return [String, nil]
+#
+# @!attribute [rw] username
+#   @return [String]
 Premium = Struct.new(
+  :boxes,
+  :font,
+  :include_nsfw,
+  :max_font_size,
   :meme,
   :memes,
+  :model,
+  :no_watermark,
+  :password,
+  :prefix_text,
+  :query,
+  :template_id,
+  :text,
+  :type,
+  :username,
   keyword_init: true
 )
 
 # Request payload for Premium#create.
 #
+# @!attribute [rw] boxes
+#   @return [Array]
+#
+# @!attribute [rw] font
+#   @return [String, nil]
+#
+# @!attribute [rw] include_nsfw
+#   @return [Integer, nil]
+#
+# @!attribute [rw] max_font_size
+#   @return [Integer, nil]
+#
 # @!attribute [rw] meme
 #   @return [Object, nil]
 #
 # @!attribute [rw] memes
 #   @return [Array, nil]
+#
+# @!attribute [rw] model
+#   @return [String, nil]
+#
+# @!attribute [rw] no_watermark
+#   @return [Boolean, nil]
+#
+# @!attribute [rw] password
+#   @return [String]
+#
+# @!attribute [rw] prefix_text
+#   @return [String, nil]
+#
+# @!attribute [rw] query
+#   @return [String]
+#
+# @!attribute [rw] template_id
+#   @return [String]
+#
+# @!attribute [rw] text
+#   @return [String]
+#
+# @!attribute [rw] type
+#   @return [String, nil]
+#
+# @!attribute [rw] username
+#   @return [String]
 PremiumCreateData = Struct.new(
+  :boxes,
+  :font,
+  :include_nsfw,
+  :max_font_size,
   :meme,
   :memes,
+  :model,
+  :no_watermark,
+  :password,
+  :prefix_text,
+  :query,
+  :template_id,
+  :text,
+  :type,
+  :username,
   keyword_init: true
 )
 

@@ -2,18 +2,57 @@
   "existing": {
     "premium": {
       "PREMIUM00": {
-        "meme": "s14",
+        "boxes": [],
+        "font": "s97",
+        "include_nsfw": 152,
+        "max_font_size": 153,
+        "meme": "s9a",
         "memes": [],
+        "model": "s9c",
+        "no_watermark": false,
+        "password": "s9e",
+        "prefix_text": "s9f",
+        "query": "sa0",
+        "template_id": "TEMPLATE01",
+        "text": "sa2",
+        "type": "sa3",
+        "username": "sa4",
         "id": "PREMIUM00"
       },
       "PREMIUM01": {
-        "meme": "s28",
+        "boxes": [],
+        "font": "s12d",
+        "include_nsfw": 302,
+        "max_font_size": 303,
+        "meme": "s130",
         "memes": [],
+        "model": "s132",
+        "no_watermark": false,
+        "password": "s134",
+        "prefix_text": "s135",
+        "query": "s136",
+        "template_id": "TEMPLATE01",
+        "text": "s138",
+        "type": "s139",
+        "username": "s13a",
         "id": "PREMIUM01"
       },
       "PREMIUM02": {
-        "meme": "s3c",
+        "boxes": [],
+        "font": "s1c3",
+        "include_nsfw": 452,
+        "max_font_size": 453,
+        "meme": "s1c6",
         "memes": [],
+        "model": "s1c8",
+        "no_watermark": false,
+        "password": "s1ca",
+        "prefix_text": "s1cb",
+        "query": "s1cc",
+        "template_id": "TEMPLATE01",
+        "text": "s1ce",
+        "type": "s1cf",
+        "username": "s1d0",
         "id": "PREMIUM02"
       }
     }
@@ -21,8 +60,21 @@
   "new": {
     "premium": {
       "premium_ref01": {
-        "meme": "s50",
-        "memes": []
+        "boxes": [],
+        "font": "s259",
+        "include_nsfw": 602,
+        "max_font_size": 603,
+        "meme": "s25c",
+        "memes": [],
+        "model": "s25e",
+        "no_watermark": false,
+        "password": "s260",
+        "prefix_text": "s261",
+        "query": "s262",
+        "template_id": "TEMPLATE01",
+        "text": "s264",
+        "type": "s265",
+        "username": "s266"
       }
     }
   },

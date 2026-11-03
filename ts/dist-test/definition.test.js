@@ -17,7 +17,12 @@ const PLAN = [
         "args": [],
         "select": {},
         "headers": [],
+        "cookies": [],
+        "responseMedia": [
+            "application/json"
+        ],
         "query": [],
+        "queryArgs": [],
         "auth": [],
         "status": 200,
         "sample": {
@@ -40,8 +45,18 @@ const PLAN = [
             "type": "image"
         },
         "headers": [],
+        "cookies": [],
+        "responseMedia": [
+            "application/json"
+        ],
         "query": [
             "type"
+        ],
+        "queryArgs": [
+            {
+                "name": "type",
+                "wire": "type"
+            }
         ],
         "auth": [],
         "status": 200,
@@ -50,12 +65,12 @@ const PLAN = [
             "data": {
                 "memes": [
                     {
-                        "box_count": 2,
-                        "height": 335,
                         "id": "61579",
                         "name": "One Does Not Simply",
                         "url": "https://i.imgflip.com/1bij.jpg",
-                        "width": 568
+                        "width": 568,
+                        "height": 335,
+                        "box_count": 2
                     }
                 ]
             }

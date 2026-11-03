@@ -15,7 +15,7 @@ predictable and low-friction for both humans and AI agents.
 
 ## Install
 This package is not yet published to npm. Install it from the GitHub
-release tag (`ts/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/imgflip-sdk/releases)), or from a
+release tag (`ts/vX.Y.Z`, see [Tags](https://github.com/voxgig-sdk/imgflip-sdk/tags)), or from a
 clone, which carries the compiled `dist/`:
 
 ```bash
@@ -42,12 +42,12 @@ const client = new ImgflipSDK({
 
 ### 3. Load a free
 
-`load()` returns the entity directly and throws on failure:
+`load()` returns the entity and throws on failure; `.data()` reads its record:
 
 ```ts
 try {
   const free = await client.Free().load()
-  console.log(free)
+  console.log(free.data())
 } catch (err) {
   console.error('load failed:', err)
 }
@@ -58,7 +58,9 @@ try {
 ```ts
 // Create — returns the created Free ENTITY (.data() for the record)
 const created = await client.Free().create({
-  memes: [],
+  password: 'example_password',
+  template_id: 'example_template_id',
+  username: 'example_username',
 })
 
 ```
@@ -71,14 +73,15 @@ Entity operations reject on failure, so wrap them in `try` / `catch`:
 ```ts
 try {
   const free = await client.Free().load()
-  console.log(free)
+  console.log(free.data())
 } catch (err) {
   console.error('load failed:', err)
 }
 ```
 
 The low-level `direct()` method does **not** throw — it returns the
-value or an `Error`, so check the result before using it:
+result envelope. Branch on `ok`; on failure `status` holds the HTTP status
+(for error responses) and `err` holds the error:
 
 ```ts
 const result = await client.direct({
@@ -87,8 +90,8 @@ const result = await client.direct({
   params: { id: 'example_id' },
 })
 
-if (result instanceof Error) {
-  throw result
+if (!result.ok) {
+  console.error('request failed:', result.status, result.err)
 }
 ```
 
@@ -106,9 +109,6 @@ const result = await client.direct({
   params: { id: 'example' },
 })
 
-if (result instanceof Error) {
-  throw result
-}
 if (result.ok) {
   console.log(result.status)  // 200
   console.log(result.data)    // response body
@@ -138,9 +138,8 @@ Create a mock client for unit testing — no server required:
 const client = ImgflipSDK.test()
 
 const free = await client.Free().load()
-// free is the entity, populated with mock response data
-// — call free.data() for the record itself
-console.log(free)
+// free is the Free entity; .data() reads its mock record
+console.log(free.data())
 ```
 
 You can also use the instance method:
@@ -264,8 +263,8 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `load(reqmatch?, ctrl?): Promise<Entity>` | Load a single entity by match criteria. |
-| `create` | `create(reqdata?, ctrl?): Promise<Entity>` | Create a new entity. |
+| `load` | `load(reqmatch?, ctrl?): Promise<Entity>` | Load a single entity by match criteria, and return it. |
+| `create` | `create(reqdata?, ctrl?): Promise<Entity>` | Create a new entity, and return it. |
 | `data` | `data(data?: Partial<Entity>): Entity` | Get or set entity data. |
 | `match` | `match(match?: Partial<Entity>): Partial<Entity>` | Get or set entity match criteria. |
 | `make` | `make(): Entity` | Create a new instance with the same options. |
@@ -274,8 +273,8 @@ All entities share the same interface.
 
 #### Return values
 
-Entity operations resolve to the entity data directly — there is no
-result envelope:
+Entity operations resolve to the entity itself — there is no result
+envelope, and an entity's `data()` reads its record:
 
 - `load` and `create` resolve to a single entity object.
 
@@ -317,7 +316,16 @@ The `prepare()` method returns:
 
 | Field | Description |
 | --- | --- |
+| `boxes` | For creating memes with more than two text boxes or for further customization. |
+| `font` | The font family to use for the text. |
+| `max_font_size` | Maximum font size in pixels |
 | `memes` |  |
+| `no_watermark` | [Premium only] Remove the imgflip.com watermark |
+| `password` | Password for the Imgflip account |
+| `template_id` | A template ID as returned by the get_memes response |
+| `text0` | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | Username of a valid Imgflip account |
 
 Operations: create, load.
 
@@ -327,8 +335,21 @@ API path: `/caption_image`
 
 | Field | Description |
 | --- | --- |
+| `boxes` | Text boxes for the meme. |
+| `font` | The font family to use for the text |
+| `include_nsfw` | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | Maximum font size in pixels |
 | `meme` |  |
 | `memes` |  |
+| `model` | Which neural network model to use |
+| `no_watermark` | Remove the imgflip.com watermark |
+| `password` | Password for the Imgflip account |
+| `prefix_text` | Max 64 chars. |
+| `query` | A text query to search the meme database for. |
+| `template_id` | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | The text to display on the meme. |
+| `type` | The type of meme templates to search for. |
+| `username` | Username of the Imgflip account with the Premium API subscription |
 
 Operations: create.
 
@@ -354,7 +375,16 @@ Create an instance: `const free = client.Free()`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `boxes` | `any[]` | For creating memes with more than two text boxes or for further customization. |
+| `font` | `string` | The font family to use for the text. |
+| `max_font_size` | `number` | Maximum font size in pixels |
 | `memes` | `any[]` |  |
+| `no_watermark` | `boolean` | [Premium only] Remove the imgflip.com watermark |
+| `password` | `string` | Password for the Imgflip account |
+| `template_id` | `string` | A template ID as returned by the get_memes response |
+| `text0` | `string` | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | `string` | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | `string` | Username of a valid Imgflip account |
 
 #### Example: Load
 
@@ -366,6 +396,9 @@ const free = await client.Free().load()
 
 ```ts
 const free = await client.Free().create({
+  password: 'example_password',
+  template_id: 'example_template_id',
+  username: 'example_username',
 })
 ```
 
@@ -384,13 +417,32 @@ Create an instance: `const premium = client.Premium()`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `boxes` | `any[]` | Text boxes for the meme. |
+| `font` | `string` | The font family to use for the text |
+| `include_nsfw` | `number` | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | `number` | Maximum font size in pixels |
 | `meme` | `any` |  |
 | `memes` | `any[]` |  |
+| `model` | `string` | Which neural network model to use |
+| `no_watermark` | `boolean` | Remove the imgflip.com watermark |
+| `password` | `string` | Password for the Imgflip account |
+| `prefix_text` | `string` | Max 64 chars. |
+| `query` | `string` | A text query to search the meme database for. |
+| `template_id` | `string` | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | `string` | The text to display on the meme. |
+| `type` | `string` | The type of meme templates to search for. |
+| `username` | `string` | Username of the Imgflip account with the Premium API subscription |
 
 #### Example: Create
 
 ```ts
 const premium = await client.Premium().create({
+  boxes: [],
+  password: 'example_password',
+  query: 'example_query',
+  template_id: 'example_template_id',
+  text: 'example_text',
+  username: 'example_username',
 })
 ```
 

@@ -12,7 +12,7 @@ The SDK exposes the API as capitalised, semantic **Entities** — for example `$
 
 ## Install
 This package is not yet published to Packagist. Install it from the
-GitHub release tag (`php/vX.Y.Z`, see [Releases](https://github.com/voxgig-sdk/imgflip-sdk/releases)), or
+GitHub release tag (`php/vX.Y.Z`, see [Tags](https://github.com/voxgig-sdk/imgflip-sdk/tags)), or
 from a clone as a Composer path repository:
 
 ```bash
@@ -54,7 +54,7 @@ try {
 
 ```php
 // create() returns the ENTITY — call data_get() for the created Free record.
-$created = $client->Free()->create(["memes" => []]);
+$created = $client->Free()->create(["password" => "example_password", "template_id" => "example_template_id", "username" => "example_username"]);
 
 ```
 
@@ -231,8 +231,8 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `($reqmatch, $ctrl): array` | Load a single entity by match criteria. |
-| `create` | `($reqdata, $ctrl): array` | Create a new entity. |
+| `load` | `($reqmatch, $ctrl): mixed` | Load a single entity by match criteria, and return it. |
+| `create` | `($reqdata, $ctrl): mixed` | Create a new entity, and return it. |
 | `data_get` | `(): array` | Get entity data. |
 | `data_set` | `($data): void` | Set entity data. |
 | `match_get` | `(): array` | Get entity match criteria. |
@@ -242,9 +242,9 @@ All entities share the same interface.
 
 ### Result shape
 
-Entity operations return the ENTITY (call data_get() for the record) (an `array` for single-entity
-ops, a `list` for `list`) and throw on error. Wrap calls in
-`try`/`catch` to handle failures.
+Entity operations return the entity, and `list` an `array` of entities, one
+per record; an entity's `data_get()` reads its record (an `array`). They
+throw on error, so wrap calls in `try`/`catch` to handle failures.
 
 The `direct()` escape hatch never throws — it returns a result `array`
 you branch on via `$result["ok"]`:
@@ -264,7 +264,16 @@ On error, `ok` is `false` and `$err` contains the error value.
 
 | Field | Description |
 | --- | --- |
+| `boxes` | For creating memes with more than two text boxes or for further customization. |
+| `font` | The font family to use for the text. |
+| `max_font_size` | Maximum font size in pixels |
 | `memes` |  |
+| `no_watermark` | [Premium only] Remove the imgflip.com watermark |
+| `password` | Password for the Imgflip account |
+| `template_id` | A template ID as returned by the get_memes response |
+| `text0` | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | Username of a valid Imgflip account |
 
 Operations: Create, Load.
 
@@ -274,8 +283,21 @@ API path: `/caption_image`
 
 | Field | Description |
 | --- | --- |
+| `boxes` | Text boxes for the meme. |
+| `font` | The font family to use for the text |
+| `include_nsfw` | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | Maximum font size in pixels |
 | `meme` |  |
 | `memes` |  |
+| `model` | Which neural network model to use |
+| `no_watermark` | Remove the imgflip.com watermark |
+| `password` | Password for the Imgflip account |
+| `prefix_text` | Max 64 chars. |
+| `query` | A text query to search the meme database for. |
+| `template_id` | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | The text to display on the meme. |
+| `type` | The type of meme templates to search for. |
+| `username` | Username of the Imgflip account with the Premium API subscription |
 
 Operations: Create.
 
@@ -301,7 +323,16 @@ Create an instance: `$free = $client->Free();`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `boxes` | `array` | For creating memes with more than two text boxes or for further customization. |
+| `font` | `string` | The font family to use for the text. |
+| `max_font_size` | `int` | Maximum font size in pixels |
 | `memes` | `array` |  |
+| `no_watermark` | `bool` | [Premium only] Remove the imgflip.com watermark |
+| `password` | `string` | Password for the Imgflip account |
+| `template_id` | `string` | A template ID as returned by the get_memes response |
+| `text0` | `string` | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | `string` | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | `string` | Username of a valid Imgflip account |
 
 #### Example: Load
 
@@ -314,6 +345,9 @@ $free = $client->Free()->load();
 
 ```php
 $free = $client->Free()->create([
+    "password" => null, // string
+    "template_id" => null, // string
+    "username" => null, // string
 ]);
 ```
 
@@ -332,13 +366,32 @@ Create an instance: `$premium = $client->Premium();`
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `boxes` | `array` | Text boxes for the meme. |
+| `font` | `string` | The font family to use for the text |
+| `include_nsfw` | `int` | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | `int` | Maximum font size in pixels |
 | `meme` | `mixed` |  |
 | `memes` | `array` |  |
+| `model` | `string` | Which neural network model to use |
+| `no_watermark` | `bool` | Remove the imgflip.com watermark |
+| `password` | `string` | Password for the Imgflip account |
+| `prefix_text` | `string` | Max 64 chars. |
+| `query` | `string` | A text query to search the meme database for. |
+| `template_id` | `string` | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | `string` | The text to display on the meme. |
+| `type` | `string` | The type of meme templates to search for. |
+| `username` | `string` | Username of the Imgflip account with the Premium API subscription |
 
 #### Example: Create
 
 ```php
 $premium = $client->Premium()->create([
+    "boxes" => null, // array
+    "password" => null, // string
+    "query" => null, // string
+    "template_id" => null, // string
+    "text" => null, // string
+    "username" => null, // string
 ]);
 ```
 

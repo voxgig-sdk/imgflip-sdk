@@ -48,11 +48,11 @@ client := sdk.TestSDK(testopts, sdkopts)
 
 ### Instance Methods
 
-#### `Free(data map[string]any) ImgflipEntity`
+#### `Free(data map[string]any) ImgflipEntityBase`
 
 Create a new `Free` entity instance. Pass `nil` for no initial data.
 
-#### `Premium(data map[string]any) ImgflipEntity`
+#### `Premium(data map[string]any) ImgflipEntityBase`
 
 Create a new `Premium` entity instance. Pass `nil` for no initial data.
 
@@ -103,34 +103,48 @@ fmt.Println(free.GetName()) // "free"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `boxes` | `[]any` | No | For creating memes with more than two text boxes or for further customization. |
+| `font` | `string` | No | The font family to use for the text. |
+| `max_font_size` | `int` | No | Maximum font size in pixels |
 | `memes` | `[]any` | No |  |
+| `no_watermark` | `bool` | No | [Premium only] Remove the imgflip.com watermark |
+| `password` | `string` | Yes | Password for the Imgflip account |
+| `template_id` | `string` | Yes | A template ID as returned by the get_memes response |
+| `text0` | `string` | No | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | `string` | No | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | `string` | Yes | Username of a valid Imgflip account |
 
 ### Operations
 
 #### `Load(reqmatch, ctrl map[string]any) (any, error)`
 
-Load a single entity matching the given criteria.
+Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
 
 ```go
 result, err := client.Free(nil).Load(nil, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data())
 ```
 
 #### `Create(reqdata, ctrl map[string]any) (any, error)`
 
-Create a new entity with the given data.
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
 
 ```go
 result, err := client.Free(nil).Create(map[string]any{
+    "password": "example_password",
+    "template_id": "example_template_id",
+    "username": "example_username",
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data())
 ```
+
+Declares a `application/x-www-form-urlencoded` body, which this SDK does not encode yet: it sends the data as JSON.
 
 ### Common Methods
 
@@ -148,6 +162,14 @@ Get or set the entity match criteria. Works the same as `Data()`.
 
 Create a new `FreeEntity` instance with the same client and
 options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
 
 #### `GetName() string`
 
@@ -167,23 +189,64 @@ fmt.Println(premium.GetName()) // "premium"
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `boxes` | `[]any` | Yes | Text boxes for the meme. |
+| `font` | `string` | No | The font family to use for the text |
+| `include_nsfw` | `int` | No | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | `int` | No | Maximum font size in pixels |
 | `meme` | `any` | No |  |
 | `memes` | `[]any` | No |  |
+| `model` | `string` | No | Which neural network model to use |
+| `no_watermark` | `bool` | No | Remove the imgflip.com watermark |
+| `password` | `string` | Yes | Password for the Imgflip account |
+| `prefix_text` | `string` | No | Max 64 chars. |
+| `query` | `string` | Yes | A text query to search the meme database for. |
+| `template_id` | `string` | No | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | `string` | Yes | The text to display on the meme. |
+| `type` | `string` | No | The type of meme templates to search for. |
+| `username` | `string` | Yes | Username of the Imgflip account with the Premium API subscription |
+
+### Field Usage by Operation
+
+| Field | create |
+| --- | --- |
+| `boxes` | - |
+| `font` | - |
+| `include_nsfw` | - |
+| `max_font_size` | - |
+| `meme` | - |
+| `memes` | - |
+| `model` | - |
+| `no_watermark` | - |
+| `password` | - |
+| `prefix_text` | - |
+| `query` | - |
+| `template_id` | Yes |
+| `text` | - |
+| `type` | - |
+| `username` | - |
 
 ### Operations
 
 #### `Create(reqdata, ctrl map[string]any) (any, error)`
 
-Create a new entity with the given data.
+Create a new entity with the given data. Returns the created entity; `err` is non-nil on failure.
 
 ```go
 result, err := client.Premium(nil).Create(map[string]any{
+    "boxes": []any{},
+    "password": "example_password",
+    "query": "example_query",
+    "template_id": "example_template_id",
+    "text": "example_text",
+    "username": "example_username",
 }, nil)
 if err != nil {
     panic(err)
 }
-fmt.Println(result)
+fmt.Println(result.(sdk.Entity).Data())
 ```
+
+Declares a `application/x-www-form-urlencoded` body, which this SDK does not encode yet: it sends the data as JSON.
 
 ### Common Methods
 
@@ -201,6 +264,14 @@ Get or set the entity match criteria. Works the same as `Data()`.
 
 Create a new `PremiumEntity` instance with the same client and
 options.
+
+#### `Stream(action string, args map[string]any, callopts map[string]any) <-chan StreamItem`
+
+Run an operation through the pipeline and send its result items on the
+returned channel, which closes when the stream ends. A `StreamItem` holds
+one item in `Item`, or in `Err` the error that ended the stream: the
+error the operation itself would return, sent as the last value. Under
+`throw: false` in `callopts["ctrl"]`, no error is sent.
 
 #### `GetName() string`
 
@@ -366,6 +437,7 @@ Timeout.
 | Option | Type |
 |---|---|
 | `clearTimer` | function |
+| `now` | function |
 | `setTimer` | function |
 
 These take no default: the feature behaves one way when you supply them and

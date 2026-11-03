@@ -5,11 +5,74 @@ main: kit: entity: free: {
   alias: field: {}
 
   fields: {
+    boxes: {
+      h: "Boxes"
+      n: "boxes"
+      r: false
+      sh: "For creating memes with more than two text boxes or for further customization."
+      t: "`$ARRAY`"
+    }
+    font: {
+      h: "Font"
+      n: "font"
+      r: false
+      sh: "The font family to use for the text."
+      t: "`$STRING`"
+    }
+    max_font_size: {
+      h: "Max Font Size"
+      n: "max_font_size"
+      r: false
+      sh: "Maximum font size in pixels"
+      t: "`$INTEGER`"
+    }
     memes: {
       h: "Memes"
       n: "memes"
       r: false
       t: "`$ARRAY`"
+    }
+    no_watermark: {
+      h: "No Watermark"
+      n: "no_watermark"
+      r: false
+      sh: "[Premium only] Remove the imgflip.com watermark"
+      t: "`$BOOLEAN`"
+    }
+    password: {
+      h: "Password"
+      n: "password"
+      r: true
+      sh: "Password for the Imgflip account"
+      t: "`$STRING`"
+    }
+    template_id: {
+      h: "Template Id"
+      n: "template_id"
+      r: true
+      sh: "A template ID as returned by the get_memes response"
+      t: "`$STRING`"
+    }
+    text0: {
+      h: "Text0"
+      n: "text0"
+      r: false
+      sh: "Top text for the meme (do not use if using boxes parameter)"
+      t: "`$STRING`"
+    }
+    text1: {
+      h: "Text1"
+      n: "text1"
+      r: false
+      sh: "Bottom text for the meme (do not use if using boxes parameter)"
+      t: "`$STRING`"
+    }
+    username: {
+      h: "Username"
+      n: "username"
+      r: true
+      sh: "Username of a valid Imgflip account"
+      t: "`$STRING`"
     }
   }
 
@@ -26,6 +89,44 @@ main: kit: entity: free: {
           }
           m: "POST"
           o: "/caption_image"
+          rb: {
+            fields: [
+              {
+                list: true
+                name: "boxes"
+              }
+              {
+                name: "font"
+              }
+              {
+                name: "max_font_size"
+              }
+              {
+                name: "no_watermark"
+              }
+              {
+                name: "password"
+              }
+              {
+                name: "template_id"
+              }
+              {
+                name: "text0"
+              }
+              {
+                name: "text1"
+              }
+              {
+                name: "username"
+              }
+            ]
+            kind: "form"
+            media: "application/x-www-form-urlencoded"
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           s: [
             {
               lit: "caption_image"
@@ -61,10 +162,9 @@ main: kit: entity: free: {
           }
           m: "GET"
           o: "/get_memes"
-          q: {
-            exist: [
-              "type"
-            ]
+          rs: {
+            kind: "json"
+            media: "application/json"
           }
           s: [
             {

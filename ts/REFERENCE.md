@@ -101,8 +101,10 @@ Make a direct HTTP request to any API endpoint.
 | `fetchargs.headers` | `object` | Request headers (merged with defaults). |
 | `fetchargs.body` | `any` | Request body (objects are JSON-serialized). |
 | `fetchargs.ctrl` | `object` | Control options (e.g. `{ explain: true }`). |
+| `fetchargs.ctrl.signal` | `AbortSignal` | Aborts the request in flight: `ok` is then `false` and `err.code` is `request_aborted`. |
 
-**Returns:** `Promise<{ ok, status, headers, data } | Error>`
+**Returns:** `Promise<{ ok, status, headers, data }>`. On a failure
+`ok` is `false` and `err` holds the error.
 
 #### `prepare(fetchargs?: object)`
 
@@ -117,6 +119,15 @@ Alias for `ImgflipSDK.test()`.
 
 **Returns:** `ImgflipSDK` instance in test mode.
 
+#### Cancelling a call
+
+Every entity operation takes an optional `ctrl` object after its match or
+data, and an `AbortSignal` in `ctrl.signal` cancels the request in flight.
+The operation then rejects with an error whose `code` is
+`request_aborted` and whose `cause` is the signal's reason. A request
+whose signal has already aborted is not sent. `stream()` takes the signal
+as `callopts.signal`, and ends when it aborts.
+
 
 ---
 
@@ -130,22 +141,36 @@ const free = client.Free()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `boxes` | `any[]` | No | For creating memes with more than two text boxes or for further customization. |
+| `font` | `string` | No | The font family to use for the text. |
+| `max_font_size` | `number` | No | Maximum font size in pixels |
 | `memes` | `any[]` | No |  |
+| `no_watermark` | `boolean` | No | [Premium only] Remove the imgflip.com watermark |
+| `password` | `string` | Yes | Password for the Imgflip account |
+| `template_id` | `string` | Yes | A template ID as returned by the get_memes response |
+| `text0` | `string` | No | Top text for the meme (do not use if using boxes parameter) |
+| `text1` | `string` | No | Bottom text for the meme (do not use if using boxes parameter) |
+| `username` | `string` | Yes | Username of a valid Imgflip account |
 
 ### Operations
 
 #### `create(data: object, ctrl?: object)`
 
-Create a new entity with the given data.
+Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.Free().create({
+  password: 'example_password',
+  template_id: 'example_template_id',
+  username: 'example_username',
 })
 ```
 
+Declares a `application/x-www-form-urlencoded` body, which this SDK does not encode yet: it sends the data as JSON.
+
 #### `load(match: object, ctrl?: object)`
 
-Load a single entity matching the given criteria.
+Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
 
 ```ts
 const result = await client.Free().load()
@@ -189,19 +214,60 @@ const premium = client.Premium()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
+| `boxes` | `any[]` | Yes | Text boxes for the meme. |
+| `font` | `string` | No | The font family to use for the text |
+| `include_nsfw` | `number` | No | Use include_nsfw=1 to allow not-safe-for-work memes to be returned |
+| `max_font_size` | `number` | No | Maximum font size in pixels |
 | `meme` | `any` | No |  |
 | `memes` | `any[]` | No |  |
+| `model` | `string` | No | Which neural network model to use |
+| `no_watermark` | `boolean` | No | Remove the imgflip.com watermark |
+| `password` | `string` | Yes | Password for the Imgflip account |
+| `prefix_text` | `string` | No | Max 64 chars. |
+| `query` | `string` | Yes | A text query to search the meme database for. |
+| `template_id` | `string` | No | Choose one of the 48 templates (classic model) or any popular Imgflip template (openai model). |
+| `text` | `string` | Yes | The text to display on the meme. |
+| `type` | `string` | No | The type of meme templates to search for. |
+| `username` | `string` | Yes | Username of the Imgflip account with the Premium API subscription |
+
+### Field Usage by Operation
+
+| Field | create |
+| --- | --- |
+| `boxes` | - |
+| `font` | - |
+| `include_nsfw` | - |
+| `max_font_size` | - |
+| `meme` | - |
+| `memes` | - |
+| `model` | - |
+| `no_watermark` | - |
+| `password` | - |
+| `prefix_text` | - |
+| `query` | - |
+| `template_id` | Yes |
+| `text` | - |
+| `type` | - |
+| `username` | - |
 
 ### Operations
 
 #### `create(data: object, ctrl?: object)`
 
-Create a new entity with the given data.
+Create a new entity with the given data. Resolves to the created entity.
 
 ```ts
 const result = await client.Premium().create({
+  boxes: [],
+  password: 'example_password',
+  query: 'example_query',
+  template_id: 'example_template_id',
+  text: 'example_text',
+  username: 'example_username',
 })
 ```
+
+Declares a `application/x-www-form-urlencoded` body, which this SDK does not encode yet: it sends the data as JSON.
 
 ### Common Methods
 
@@ -388,6 +454,7 @@ Timeout.
 | Option | Type |
 |---|---|
 | `clearTimer` | function |
+| `now` | function |
 | `setTimer` | function |
 
 These take no default: the feature behaves one way when you supply them and

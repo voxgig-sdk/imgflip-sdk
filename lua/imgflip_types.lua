@@ -7,21 +7,65 @@
 -- edit by hand.
 
 ---@class Free
+---@field boxes? table
+---@field font? string
+---@field max_font_size? number
 ---@field memes? table
+---@field no_watermark? boolean
+---@field password string
+---@field template_id string
+---@field text0? string
+---@field text1? string
+---@field username string
 
 ---@class FreeLoadMatch
 ---@field type? string
 
 ---@class FreeCreateData
+---@field boxes? table
+---@field font? string
+---@field max_font_size? number
 ---@field memes? table
+---@field no_watermark? boolean
+---@field password string
+---@field template_id string
+---@field text0? string
+---@field text1? string
+---@field username string
 
 ---@class Premium
+---@field boxes table
+---@field font? string
+---@field include_nsfw? number
+---@field max_font_size? number
 ---@field meme? any
 ---@field memes? table
+---@field model? string
+---@field no_watermark? boolean
+---@field password string
+---@field prefix_text? string
+---@field query string
+---@field template_id? string
+---@field text string
+---@field type? string
+---@field username string
 
 ---@class PremiumCreateData
+---@field boxes table
+---@field font? string
+---@field include_nsfw? number
+---@field max_font_size? number
 ---@field meme? any
 ---@field memes? table
+---@field model? string
+---@field no_watermark? boolean
+---@field password string
+---@field prefix_text? string
+---@field query string
+---@field template_id string
+---@field text string
+---@field type? string
+---@field username string
 
 local M = {}
 
